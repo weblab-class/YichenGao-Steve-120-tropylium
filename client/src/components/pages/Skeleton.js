@@ -25,7 +25,7 @@ const Skeleton = ({ userId, handleLogin, handleLogout }) => {
           onFailure={(err) => console.log(err)}
         />
       )}
-      <h1>Fractory will win</h1>
+      <h1>Fractory will win- Alex Dang Yichen Gao Steven Reyes</h1>
       <h2> What you need to change in this skeleton</h2>
       <ul>
         <li>
