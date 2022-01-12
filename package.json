@@ -1,5 +1,5 @@
 {
-  "name": "Fractory",
+  "name": "fractory",
   "version": "1.0.0",
   "description": "A fractal art creating website",
   "main": "server/server.js",
