@@ -7,6 +7,7 @@ import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-lo
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
+import ArtCreator from "./pages/ArtCreator";
 
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
@@ -49,6 +50,7 @@ const App = () => {
         handleLogout={handleLogout}
         userId={userId}
       />
+      <ArtCreator path="/fractal" />
       <NotFound default={true} />
     </Router>
   );
