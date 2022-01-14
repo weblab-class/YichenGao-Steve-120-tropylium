@@ -1,4 +1,5 @@
 import React, { MouseEventHandler, useState } from "react";
+import { Link } from "@reach/router";
 
 import "./NavBar.css";
 import logo_transparent from '../../images/logo_transparent.png';
@@ -24,10 +25,10 @@ const NavBar = (props: NavBarProps) => {
             <img className="navbar-logo-icon" src = {logo_transparent}/>
         </div>
         <div className={`navbar-list ${menuShown ? "" : "inactive"}`}>
-            <div className="navbar-linktext">Create</div>
-            <div className="navbar-linktext">My Artworks</div>
-            <div className="navbar-linktext">Gallery</div>
-            <div className="navbar-linktext">Account</div>
+            <Link to="/fractal" className="navbar-linktext">Create</Link>
+            <Link to="/dashboard" className="navbar-linktext">My Artworks</Link>
+            <Link to="/" className="navbar-linktext">Gallery</Link>
+            <Link to="/" className="navbar-linktext">Account</Link>
         </div>
         <div className="navbar-menu" onClick={onMenuClick}>
             <img className="navbar-menu-icon filter-white" src = {menu_icon}/>

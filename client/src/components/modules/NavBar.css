@@ -32,6 +32,8 @@
     margin: 0px;
     padding: 0px var(--m);
     text-align: center;
+    text-decoration: none;
+    color:inherit;
 }
 
 .navbar-linktext:hover {
@@ -42,6 +44,10 @@
     display: none;
     width: var(--xxl);
     height: var(--xxl);
+}
+
+.navbar-menu:hover {
+    background-color: var(--primary--dim);
 }
 
 .navbar-menu-icon {
