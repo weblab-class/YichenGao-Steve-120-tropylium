@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useState } from "react";
 import { Link } from "@reach/router";
 
 import "./NavBar.css";
-import logo_transparent from '../../images/logo_transparent.png';
+import logo_transparent from '../../images/white_name_logo.png';
 import menu_icon from '../../images/menu_icon.svg'
 type NavBarProps = {
 
