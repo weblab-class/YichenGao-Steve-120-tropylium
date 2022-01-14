@@ -4,18 +4,20 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from "react-google-login";
-import "./Skeleton.css";
+import NavBar from "../NavBar";
+import "./Home.css";
 import { RouteComponentProps } from "@reach/router";
 //TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
-type Props = RouteComponentProps & {
+type HomeProps = RouteComponentProps & {
   userId: String;
   handleLogin: (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
   handleLogout: () => void;
 };
-const Skeleton = (props: Props) => {
+const Home = (props: HomeProps) => {
   return (
-    <>
+    <div className="home-container">
+      <NavBar/>
       {props.userId ? (
         <GoogleLogout
           clientId={GOOGLE_CLIENT_ID}
@@ -48,8 +50,8 @@ const Skeleton = (props: Props) => {
         <li>Add a favicon to your website at the path client/dist/favicon.ico</li>
         <li>Update website title in client/dist/index.html</li>
       </ul>
-    </>
+    </div>
   );
 };
 
-export default Skeleton;
+export default Home;

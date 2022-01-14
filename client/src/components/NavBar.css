@@ -1,0 +1,23 @@
+.navbar-container {
+    background-color: var(--primary);
+    color: var(--white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: var(--m);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+}
+
+.navbar-list {
+    list-style-type: none;
+}
+
+.navbar-container .navbar-linktext {
+    display: inline-block;
+    padding: var(--m);
+}
+
+.navbar-container .navbar-linktext:hover {
+    background-color: var(--primary--dim);
+}

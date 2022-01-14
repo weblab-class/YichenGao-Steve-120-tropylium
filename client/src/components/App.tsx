@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
 import { get, post } from "../utilities";
 import NotFound from "./pages/NotFound";
-import Skeleton from "./pages/Skeleton";
+import Home from "./pages/Home";
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
@@ -43,7 +43,7 @@ const App = () => {
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
     <Router>
-      <Skeleton
+      <Home
         path="/"
         handleLogin={handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void}
         handleLogout={handleLogout}
