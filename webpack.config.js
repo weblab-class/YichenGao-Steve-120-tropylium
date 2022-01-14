@@ -33,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jp(e*)g|svg|gif)$/,
+        test: /\.jsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/,
       },
@@ -42,11 +42,11 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
-              configFile: 'client-tsconfig.json',
-            },    
-          }
+              configFile: "client-tsconfig.json",
+            },
+          },
         ],
       },
       {
