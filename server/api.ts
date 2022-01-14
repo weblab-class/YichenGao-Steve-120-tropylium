@@ -25,6 +25,18 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+router.post("/create", (req, res) => {
+  // creating fractal page
+});
+
+router.get("/myartworks", (req, res) => {
+  // checking saved artworks
+});
+
+router.get("/gallery", (req, res) => {
+  // checking other people's artworks
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;
