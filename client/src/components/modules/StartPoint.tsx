@@ -1,8 +1,11 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 
 type StartProp = {
   nextStep: () => void;
   prevStep: () => void;
+  grid: boolean[][];
+  startPoint: number[];
+  setStartPoint: React.Dispatch<SetStateAction<number[]>>;
 };
 
 const Start = (props: StartProp) => {

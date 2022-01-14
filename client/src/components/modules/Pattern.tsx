@@ -3,23 +3,13 @@ import ButtonGrid from "./ButtonGrid";
 
 type PatternProp = {
   nextStep: () => void;
+  grid: boolean[][];
+  changeCellState: (x: number, y: number) => void;
 };
 
 const GRID_SIZE = 10;
 
 const Pattern = (props: PatternProp) => {
-  const [grid, setGrid] = useState(
-    new Array(GRID_SIZE).fill(0).map(() => new Array(GRID_SIZE).fill(false))
-  );
-
-  const changeCellState = (x: number, y: number) => {
-    let newGrid = grid.map((a) => {
-      return [...a];
-    });
-    newGrid[x][y] = !newGrid[x][y];
-    setGrid(newGrid);
-  };
-
   return (
     <div>
       <h1>Step 1: Choose Pattern</h1>
@@ -28,7 +18,7 @@ const Pattern = (props: PatternProp) => {
         fractal.
       </p>
 
-      <ButtonGrid grid={grid} changeCellState={changeCellState} />
+      <ButtonGrid grid={props.grid} changeCellState={props.changeCellState} />
 
       <button onClick={props.nextStep}>NEXT</button>
     </div>
