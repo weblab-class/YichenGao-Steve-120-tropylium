@@ -4,7 +4,6 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from "react-google-login";
-import NavBar from "../modules/NavBar";
 import "./Home.css";
 import { RouteComponentProps } from "@reach/router";
 
@@ -17,7 +16,6 @@ type HomeProps = RouteComponentProps & {
 const Home = (props: HomeProps) => {
   return (
     <div className="home-container">
-      <NavBar />
       {props.userId ? (
         <GoogleLogout
           clientId={GOOGLE_CLIENT_ID}

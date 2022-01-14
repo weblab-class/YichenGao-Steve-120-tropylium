@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Segments from "../modules/Segments";
+import Pattern from "../modules/Pattern";
 import StartPoint from "../modules/StartPoint";
 import EndPoint from "../modules/EndPoint";
 import Parameters from "../modules/Parameters";
@@ -24,7 +24,7 @@ const ArtCreator = (props: ArtCreatorProps) => {
   const renderFromStepNumber = (stepNumber: number) => {
     switch (stepNumber) {
       case 0:
-        return <Segments nextStep={nextStep} />;
+        return <Pattern nextStep={nextStep} />;
       case 1:
         return <StartPoint nextStep={nextStep} prevStep={prevStep} />;
       case 2:
