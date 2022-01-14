@@ -1,11 +1,16 @@
 import React from "react";
 
 type ResultProp = {
-  //TODO
+  prevStep: () => void;
 };
 
 const Result = (props: ResultProp) => {
-  return <div>test result</div>;
+  return (
+    <div>
+      test result
+      <button onClick={props.prevStep}>BACK</button>
+    </div>
+  );
 };
 
 export default Result;

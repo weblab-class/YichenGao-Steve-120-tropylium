@@ -1,14 +1,16 @@
 import React from "react";
 
 type EndPointProp = {
-  // nextStep: () => void;
+  nextStep: () => void;
+  prevStep: () => void;
 };
 
 const EndPoint = (props: EndPointProp) => {
   return (
     <div>
       test end point
-      {/* <button onClick={props.nextStep}>NEXT</button> */}
+      <button onClick={props.prevStep}>BACK</button>
+      <button onClick={props.nextStep}>NEXT</button>
     </div>
   );
 };
