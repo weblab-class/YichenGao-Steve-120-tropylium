@@ -1,14 +1,14 @@
 import React from "react";
 
 type ParametersProp = {
-  nextStep: () => void;
+  // nextStep: () => void;
 };
 
 const Parameters = (props: ParametersProp) => {
   return (
     <div>
       test parameters
-      <button onClick={props.nextStep}>NEXT</button>
+      {/* <button onClick={props.nextStep}>NEXT</button> */}
     </div>
   );
 };
