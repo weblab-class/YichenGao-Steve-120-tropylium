@@ -28,7 +28,7 @@ const NavBar = (props: NavBarProps) => {
             <Link to="/fractal" className="navbar-linktext">Create</Link>
             <Link to="/dashboard" className="navbar-linktext">My Artworks</Link>
             <Link to="/" className="navbar-linktext">Gallery</Link>
-            <Link to="/" className="navbar-linktext">Account</Link>
+            <Link to="/account" className="navbar-linktext">Account</Link>
         </div>
         <div className="navbar-menu" onClick={onMenuClick}>
             <img className="navbar-menu-icon filter-white" src = {menu_icon}/>
