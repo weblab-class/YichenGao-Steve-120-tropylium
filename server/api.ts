@@ -33,6 +33,14 @@ router.get("/myartworks", (req, res) => {
   // checking saved artworks
 });
 
+router.post("/saveArtwork", auth.ensureLoggedIn, (req, res) => {
+  const newStory = new artwork({
+    creator_id: req.user._id,
+    creator_name: req.user.name,
+    artwork_name: req.artwork.name,
+    artwork_content: req.artwork.content,
+  });
+
 router.get("/gallery", (req, res) => {
   // checking other people's artworks
 });

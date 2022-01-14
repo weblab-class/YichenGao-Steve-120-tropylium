@@ -8,6 +8,9 @@ import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
 
+import NavBar from "./modules/NavBar";
+import ArtCreator from "./pages/ArtCreator";
+
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
 
@@ -42,15 +45,21 @@ const App = () => {
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
-    <Router>
-      <Home
-        path="/"
-        handleLogin={handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void}
-        handleLogout={handleLogout}
-        userId={userId}
-      />
-      <NotFound default={true} />
-    </Router>
+    <>
+      <NavBar />
+      <Router>
+        <Home
+          path="/"
+          handleLogin={
+            handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void
+          }
+          handleLogout={handleLogout}
+          userId={userId}
+        />
+        <ArtCreator path="/fractal" />
+        <NotFound default={true} />
+      </Router>
+    </>
   );
 };
 

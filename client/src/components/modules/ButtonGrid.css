@@ -1,0 +1,11 @@
+.clicked {
+  background-color: blue;
+}
+
+.unclicked {
+  background-color: red;
+}
+
+.button {
+  color: white;
+}
