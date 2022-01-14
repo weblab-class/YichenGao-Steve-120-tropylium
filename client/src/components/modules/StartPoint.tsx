@@ -9,6 +9,7 @@ type StartProp = {
 };
 
 const Start = (props: StartProp) => {
+  // TODO: replace with ButtonGrid
   return (
     <div>
       test start point

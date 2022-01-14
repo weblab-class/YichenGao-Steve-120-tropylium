@@ -1,11 +1,19 @@
-.clicked {
+.ButtonGrid-clicked {
   background-color: blue;
 }
 
-.unclicked {
+.ButtonGrid-unclicked {
   background-color: red;
 }
 
-.button {
+.ButtonGrid-startpoint {
+  background-color: yellow;
+}
+
+.ButtonGrid-endpoint {
+  background-color: green;
+}
+
+.ButtonGrid-button {
   color: white;
 }
