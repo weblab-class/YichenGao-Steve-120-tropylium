@@ -40,14 +40,19 @@
 
 .navbar-menu {
     display: none;
+    width: var(--xxl);
+    height: var(--xxl);
 }
 
 .navbar-menu-icon {
     color: var(--white);
+    fill: var(--white);
+    height: var(--xl);
+    object-fit: contain;
 }
 
 .filter-white {
-    filter: brightness(0) invert(100%) sepia(0%) saturate(100%) hue-rotate(72deg) brightness(107%) contrast(101%);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(44deg) brightness(105%) contrast(104%);
 }
 
 .inactive {
@@ -71,9 +76,11 @@
         justify-content: center;
     }
     .navbar-menu {
-        display: block;
+        display: flex;
         position: absolute;
-        right: var(--m);
-        top: var(--m);
+        justify-content: center;
+        align-items: center;
+        top:0px;
+        right:0px;
     }
 }
