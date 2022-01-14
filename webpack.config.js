@@ -33,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(png|jp(e*)g|svg|gif)$/,
         loader: "babel-loader",
         exclude: /node_modules/,
       },

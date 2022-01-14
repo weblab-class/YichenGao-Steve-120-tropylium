@@ -1,8 +1,8 @@
 import React, { MouseEventHandler, useState } from "react";
 
 import "./NavBar.css";
-//import logo_transparent from '../../images/logo_transparent.png';
-
+import logo_transparent from '../../images/logo_transparent.png';
+import menu_icon from '../../images/menu_icon.svg'
 type NavBarProps = {
 
 }
@@ -21,7 +21,7 @@ const NavBar = (props: NavBarProps) => {
     return (
     <nav className="navbar-container">
         <div className="navbar-logo">
-            <img className="navbar-logo-icon" src = {"https://scontent-bos3-1.xx.fbcdn.net/v/t1.15752-9/271392189_5036392723072179_1105063127099927337_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=A3j4cHRQpscAX-c6qw5&_nc_ht=scontent-bos3-1.xx&oh=03_AVIJQHfa-1zJj6MyuxVaIMQz53ax_DiDNzyrJP0t6a-L3Q&oe=6205FAF8"}/>
+            <img className="navbar-logo-icon" src = {logo_transparent}/>
         </div>
         <div className={`navbar-list ${menuShown ? "" : "inactive"}`}>
             <div className="navbar-linktext">Create</div>
@@ -30,7 +30,7 @@ const NavBar = (props: NavBarProps) => {
             <div className="navbar-linktext">Account</div>
         </div>
         <div className="navbar-menu" onClick={onMenuClick}>
-            !MenuIcon!
+            <img className="navbar-menu-icon filter-white" src = {menu_icon}/>
         </div>
     </nav>);
 };
