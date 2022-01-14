@@ -10,6 +10,7 @@ import "../utilities.css";
 
 import NavBar from "./modules/NavBar";
 import ArtCreator from "./pages/ArtCreator";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
@@ -57,6 +58,7 @@ const App = () => {
           userId={userId}
         />
         <ArtCreator path="/fractal" />
+        <Dashboard path="/dashboard"/>
         <NotFound default={true} />
       </Router>
     </>
