@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ButtonGrid from "./ButtonGrid";
 
 type PatternProp = {
@@ -6,8 +6,6 @@ type PatternProp = {
   grid: boolean[][];
   changeCellState: (x: number, y: number) => void;
 };
-
-const GRID_SIZE = 10;
 
 const Pattern = (props: PatternProp) => {
   return (
