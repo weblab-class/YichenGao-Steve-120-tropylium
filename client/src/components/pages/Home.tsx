@@ -1,36 +1,12 @@
 import React from "react";
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-  GoogleLogout,
-} from "react-google-login";
 import "./Home.css";
 import { RouteComponentProps } from "@reach/router";
 
-const GOOGLE_CLIENT_ID = "345260256672-4hgaortvbdeb0t3mb8iuphdvehej9m14.apps.googleusercontent.com";
-type HomeProps = RouteComponentProps & {
-  userId: String;
-  handleLogin: (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
-  handleLogout: () => void;
-};
+type HomeProps = RouteComponentProps;
+
 const Home = (props: HomeProps) => {
   return (
     <div className="home-container">
-      {props.userId ? (
-        <GoogleLogout
-          clientId={GOOGLE_CLIENT_ID}
-          buttonText="Logout"
-          onLogoutSuccess={props.handleLogout}
-          onFailure={() => console.log(`Failed to logout.`)}
-        />
-      ) : (
-        <GoogleLogin
-          clientId={GOOGLE_CLIENT_ID}
-          buttonText="Login"
-          onSuccess={props.handleLogin}
-          onFailure={(err) => console.log(err)}
-        />
-      )}
       <h1>Fractory will win- Alex Dang Yichen Gao Steven Reyes</h1>
       <h2> What we provide in this skeleton</h2>
       <ul>
