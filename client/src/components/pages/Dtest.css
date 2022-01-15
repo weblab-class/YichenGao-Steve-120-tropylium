@@ -18,13 +18,18 @@
     vertical-align: top;
 }
 
-.reset-button {
+.dtest-button-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.dtest-button {
     background-color: mediumaquamarine;
     color: white;
     height: fit-content;
     padding: var(--m);
 }
 
-.reset-button:hover {
+.dtest-button:hover {
     background-color: darkgoldenrod;
 }
