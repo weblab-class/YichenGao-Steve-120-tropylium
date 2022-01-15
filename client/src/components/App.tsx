@@ -12,6 +12,7 @@ import NavBar from "./modules/NavBar";
 import ArtCreator from "./pages/ArtCreator";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
+import Dtest from "./pages/Dtest";
 
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
@@ -58,6 +59,7 @@ const App = () => {
         <ArtCreator path="/fractal" />
         <Dashboard path="/dashboard" />
         <Account path="/account" />
+        <Dtest path="/dtest"/>
         <NotFound default={true} />
       </Router>
     </>
