@@ -11,24 +11,25 @@ type d3testProp = RouteComponentProps & {
 const Dtest = (props: d3testProp) => {
     const graph_container = useRef(null);
     const [graph, setGraph] = useState(null);
+    let zoom;
 
     useEffect(() => {
         drawCanvas();
     });
 
     function drawCanvas(): void {
-        
+        zoom = d3.zoom();
         const graph = d3
             .select(graph_container.current)
             .append("svg")
             .attr("width", 800)
             .attr("height", 800)
-            .call(d3.zoom().on("zoom", function (event) {
+            .call(zoom.on("zoom", function (event) {
                 graph.attr("transform", event.transform)
              }))
             .append("g")
             ;
-
+        
         // function handleZoom(event): void {
         //     graph.attr('transform', event.transform);
         // }
@@ -53,12 +54,16 @@ const Dtest = (props: d3testProp) => {
     }
 
     const resetGraph= (event) => {
-
+        d3.select('svg')
+		.transition()
+		// .call(zoom.scaleTo, 1);
+        .call(zoom.transform, d3.zoomIdentity.translate(0,0).scale(1))
     }
 
     return (
     <div className="dtest-container">
         <div ref = {graph_container} className="dtest-graph-container"></div>
+        <div className="reset-button" onClick={resetGraph}>Reset</div>
     </div>);
 }
 

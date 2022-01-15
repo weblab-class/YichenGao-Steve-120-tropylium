@@ -22,4 +22,9 @@
     background-color: mediumaquamarine;
     color: white;
     height: fit-content;
+    padding: var(--m);
+}
+
+.reset-button:hover {
+    background-color: darkgoldenrod;
 }
