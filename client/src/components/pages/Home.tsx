@@ -7,7 +7,7 @@ import GoogleLogin, {
 import "./Home.css";
 import { RouteComponentProps } from "@reach/router";
 
-const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "345260256672-4hgaortvbdeb0t3mb8iuphdvehej9m14.apps.googleusercontent.com";
 type HomeProps = RouteComponentProps & {
   userId: String;
   handleLogin: (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void;

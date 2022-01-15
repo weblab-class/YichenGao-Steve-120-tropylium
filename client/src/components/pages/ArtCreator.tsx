@@ -24,8 +24,8 @@ const ArtCreator = (props: ArtCreatorProps) => {
     newGrid[x][y] = !newGrid[x][y];
     setGrid(newGrid);
   };
-  const [startPoint, setStartPoint] = useState([-1, -1]);
-  const [endPoint, setEndPoint] = useState([-1, -1]);
+  const [startCoords, setStartCoords] = useState([-1, -1]);
+  const [endCoords, setEndCoords] = useState([-1, -1]);
 
   // keeping track of steps
   const [stepNumber, setStepNumber] = useState(0);
@@ -46,16 +46,27 @@ const ArtCreator = (props: ArtCreatorProps) => {
             nextStep={nextStep}
             prevStep={prevStep}
             grid={grid}
-            startPoint={startPoint}
-            setStartPoint={setStartPoint}
+            startCoords={startCoords}
+            setStartCoords={setStartCoords}
           />
         );
       case 2:
-        return <EndPoint nextStep={nextStep} prevStep={prevStep} />;
+        return (
+          <EndPoint
+            nextStep={nextStep}
+            prevStep={prevStep}
+            grid={grid}
+            startCoords={startCoords}
+            endCoords={endCoords}
+            setEndCoords={setEndCoords}
+          />
+        );
       case 3:
         return <Parameters nextStep={nextStep} prevStep={prevStep} />;
       case 4:
-        return <Result prevStep={prevStep} />;
+        return (
+          <Result prevStep={prevStep} grid={grid} startCoords={startCoords} endCoords={endCoords} />
+        );
     }
   };
 
