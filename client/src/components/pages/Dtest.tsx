@@ -14,6 +14,8 @@ const Dtest = (props: d3testProp) => {
     const height: number = 800;
     const center_x: number = width/2;
     const center_y: number = height/2;
+    const num_points = 100;
+
     let zoom;
 
     useEffect(() => {
@@ -36,7 +38,7 @@ const Dtest = (props: d3testProp) => {
         
         const g = svg.append("g");
 
-        zoom = d3.zoom().on("zoom", function (event) {
+        zoom = d3.zoom().scaleExtent([0.1,1000]).on("zoom", function (event) {
             g.attr("transform", event.transform)
         });
 
@@ -49,13 +51,35 @@ const Dtest = (props: d3testProp) => {
             .attr("height", "100%")
             .attr("fill", "white");
         
-        g.append('circle')
-        .attr('cx', center_x)
-        .attr('cy', center_y)
-        .attr('r', 50)
-        .attr('stroke', 'black')
-        .attr('fill', '#69a3b2');
-    });
+        const data = [];
+        for(let i: number = 0; i < num_points; i++) {
+            let r = (Math.floor(Math.random()*256)).toString(16);
+            let g = (Math.floor(Math.random()*256)).toString(16);
+            let b = (Math.floor(Math.random()*256)).toString(16);
+            data.push({
+                x: Math.random()*width,
+                y: Math.random()*height,
+                color: "#" + r+g+b
+            });
+        };
+
+        g
+            .selectAll('circle')
+            .data(data)
+            .join('circle')
+            .attr('cx', (d) => d.x)
+            .attr('cy', (d) => d.y)
+            .attr('fill', (d) => d.color)
+            .attr('r', 30)
+            .attr('opacity', 0.5)
+        ;
+
+        // g.append('circle')
+        // .attr('cx', center_x)
+        // .attr('cy', center_y)
+        // .attr('r', 50)
+        // .attr('fill', '#69a3b2');
+    }, []);
 
     const resetGraph= (event) => {
         d3.select(graph_container.current)
