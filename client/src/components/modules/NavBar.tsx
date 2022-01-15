@@ -32,9 +32,11 @@ const NavBar = (props: NavBarProps) => {
 
   return (
     <nav className="navbar-container">
-      <div className="navbar-logo">
-        <img className="navbar-logo-icon" src={logo_transparent} />
-      </div>
+      <Link to="/" className="navbar-linktext">
+        <div className="navbar-logo">
+          <img className="navbar-logo-icon" src={logo_transparent} />
+        </div>
+      </Link>
       <div className={`navbar-list ${menuShown ? "" : "inactive"}`}>
         <Link to="/fractal" className="navbar-linktext">
           Create
@@ -42,7 +44,7 @@ const NavBar = (props: NavBarProps) => {
         <Link to="/dashboard" className="navbar-linktext">
           My Artworks
         </Link>
-        <Link to="/" className="navbar-linktext">
+        <Link to="/gallery" className="navbar-linktext">
           Gallery
         </Link>
         <Link to="/account" className="navbar-linktext">
