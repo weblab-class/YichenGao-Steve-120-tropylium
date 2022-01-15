@@ -10,7 +10,7 @@ const Parameters = (props: ParametersProp) => {
     <div>
       test parameters
       <button onClick={props.prevStep}>BACK</button>
-      <button onClick={props.nextStep}>NEXT</button>
+      <button onClick={props.nextStep}>GENERATE MY FRACTAL!</button>
     </div>
   );
 };
