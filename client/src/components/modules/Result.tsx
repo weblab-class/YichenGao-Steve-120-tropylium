@@ -20,12 +20,6 @@ const useD3 = (renderD3) => {
 };
 
 const Result = (props: ResultProp) => {
-  console.log(props.grid);
-  console.log(props.startCoords);
-  console.log(props.endCoords);
-  console.log(props.numIterations);
-  console.log("YEET");
-
   const doD3Stuff = (svg) => {
     svg.attr("width", 1000).attr("height", 1000);
     const artist = new D3Drawer(

@@ -25,13 +25,16 @@ class D3Drawer {
 
     this.svg.attr("viewBox", `-500 -500 ${this.width} ${this.height}`);
     this.svgCanvas = this.svg.append("g").attr("class", "D3Drawer-svgCanvas");
-
-    console.log(this.cellDeltas);
-    console.log(this.endDelta);
   }
 
   convertToDeltas(grid: boolean[][], startCoords: number[], endCoords: number[]) {
     this.cellDeltas = [];
+    [
+      [0, 1],
+      [-1, 0],
+      [0, 2],
+      [5, 10],
+    ];
     for (let i = 0; i < GRID_SIZE; i++) {
       for (let j = 0; j < GRID_SIZE; j++) {
         if (grid[i][j]) {
@@ -85,7 +88,6 @@ class D3Drawer {
       }
     } else {
       let newOrigin = this.renderIteration(n - 1, rotateIdx, origin);
-      console.log("BRUH", newOrigin);
       return this.renderIteration(n - 1, (rotateIdx + 1) % 4, newOrigin);
     }
   }
