@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler, useState } from "react";
 import "./Home.css";
 import { RouteComponentProps } from "@reach/router";
 import Carousel from 'react-bootstrap/Carousel';
@@ -6,9 +6,9 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import logo_colored from "../../images/colored_name_logo.png";
-import fractal_example1 from "../../images/fractal_example1";
-import fractal_example2 from "../../images/fractal_example1";
-import React, { MouseEventHandler, useState } from "react";
+import fractal_example1 from "../../images/fractal_example1.png";
+import fractal_example2 from "../../images/fractal_example1.png";
+
 // import GoogleLogin, {
 //   GoogleLoginResponse,
 //   GoogleLoginResponseOffline,
@@ -17,7 +17,7 @@ import React, { MouseEventHandler, useState } from "react";
 // import { Link } from "@reach/router";
 // const GOOGLE_CLIENT_ID = "345260256672-4hgaortvbdeb0t3mb8iuphdvehej9m14.apps.googleusercontent.com";
 
-// type HomeProps = RouteComponentProps;
+type HomeProps = RouteComponentProps;
 // type NavBarProps = {
 //   userId: String;
 //   handleLogin: (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
