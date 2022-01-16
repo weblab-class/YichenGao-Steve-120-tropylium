@@ -172,7 +172,7 @@ const Dtest = (props: d3testProp) => {
             <div className="dtest-button" onClick={zoomOut}>Zoom Out</div>
             <div className="dtest-button" onClick={regenerate}>Generate New</div>
             <div className="dtest-button">
-                <input type="number" min="0" max = "200" value = {num_circles} required placeholder="0-200" step = "20" onChange={onCircleInputChange}/>
+                <input type="number" min="0" max = "20000" value = {num_circles} required placeholder="0-200" step = "20" onChange={onCircleInputChange}/>
             </div>
         </div>
     </div>);
