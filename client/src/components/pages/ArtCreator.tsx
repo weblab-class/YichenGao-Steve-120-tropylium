@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import { RouteComponentProps } from "@reach/router";
+
+import { GRID_SIZE } from "../../constants/Constants";
 import Pattern from "../modules/Pattern";
 import StartPoint from "../modules/StartPoint";
 import EndPoint from "../modules/EndPoint";
 import Parameters from "../modules/Parameters";
 import Result from "../modules/Result";
-import { RouteComponentProps } from "@reach/router";
 
 type ArtCreatorProps = RouteComponentProps & {
   //TODO
 };
-
-const GRID_SIZE = 10;
 
 const ArtCreator = (props: ArtCreatorProps) => {
   // info to get from inputs (grid pattern, start, end)
@@ -26,6 +26,7 @@ const ArtCreator = (props: ArtCreatorProps) => {
   };
   const [startCoords, setStartCoords] = useState([-1, -1]);
   const [endCoords, setEndCoords] = useState([-1, -1]);
+  const [numIterations, setNumIterations] = useState(undefined);
 
   // keeping track of steps
   const [stepNumber, setStepNumber] = useState(0);
@@ -62,10 +63,23 @@ const ArtCreator = (props: ArtCreatorProps) => {
           />
         );
       case 3:
-        return <Parameters nextStep={nextStep} prevStep={prevStep} />;
+        return (
+          <Parameters
+            nextStep={nextStep}
+            prevStep={prevStep}
+            numIterations={numIterations}
+            setNumIterations={setNumIterations}
+          />
+        );
       case 4:
         return (
-          <Result prevStep={prevStep} grid={grid} startCoords={startCoords} endCoords={endCoords} />
+          <Result
+            prevStep={prevStep}
+            grid={grid}
+            startCoords={startCoords}
+            endCoords={endCoords}
+            numIterations={numIterations}
+          />
         );
     }
   };

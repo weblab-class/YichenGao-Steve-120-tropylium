@@ -13,7 +13,6 @@ const Start = (props: StartProp) => {
   const [outOfPattern, setOutOfPattern] = useState(false);
 
   const setNewStartPoint = (x: number, y: number) => {
-    console.log("YEET");
     if (props.grid[x][y]) {
       props.setStartCoords([x, y]);
       setOutOfPattern(false);

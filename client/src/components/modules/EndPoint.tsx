@@ -1,5 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import ButtonGrid from "./ButtonGrid";
+import { isEqual } from "../../constants/Constants";
 
 type EndPointProp = {
   nextStep: () => void;
@@ -15,12 +16,11 @@ const EndPoint = (props: EndPointProp) => {
   const [sameAsStart, setSameAsStart] = useState(false);
 
   const setNewEndPoint = (x: number, y: number) => {
-    console.log("YEET");
-    if (props.grid[x][y] && !(x === props.startCoords[0] && y === props.startCoords[1])) {
+    if (props.grid[x][y] && !isEqual([x, y], props.startCoords)) {
       props.setEndCoords([x, y]);
       setOutOfPattern(false);
       setSameAsStart(false);
-    } else if (x === props.startCoords[0] && y === props.startCoords[1]) {
+    } else if (isEqual([x, y], props.startCoords)) {
       setOutOfPattern(false);
       setSameAsStart(true);
     } else {
@@ -30,9 +30,8 @@ const EndPoint = (props: EndPointProp) => {
   };
 
   useEffect(() => {
-    let [x1, y1] = props.startCoords;
     let [x2, y2] = props.endCoords;
-    if (x1 === x2 && y1 === y2) {
+    if (isEqual([x2, y2], props.startCoords)) {
       props.setEndCoords([-1, -1]);
     } else if (x2 >= 0 && !props.grid[x2][y2]) {
       props.setEndCoords([-1, -1]);
