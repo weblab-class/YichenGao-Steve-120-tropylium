@@ -49,10 +49,12 @@ body {
   min-height: 100vh;
   height: 100vh;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 #root > div {
-  height:100%;
+  flex-grow: 2;
 }
 
 form {
