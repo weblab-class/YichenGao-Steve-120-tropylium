@@ -1,1 +1,8 @@
 /* Fill me in :) */
+.centerImage {
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: block;
+}
