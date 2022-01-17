@@ -25,25 +25,29 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.post("/create", (req, res) => {
-  // creating fractal page
+const Artwork = require("./models/Artwork");
+import ArtworkInterface from "../shared/Artwork";
+
+router.get("/artworks", (req, res) => {
+  Artwork.find({}).then((artworks: ArtworkInterface[] | null | undefined) => res.send(artworks));
 });
 
-router.get("/myartworks", (req, res) => {
-  // checking saved artworks
+router.get("/artworks/:id", (req, res) => {
+  Artwork.find({ creator_id: req.params.id }).then(
+    (artworks: ArtworkInterface[] | null | undefined) => res.send(artworks)
+  );
 });
 
-router.post("/saveArtwork", auth.ensureLoggedIn, (req, res) => {
-  // const newStory = new artwork({
-  //   creator_id: req.user._id,
-  //   creator_name: req.user.name,
-  //   artwork_name: req.artwork.name,
-  //   artwork_content: req.artwork.content,
-  // });
-});
-
-router.get("/gallery", (req, res) => {
-  // checking other people's artworks
+router.post("/artwork", auth.ensureLoggedIn, (req, res) => {
+  if (req.user) {
+    const newArtwork = new Artwork({
+      creator_id: req.user._id,
+      cellDeltas: req.body.cellDeltas,
+      endDelta: req.body.endDelta,
+      numIterations: req.body.numIterations,
+    });
+    newArtwork.save().then((artwork: ArtworkInterface) => res.send(artwork));
+  }
 });
 
 // anything else falls to this "not found" case

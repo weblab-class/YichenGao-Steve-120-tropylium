@@ -9,7 +9,7 @@ import Parameters from "../modules/Parameters";
 import Result from "../modules/Result";
 
 type ArtCreatorProps = RouteComponentProps & {
-  //TODO
+  userId: String;
 };
 
 const ArtCreator = (props: ArtCreatorProps) => {
@@ -84,7 +84,11 @@ const ArtCreator = (props: ArtCreatorProps) => {
     }
   };
 
-  return <div>{renderFromStepNumber(stepNumber)}</div>;
+  return (
+    <div>
+      {props.userId ? renderFromStepNumber(stepNumber) : "You must be logged in to continue!"}
+    </div>
+  );
 };
 
 export default ArtCreator;

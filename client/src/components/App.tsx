@@ -13,7 +13,6 @@ import ArtCreator from "./pages/ArtCreator";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Dtest from "./pages/Dtest";
-import FractalCreatorTest from "./pages/FractalCreatorTest";
 
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
@@ -57,12 +56,10 @@ const App = () => {
       />
       <Router>
         <Home path="/" />
-        <ArtCreator path="/fractal" />
-        <FractalCreatorTest path="/create"/>
+        <ArtCreator path="/fractal_creator" userId={userId} />
         <Dashboard path="/dashboard" />
         <Account path="/account" />
-        <Dtest default={true}/>
-        
+        <Dtest default={true} />
       </Router>
     </>
   );
