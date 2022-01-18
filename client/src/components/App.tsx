@@ -57,7 +57,7 @@ const App = () => {
       />
       <Router>
         <Home path="/" />
-        <ArtCreator path="/fractal"/>
+        <ArtCreator path="/fractal" userId={userId} />
         <Dashboard path="/dashboard" />
         <Account path="/account" />
         <Dtest default={true}/>

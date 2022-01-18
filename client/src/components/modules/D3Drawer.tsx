@@ -10,14 +10,9 @@ class D3Drawer {
   height: number;
   svgCanvas: any;
 
-  constructor(
-    grid: boolean[][],
-    startCoords: number[],
-    endCoords: number[],
-    numIterations: number,
-    svg
-  ) {
-    this.convertToDeltas(grid, startCoords, endCoords);
+  constructor(cellDeltas: number[][], endDelta: number[], numIterations: number, svg) {
+    this.cellDeltas = cellDeltas;
+    this.endDelta = endDelta;
     this.numIterations = numIterations;
     this.svg = svg;
     this.width = 1000;
@@ -25,21 +20,6 @@ class D3Drawer {
 
     this.svg.attr("viewBox", `-500 -500 ${this.width} ${this.height}`);
     this.svgCanvas = this.svg.append("g").attr("class", "D3Drawer-svgCanvas");
-
-    console.log(this.cellDeltas);
-    console.log(this.endDelta);
-  }
-
-  convertToDeltas(grid: boolean[][], startCoords: number[], endCoords: number[]) {
-    this.cellDeltas = [];
-    for (let i = 0; i < GRID_SIZE; i++) {
-      for (let j = 0; j < GRID_SIZE; j++) {
-        if (grid[i][j]) {
-          this.cellDeltas.push([j - startCoords[1], i - startCoords[0]]);
-        }
-      }
-    }
-    this.endDelta = [endCoords[1] - startCoords[1], endCoords[0] - startCoords[0]];
   }
 
   renderIteration(n: number, rotateIdx: number, origin: number[]): number[] {
@@ -85,7 +65,6 @@ class D3Drawer {
       }
     } else {
       let newOrigin = this.renderIteration(n - 1, rotateIdx, origin);
-      console.log("BRUH", newOrigin);
       return this.renderIteration(n - 1, (rotateIdx + 1) % 4, newOrigin);
     }
   }
