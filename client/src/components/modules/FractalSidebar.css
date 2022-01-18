@@ -1,0 +1,15 @@
+.fractal-sidebar_container {
+    width: 200px;
+    background-color: lightgray;
+}
+
+.fractal-sidebar-open-initial_button {
+    background-color: var(--primary--dim);
+    color:var(--white);
+    padding: var(--m);
+}
+
+.fractal-sidebar-iterations_input {
+    width: 100%;
+    padding: var(--m);
+}

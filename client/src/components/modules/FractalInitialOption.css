@@ -1,0 +1,20 @@
+.fractal-initial-option_container {
+    padding: var(--m);
+    background-color: var(--white);
+}
+
+.selected {
+    background-color: var(--primary--dim);
+}
+
+.done {
+    background-color: lightgreen;
+}
+
+.fractal-initial-option-title {
+    font-weight: bold;
+}
+
+.fractal-initial-option-hint {
+    font-style: italic;
+}

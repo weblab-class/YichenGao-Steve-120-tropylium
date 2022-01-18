@@ -21,8 +21,8 @@ const Dtest = (props: d3testProp) => {
     function generateNewData(){
         function numToString(num: number): string {
             if(num < 0x10)
-                return "0" + num.toString(16);
-            return num.toString(16);
+                return "0" + num.toString(0x10);
+            return num.toString(0x10);
         }
         const data = [];
         for(let i: number = 0; i < num_circles; i++) {

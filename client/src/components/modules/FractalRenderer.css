@@ -1,0 +1,5 @@
+.fractal-renderer_container{
+    height: 100%;
+    flex-grow: 2;
+    background-color: var(--white);
+}
