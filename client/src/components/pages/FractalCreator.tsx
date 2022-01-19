@@ -24,7 +24,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
         end_points: [],
     } as InitialState);
     const [is_editor_open, setEditorOpen] = useState(props.is_new_project); 
-    const [num_iterations, setNumIterations] = useState(1);
+    const [num_iterations, setNumIterations] = useState(0);
     
     function updateInitialState(newInitialState: InitialState): void {
         setInitialState(newInitialState);

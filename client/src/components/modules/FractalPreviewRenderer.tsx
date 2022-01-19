@@ -20,7 +20,7 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
             function(enter) {
                 return enter
                 .append('rect')
-                .attr('x', (data_value) => {console.log(data_value); return data_value[0]*PREVIEW_WIDTH/GRID_SIZE})
+                .attr('x', (data_value) => { return data_value[0]*PREVIEW_WIDTH/GRID_SIZE})
                 .attr('y', (data_value) => data_value[1]*PREVIEW_HEIGHT/GRID_SIZE)
                 .attr('width', PREVIEW_WIDTH/GRID_SIZE)
                 .attr('height', PREVIEW_HEIGHT/GRID_SIZE)
@@ -36,7 +36,7 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
             },
             function(update) {
                 return update
-                .attr('x', (data_value) => {console.log(data_value); return data_value[0]*PREVIEW_WIDTH/GRID_SIZE})
+                .attr('x', (data_value) => { return data_value[0]*PREVIEW_WIDTH/GRID_SIZE})
                 .attr('y', (data_value) => data_value[1]*PREVIEW_HEIGHT/GRID_SIZE)
                 .attr('width', PREVIEW_WIDTH/GRID_SIZE)
                 .attr('height', PREVIEW_HEIGHT/GRID_SIZE)
@@ -51,7 +51,7 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
                 });
             },
             function(exit) {
-                return exit;
+                return exit.remove();
             }
         );
     });

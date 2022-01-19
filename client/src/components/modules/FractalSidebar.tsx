@@ -23,7 +23,7 @@ const FractalSidebar = (props: FractalSidebarProps) => {
             Number of Iterations
         </div>
         <input className = 'fractal-sidebar-iterations_input'
-            type='number' value={props.numIterations} min={1} max={12} step={1} 
+            type='number' value={props.numIterations} min={1} max={20} step={1} 
             onChange={(event) => props.updateNumIterations(event.target.value)}/>
     </div>
 }

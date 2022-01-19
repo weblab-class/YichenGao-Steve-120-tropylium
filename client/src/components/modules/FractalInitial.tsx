@@ -95,6 +95,7 @@ const FractalInitial = (props: FractalInitialProps) => {
                         rect.is_endpoint = false;
                         newOptionStatus[InitialEditorState.SELECT_END] = false;
                     }
+                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = true
                 }
                 newOptionStatus[InitialEditorState.SELECT_START] = nextStartState;
 
@@ -114,6 +115,7 @@ const FractalInitial = (props: FractalInitialProps) => {
                         rect.is_startpoint = false;
                         newOptionStatus[InitialEditorState.SELECT_START] = false;
                     }
+                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = true
                 }
                 newOptionStatus[InitialEditorState.SELECT_END] = nextEndState;
 
@@ -131,20 +133,23 @@ const FractalInitial = (props: FractalInitialProps) => {
                         rect.is_endpoint = false;
                         newOptionStatus[InitialEditorState.SELECT_END] = false;
                     }
+                    rect.is_selected = nextRegularState;
+                    let any_selected = false;
+                    for(let i = 0; i < GRID_SIZE; i++) {
+                        for(let j = 0; j < GRID_SIZE; j++) {
+                            if(newRectData[i][j].is_selected) {
+                                any_selected = true;
+                                i = GRID_SIZE; //breaks out of outer loop
+                                break;
+                            }
+                        }
+                    }
+                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = any_selected;
+                } else {
+                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = true;
                 }
                 rect.is_selected = nextRegularState;
 
-                let any_selected = false;
-                for(let i = 0; i < GRID_SIZE; i++) {
-                    for(let j = 0; j < GRID_SIZE; j++) {
-                        if(newRectData[i][j].is_selected) {
-                            any_selected = true;
-                            i = GRID_SIZE; //breaks out of outer loop
-                            break;
-                        }
-                    }
-                }
-                newOptionStatus[InitialEditorState.SELECT_REGULAR] = any_selected;
                 break;
                         
         }
