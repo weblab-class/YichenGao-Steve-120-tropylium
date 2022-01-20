@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from "react";
-import { InitialState } from "../pages/FractalCreator";
+import { InitialState } from "../../pages/FractalCreator";
 import * as d3 from 'd3'
 
 import "./FractalPreviewRenderer.css";
