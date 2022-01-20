@@ -25,11 +25,11 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
                 .attr('width', PREVIEW_WIDTH/GRID_SIZE)
                 .attr('height', PREVIEW_HEIGHT/GRID_SIZE)
                 .attr('fill', (data_value: number[]) => {
-                    if(data_value[0] === props.initialState.start_points[0]
-                        && data_value[1] === props.initialState.start_points[1])
+                    if(data_value[0] === props.initialState.start_point[0]
+                        && data_value[1] === props.initialState.start_point[1])
                         return '#0f0';
-                    if(data_value[0] === props.initialState.end_points[0]
-                        && data_value[1] === props.initialState.end_points[1])
+                    if(data_value[0] === props.initialState.end_point[0]
+                        && data_value[1] === props.initialState.end_point[1])
                         return '#f00';
                     return '#000'
                 });
@@ -41,11 +41,11 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
                 .attr('width', PREVIEW_WIDTH/GRID_SIZE)
                 .attr('height', PREVIEW_HEIGHT/GRID_SIZE)
                 .attr('fill', (data_value: number[]) => {
-                    if(data_value[0] === props.initialState.start_points[0]
-                        && data_value[1] === props.initialState.start_points[1])
+                    if(data_value[0] === props.initialState.start_point[0]
+                        && data_value[1] === props.initialState.start_point[1])
                         return '#0f0';
-                    if(data_value[0] === props.initialState.end_points[0]
-                        && data_value[1] === props.initialState.end_points[1])
+                    if(data_value[0] === props.initialState.end_point[0]
+                        && data_value[1] === props.initialState.end_point[1])
                         return '#f00';
                     return '#000'
                 });

@@ -35,8 +35,8 @@ const FractalInitial = (props: FractalInitialProps) => {
     const [optionStatus, setOptionStatus] = useState(
         [
             props.initialState.selected_points.length > 0,
-            props.initialState.start_points.length > 0,
-            props.initialState.end_points.length > 0,
+            props.initialState.start_point.length > 0,
+            props.initialState.end_point.length > 0,
         ]
     );
     function getRectData(initialState: InitialState): RectData[][] {
@@ -68,12 +68,12 @@ const FractalInitial = (props: FractalInitialProps) => {
             rect_info[element[0]][element[1]].is_selected = true;
         });
 
-        if(initialState.start_points.length > 0)
-            rect_info[initialState.start_points[0]][ 
-            initialState.start_points[1]].is_startpoint = true;
-        if(initialState.end_points.length > 0)
-            rect_info[initialState.end_points[0]][ 
-            initialState.end_points[1]].is_endpoint = true;
+        if(initialState.start_point.length > 0)
+            rect_info[initialState.start_point[0]][ 
+            initialState.start_point[1]].is_startpoint = true;
+        if(initialState.end_point.length > 0)
+            rect_info[initialState.end_point[0]][ 
+            initialState.end_point[1]].is_endpoint = true;
         return rect_info;
     }
 
@@ -167,8 +167,8 @@ const FractalInitial = (props: FractalInitialProps) => {
         if(optionStatus[0]&&optionStatus[1]&&optionStatus[2]) {
             const newState = {
                 selected_points: [],
-                start_points: [],
-                end_points: [],
+                start_point: [],
+                end_point: [],
             } as InitialState;
             for(let i = 0; i < GRID_SIZE; i++) {
                 for(let j = 0; j < GRID_SIZE; j++) {
@@ -176,9 +176,9 @@ const FractalInitial = (props: FractalInitialProps) => {
                     if(rect.is_selected)
                         newState.selected_points.push([i,j]);
                     if(rect.is_startpoint)
-                        newState.start_points.push(i,j);
+                        newState.start_point.push(i,j);
                     if(rect.is_endpoint)
-                        newState.end_points.push(i,j);
+                        newState.end_point.push(i,j);
                 }
             }
             props.onInitialStateUpdate(newState);
