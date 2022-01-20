@@ -101,8 +101,11 @@ const FractalCreator = (props: FractalCreatorProps) => {
     }
     
     function getInitialStateFromDrawType(draw_type: string): InitialState {
+        //console.log(draw_type);
         switch(draw_type) {
             case "A":
+                return initial_state;
+            case "B":
                 return initial_state;
         }
         return {

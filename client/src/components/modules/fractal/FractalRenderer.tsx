@@ -43,12 +43,13 @@ const FractalRenderer = (props: FractalRendererProps) => {
                 return enter
                 .append('g')
                 .attr('transform', (data: DrawData) => 
-                    {return (
-                        `translate(
-                            ${(data.start_point[0]-props.getInitialStateFromDrawType(data.drawType).start_point[0])*32},
-                            ${(data.start_point[1]-props.getInitialStateFromDrawType(data.drawType).start_point[1])*32}) 
-                        rotate(${data.start_direction})`
-                )})
+                    {
+                     const x = props.getInitialStateFromDrawType(data.drawType).start_point[0];
+                     const y = props.getInitialStateFromDrawType(data.drawType).start_point[1];
+                    const rotated_x =x*Math.cos(data.start_direction*Math.PI/180) - y*Math.sin(data.start_direction*Math.PI/180)
+                    const rotated_y =y*Math.cos(data.start_direction*Math.PI/180) + x*Math.sin(data.start_direction*Math.PI/180)
+                        return `translate(${(data.start_point[0]-rotated_x)*32}, ${(data.start_point[1]-rotated_y)*32}) rotate(${data.start_direction})`
+                })
                 .selectAll('rect')
                 .data((data: DrawData) => {
                     return props.getInitialStateFromDrawType(data.drawType).selected_points
@@ -80,12 +81,14 @@ const FractalRenderer = (props: FractalRendererProps) => {
             function(update) {
                 return update
                 .attr('transform', (data: DrawData) => 
-                    {return (
-                        `translate(
-                            ${(data.start_point[0]-props.getInitialStateFromDrawType(data.drawType).start_point[0])*32},
-                            ${(data.start_point[1]-props.getInitialStateFromDrawType(data.drawType).start_point[1])*32}) 
-                        rotate(${data.start_direction})`
-                )})
+                    {
+                     const x = props.getInitialStateFromDrawType(data.drawType).start_point[0];
+                     const y = props.getInitialStateFromDrawType(data.drawType).start_point[1];
+                    const rotated_x =x*Math.cos(data.start_direction*Math.PI/180) - y*Math.sin(data.start_direction*Math.PI/180)
+                    const rotated_y =y*Math.cos(data.start_direction*Math.PI/180) + x*Math.sin(data.start_direction*Math.PI/180)
+                    //console.log((data.start_point[0]-rotated_x)*32);
+                    return `translate(${(data.start_point[0]-rotated_x)*32}, ${(data.start_point[1]-rotated_y)*32}) rotate(${data.start_direction})`
+                })
                 .selectAll('rect')
                 .data((data: DrawData) => {
                     return props.getInitialStateFromDrawType(data.drawType).selected_points
