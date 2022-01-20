@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { InitialState } from "../pages/FractalCreator";
+import { InitialState } from "../../pages/FractalCreator";
 import FractalPreviewRenderer from "./FractalPreviewRenderer";
 
 import "./FractalSidebar.css";

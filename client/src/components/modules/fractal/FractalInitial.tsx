@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import InitialRenderer from "./InitialRenderer"
 
-import { InitialState } from "../pages/FractalCreator"
+import { InitialState } from "../../pages/FractalCreator"
 import "./FractalInitial.css"
 import FractalInitialSidebar from "./FractalInitialSidebar";
 

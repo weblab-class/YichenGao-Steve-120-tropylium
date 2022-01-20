@@ -1,10 +1,10 @@
 import React, {useState} from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import FractalInitial from "../modules/FractalInitial"
-import FractalSidebar from "../modules/FractalSidebar";
+import FractalInitial from "../modules/fractal/FractalInitial"
+import FractalSidebar from "../modules/fractal/FractalSidebar";
 import "./FractalCreator.css";
-import FractalRenderer from "../modules/FractalRenderer";
+import FractalRenderer from "../modules/fractal/FractalRenderer";
 
 type FractalCreatorProps = RouteComponentProps & {
     is_new_project: boolean;
