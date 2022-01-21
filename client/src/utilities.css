@@ -15,10 +15,10 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
 
 :root {
-  --primary: #396dff;
+  --primary: #3454c5;
   --primary--dim: #6987db;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
@@ -34,8 +34,9 @@
   --xxl: 64px;
 }
 
-html, body {
-  min-height:100vh;
+html,
+body {
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   overflow: auto;

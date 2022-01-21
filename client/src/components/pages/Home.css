@@ -5,3 +5,7 @@
   bottom: 350px;
   display: block;
 }
+
+.dashboard-background {
+  background-color: #010040;
+}

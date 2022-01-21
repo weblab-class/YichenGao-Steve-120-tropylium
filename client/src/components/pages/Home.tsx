@@ -14,46 +14,47 @@ type HomeProps = RouteComponentProps;
 
 const Home = (props: HomeProps) => {
   return (
-      <Container fluid>
-          <Row>
-              <Col>
-                  <Carousel fade>
-                      <Carousel.Item>
-                          <img
-                              className="d-block w-100"
-                              src= {fractal_example1}
-                              alt="First slide"
-                          />
-                          <Carousel.Caption>
+    <body className="dashboard-background">
+        <Container fluid>
+            <Row>
+                <Col>
+                    <Carousel fade>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src= {fractal_example1}
+                                alt="First slide"
+                            />
+                            <Carousel.Caption>
+                                <div className="centerImage">
+                                <img className="navbar-logo-icon" height="240" width="700" src={logo_blue} />
+                                <h3>Create Your Fractal Art in just a few steps.</h3>
+                                <p>Log in to turn your imaginamtion into reality.</p>
+                                </div>
+
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src={fractal_example2}
+                                alt="Second slide"
+                            />
+
+                            <Carousel.Caption>
                             <div className="centerImage">
-                              <img className="navbar-logo-icon" height="240" width="700" src={logo_blue} />
-                              <h3>Create Your Fractal Art in just a few steps.</h3>
-                              <p>Log in to turn your imaginamtion into reality.</p>
-                            </div>
-
-                          </Carousel.Caption>
-                      </Carousel.Item>
-                      <Carousel.Item>
-                          <img
-                              className="d-block w-100"
-                              src={fractal_example2}
-                              alt="Second slide"
-                          />
-
-                          <Carousel.Caption>
-                          <div className="centerImage">
-                              <img className="navbar-logo-icon" height="240" width="700" src={logo_red} />
-                              <h3>Create Your Fractal Art in just a few steps.</h3>
-                              <p>Log in to turn your imaginamtion into reality.</p>
-                            </div>
-                          </Carousel.Caption>
-                      </Carousel.Item>
-                      
-                  </Carousel>
-              </Col>
-          </Row>
-      </Container>
-
+                                <img className="navbar-logo-icon" height="240" width="700" src={logo_red} />
+                                <h3>Create Your Fractal Art in just a few steps.</h3>
+                                <p>Log in to turn your imaginamtion into reality.</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        
+                    </Carousel>
+                </Col>
+            </Row>
+        </Container>
+    </body>
   );
 };
 
