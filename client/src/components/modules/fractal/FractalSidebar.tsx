@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import { InitialState } from "../pages/FractalCreator";
+import { Pattern } from "../../pages/FractalCreator";
 import FractalPreviewRenderer from "./FractalPreviewRenderer";
 
 import "./FractalSidebar.css";
 
 type FractalSidebarProps = {
-    initialState: InitialState;
-    onInitialStateClick: (event) => void;
+    pattern: Pattern;
+    onPatternClick: (event) => void;
     numIterations: number
     updateNumIterations: (number) => void
 }
@@ -14,16 +14,16 @@ type FractalSidebarProps = {
 const FractalSidebar = (props: FractalSidebarProps) => {
     return <div className ='fractal-sidebar_container'>
         <div className = 'fractal-sidebar-open-initial_button' 
-            onClick = {props.onInitialStateClick}>
+            onClick = {props.onPatternClick}>
             Open Initial Editor
         </div>
         <FractalPreviewRenderer
-            initialState={props.initialState}/>
+            pattern={props.pattern}/>
         <div>
             Number of Iterations
         </div>
         <input className = 'fractal-sidebar-iterations_input'
-            type='number' value={props.numIterations} min={1} max={20} step={1} 
+            type='number' value={props.numIterations} min={0} max={20} step={1} 
             onChange={(event) => props.updateNumIterations(event.target.value)}/>
     </div>
 }

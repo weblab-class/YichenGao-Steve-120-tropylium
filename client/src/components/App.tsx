@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Dtest from "./pages/Dtest";
 import FractalCreator from "./pages/FractalCreator";
+import PixiTest from "./pages/PixiTest";
 
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
@@ -62,6 +63,7 @@ const App = () => {
         <Account path="/account" />
         <Dtest default={true}/>
         <FractalCreator path = "/create" is_new_project = {false}/>
+        <PixiTest path="/pixitest"/>
       </Router>
     </>
   );

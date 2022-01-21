@@ -1,11 +1,11 @@
 import React, {useState, useRef, useEffect} from "react";
-import { InitialState } from "../pages/FractalCreator";
+import { Pattern, Point } from "../../pages/FractalCreator";
 import * as d3 from 'd3'
 
 import "./FractalPreviewRenderer.css";
 
 type FractalPreviewRendererProps = {
-    initialState: InitialState;
+    pattern: Pattern;
 }
 
 const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
@@ -15,37 +15,37 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
     useEffect(() => {
         d3.select(svg_container.current).select('svg').select('g')
         .selectAll('rect')
-        .data(props.initialState.selected_points)
+        .data(props.pattern.points)
         .join(
             function(enter) {
                 return enter
                 .append('rect')
-                .attr('x', (data_value) => { return data_value[0]*PREVIEW_WIDTH/GRID_SIZE})
-                .attr('y', (data_value) => data_value[1]*PREVIEW_HEIGHT/GRID_SIZE)
+                .attr('x', (data_value: Point) => { return data_value.x*PREVIEW_WIDTH/GRID_SIZE})
+                .attr('y', (data_value: Point) => data_value.y*PREVIEW_HEIGHT/GRID_SIZE)
                 .attr('width', PREVIEW_WIDTH/GRID_SIZE)
                 .attr('height', PREVIEW_HEIGHT/GRID_SIZE)
-                .attr('fill', (data_value: number[]) => {
-                    if(data_value[0] === props.initialState.start_points[0]
-                        && data_value[1] === props.initialState.start_points[1])
+                .attr('fill', (data_value: Point) => {
+                    if(data_value.x === props.pattern.start_position[0]
+                        && data_value.y === props.pattern.start_position[1])
                         return '#0f0';
-                    if(data_value[0] === props.initialState.end_points[0]
-                        && data_value[1] === props.initialState.end_points[1])
+                    if(data_value.x === props.pattern.end_position[0]
+                        && data_value.y === props.pattern.end_position[1])
                         return '#f00';
                     return '#000'
                 });
             },
             function(update) {
                 return update
-                .attr('x', (data_value) => { return data_value[0]*PREVIEW_WIDTH/GRID_SIZE})
-                .attr('y', (data_value) => data_value[1]*PREVIEW_HEIGHT/GRID_SIZE)
+                .attr('x', (data_value: Point) => { return data_value.x*PREVIEW_WIDTH/GRID_SIZE})
+                .attr('y', (data_value: Point) => data_value.y*PREVIEW_HEIGHT/GRID_SIZE)
                 .attr('width', PREVIEW_WIDTH/GRID_SIZE)
                 .attr('height', PREVIEW_HEIGHT/GRID_SIZE)
-                .attr('fill', (data_value: number[]) => {
-                    if(data_value[0] === props.initialState.start_points[0]
-                        && data_value[1] === props.initialState.start_points[1])
+                .attr('fill', (data_value: Point) => {
+                    if(data_value.x === props.pattern.start_position[0]
+                        && data_value.y === props.pattern.start_position[1])
                         return '#0f0';
-                    if(data_value[0] === props.initialState.end_points[0]
-                        && data_value[1] === props.initialState.end_points[1])
+                    if(data_value.x === props.pattern.end_position[0]
+                        && data_value.y === props.pattern.end_position[1])
                         return '#f00';
                     return '#000'
                 });

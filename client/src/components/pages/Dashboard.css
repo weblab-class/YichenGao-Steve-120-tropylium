@@ -1,0 +1,41 @@
+.button {
+  padding: 10px 40px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #3454c5;
+  border: none;
+  border-radius: 15px;
+  font-size: var(--m);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  position: relative;
+  left: 50px;
+  top: 30px;
+}
+
+.button:hover {
+  background-color: var(--primary--dim);
+}
+.button:active {
+  background-color: #3454c5;
+  transform: translateY(4px);
+}
+
+.dashboard-background {
+  background-color: #010040;
+}
+
+.dashboard-text {
+  color: #fff;
+  display: flex;
+  justify-content: start;
+  font-size: var(--m);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: var(--m);
+  position: relative;
+  left: 50px;
+  top: 20px;
+}
