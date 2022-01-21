@@ -19,55 +19,60 @@ type NavBarProps = {
 };
 
 const NavBar = (props: NavBarProps) => {
+  // tracks width of window for responsive menu
+  // mobile mode at < 840 px, menuShown becomes true
   const [menuShown, setMenuShown] = useState<boolean>(true);
   const onMenuClick = (event) => {
     setMenuShown(!menuShown);
   };
-
   window
-    .matchMedia("(max-width:600px)")
+    .matchMedia("(max-width:840px)")
     .addEventListener("change", (event: MediaQueryListEvent) => {
       setMenuShown(!event.matches);
     });
 
   return (
-    <nav className="navbar-container">
-      <Link to="/" className="navbar-linktext">
-        <div className="navbar-logo">
-          <img className="navbar-logo-icon" src={logo_transparent} />
+    <nav className="NavBar-container">
+      <Link to="/" className="NavBar-linktext">
+        <div className="NavBar-logo">
+          <img className="NavBar-logo-icon" src={logo_transparent} />
         </div>
       </Link>
-      <div className={`navbar-list ${menuShown ? "" : "inactive"}`}>
-        <Link to="/fractal_creator" className="navbar-linktext">
+      <div className={`NavBar-list ${menuShown ? "" : "inactive"}`}>
+        <Link to="/fractal_creator" className="NavBar-linktext">
           Create
         </Link>
-        <Link to="/dashboard" className="navbar-linktext">
+        <Link to="/dashboard" className="NavBar-linktext">
           My Artworks
         </Link>
-        <Link to="/gallery" className="navbar-linktext">
+        <Link to="/gallery" className="NavBar-linktext">
           Gallery
         </Link>
-        <Link to="/account" className="navbar-linktext">
+        <Link to="/account" className="NavBar-linktext">
           Account
         </Link>
-        {props.userId ? (
-          <GoogleLogout
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={props.handleLogout}
-            onFailure={() => console.log(`Failed to logout.`)}
-          />
-        ) : (
-          <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={props.handleLogin}
-            onFailure={(err) => console.log(err)}
-          />
-        )}
       </div>
-      <div className="navbar-menu" onClick={onMenuClick}>
-        <img className="navbar-menu-icon filter-white" src={menu_icon} />
+      <div className={`NavBar-login ${menuShown ? "" : "inactive"}`}>
+        <div className="NavBar-linktext">
+          {props.userId ? (
+            <GoogleLogout
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Logout"
+              onLogoutSuccess={props.handleLogout}
+              onFailure={() => console.log(`Failed to logout.`)}
+            />
+          ) : (
+            <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={props.handleLogin}
+              onFailure={(err) => console.log(err)}
+            />
+          )}
+        </div>
+      </div>
+      <div className="NavBar-menu" onClick={onMenuClick}>
+        <img className="NavBar-menu-icon filter-white" src={menu_icon} />
       </div>
     </nav>
   );
