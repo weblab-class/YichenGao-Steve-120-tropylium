@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "@reach/router";
 import React, {useState, useRef, useEffect} from "react";
 import * as d3 from 'd3';
-//import {InitialState, onInitialStateUpdate} from "../pages/FractalCreator"
+//import {Pattern, onPatternUpdate} from "../pages/FractalCreator"
 import { InitialEditorState, RectData} from "./FractalInitial";
 
 import "./InitialRenderer.css"

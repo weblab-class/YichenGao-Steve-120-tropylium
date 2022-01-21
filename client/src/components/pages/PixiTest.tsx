@@ -14,8 +14,8 @@ type PixiTestProps = RouteComponentProps & {
 const PixiTest = (props: PixiTestProps) => {
     const ref = useRef(undefined);
     const [change_state, setChangeState] = useState(0);
-    let PixiAppRef = useRef<Pixi.Application>(undefined);
     let test = undefined;
+    let PixiAppRef = useRef<Pixi.Application>(undefined);
     let viewportRef = useRef<Viewport>(undefined);
     useEffect(() => {
         console.log('UseEffect() rerender only once')
