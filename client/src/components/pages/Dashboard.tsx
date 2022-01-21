@@ -7,9 +7,12 @@ type DashboardProps = RouteComponentProps & {
 
 }
 const Dashboard = (props: DashboardProps) => {
-    return <div>
-        Dashboard
-    </div>
+    return (
+        <body className="dashboard-background">
+            <div className="dashboard-text">MY PROJECTS</div>
+            <button className="button">CREATE NEW</button>
+        </body>
+    );
 }
 
 export default Dashboard;
