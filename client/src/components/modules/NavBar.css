@@ -9,11 +9,21 @@
   font-weight: 600;
 }
 
-.NavBar-logo {
+.NavBar-logoContainer {
   height: var(--xxl);
 }
 
-.NavBar-logo-icon {
+.NavBar-logo {
+  height: var(--xxl);
+  align-items: center;
+  margin: 0px;
+  padding: 0px var(--m);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.NavBar-logoIcon {
   padding: var(--s) 0;
   height: 100%;
   object-fit: contain;
@@ -24,7 +34,7 @@
   flex-direction: row;
 }
 
-.NavBar-linktext {
+.NavBar-linkText {
   height: var(--xxl);
   display: flex;
   justify-content: center;
@@ -36,7 +46,7 @@
   color: inherit;
 }
 
-.NavBar-linktext:hover {
+.NavBar-linkText:hover {
   background-color: var(--primary--dim);
 }
 
@@ -81,7 +91,7 @@
     flex-direction: column;
     width: 100%;
   }
-  .NavBar-linktext {
+  .NavBar-linkText {
     padding: 0px;
     width: 100%;
     display: flex;

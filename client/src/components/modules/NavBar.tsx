@@ -33,27 +33,27 @@ const NavBar = (props: NavBarProps) => {
 
   return (
     <nav className="NavBar-container">
-      <Link to="/" className="NavBar-linktext">
-        <div className="NavBar-logo">
-          <img className="NavBar-logo-icon" src={logo_transparent} />
-        </div>
-      </Link>
+      <div className="NavBar-logoContainer">
+        <Link to="/" className="NavBar-logo">
+          <img className="NavBar-logoIcon" src={logo_transparent} />
+        </Link>
+      </div>
       <div className={`NavBar-list ${menuShown ? "" : "inactive"}`}>
-        <Link to="/fractal_creator" className="NavBar-linktext">
+        <Link to="/fractal_creator" className="NavBar-linkText">
           Create
         </Link>
-        <Link to="/dashboard" className="NavBar-linktext">
+        <Link to="/dashboard" className="NavBar-linkText">
           My Artworks
         </Link>
-        <Link to="/gallery" className="NavBar-linktext">
+        <Link to="/gallery" className="NavBar-linkText">
           Gallery
         </Link>
-        <Link to="/account" className="NavBar-linktext">
+        <Link to="/account" className="NavBar-linkText">
           Account
         </Link>
       </div>
       <div className={`NavBar-login ${menuShown ? "" : "inactive"}`}>
-        <div className="NavBar-linktext">
+        <div className="NavBar-linkText">
           {props.userId ? (
             <GoogleLogout
               clientId={GOOGLE_CLIENT_ID}
