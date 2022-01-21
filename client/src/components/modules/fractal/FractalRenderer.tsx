@@ -45,25 +45,27 @@ const FractalRenderer = (props: FractalRendererProps) => {
         viewportRef.current = viewport;
 
         return () => {
-            // kill everything to hopefully avoid memory leaks and cleanup
-            PixiApp.destroy(true, true);
+            // kill everything to hopefully avoid memory leaks and cleanup properly
+            viewportRef.current.destroy();
+            PixiAppRef.current.destroy(true, true);
         };
     }, []);
 
     const CELL_WIDTH = 32;
     function drawShape(graphics: Pixi.Graphics, x:number, y: number):void {
-        graphics.beginFill(0xABCDEF);
+        graphics.beginFill(0x0e782b);
         graphics.drawRect(CELL_WIDTH*x, CELL_WIDTH*y, CELL_WIDTH, CELL_WIDTH);
         graphics.endFill();
     }
     // run with every data change
     useEffect(() => {
-        viewportRef.current.removeChildren();
+        const viewport = viewportRef.current
+        viewport.removeChildren();
 
         const render_string = props.renderString;
         //const draw_data = props.draw_data;
 
-        const graphics: Pixi.Graphics = new Pixi.Graphics();
+        let graphics: Pixi.Graphics = new Pixi.Graphics();
 
         // const translation = initial_state.end_position.map(
         //     (value: number, index: number) => (value - initial_state.start_position[index]));
@@ -71,6 +73,9 @@ const FractalRenderer = (props: FractalRendererProps) => {
         let current_start_position = [0,0];
         let current_direction = 0;
 
+        let max_x = 0, min_x = 0, max_y = 0, min_y = 0;
+
+        const startTime = performance.now();
         for(let instruction of render_string) {
             if("QWERTYUIOPASDFGHJKLZXCVBNM".includes(instruction)) {
                 const pattern = props.getDrawPattern(instruction);
@@ -85,6 +90,12 @@ const FractalRenderer = (props: FractalRendererProps) => {
     
                     const absolute_x = (current_start_position[0] + transformed_x);
                     const absolute_y = (current_start_position[1] + transformed_y);
+
+                    if(absolute_x > max_x) max_x = absolute_x;
+                    if(absolute_y > max_y) max_y = absolute_y;
+                    if(absolute_x < min_x) min_x = absolute_x;
+                    if(absolute_y < min_y) min_y = absolute_y;
+
                     drawShape(graphics, absolute_x, absolute_y);
                 })
 
@@ -103,8 +114,62 @@ const FractalRenderer = (props: FractalRendererProps) => {
             }
         }
 
-        viewportRef.current.addChild(graphics);
-    }, [props.renderString]);
+        viewport.addChild(graphics);
+
+        const fill_screen_height = container_ref.current.clientHeight/CELL_WIDTH, 
+        fill_screen_width = container_ref.current.clientWidth/CELL_WIDTH;
+        const distance_span_y = Math.abs(max_y-min_y)+1,
+        distance_span_x = Math.abs(max_x - min_x)+1;
+
+        // decreases zoom close to 1 and asymptotically approaches 0.75
+        function getProperZoomLevel(max_fill_zoom: number): number {
+            return (-0.75/(1/max_fill_zoom_level+1) + 0.75)*max_fill_zoom_level;
+        }
+        const max_fill_zoom_level = Math.min(fill_screen_height/ distance_span_y, fill_screen_width/ distance_span_x);
+        //console.log(getProperZoomLevel(max_fill_zoom_level));
+        const center_x = (max_x-min_x)/2 + min_x, center_y = (max_y-min_y)/2 + min_y;
+        
+        if(render_string.length < 100000) {
+            viewport.animate({
+                time: 500,
+                scale: getProperZoomLevel(max_fill_zoom_level),
+                position: {
+                    x: CELL_WIDTH/2 + CELL_WIDTH*center_x,
+                    y: CELL_WIDTH/2 + CELL_WIDTH*center_y,
+                },
+                ease: 'easeInOutSine',
+                removeOnInterrupt: true,
+            })
+        } else {
+            viewport.setTransform(
+                container_ref.current.clientWidth/2 - CELL_WIDTH/2 - CELL_WIDTH*center_x,  
+                container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*center_y)
+                .setZoom(getProperZoomLevel(max_fill_zoom_level), true)
+        }
+        
+        const endTime = performance.now();
+
+        console.log(`Render took ${endTime- startTime} milliseconds`);
+            // viewport.setTransform(
+            //     container_ref.current.clientWidth/2 - CELL_WIDTH/2 - CELL_WIDTH*center_x,  
+            //     container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*center_y)
+            //     .setZoom(getProperZoomLevel(max_fill_zoom_level), true)
+        // console.log(`Center X ${center_x}`)
+        // console.log(`Center Y ${center_y}`)
+        // console.log(`Max X ${max_x}`)
+        // console.log(`Max Y ${max_y}`)
+        // console.log(`Min X ${min_x}`)
+        // console.log(`Min Y ${min_y}`)
+        // console.log(viewport.getGlobalPosition());
+        // console.log({
+        //     x: container_ref.current.clientWidth/2 - CELL_WIDTH/2 - CELL_WIDTH*center_x,
+        //     y: container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*center_y,
+        // });
+
+        // graphics.beginFill(0xFFF000);
+        // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
+        // graphics.endFill();
+    });
 
     return (<div ref = {container_ref} className="fractal-renderer_container">
         
