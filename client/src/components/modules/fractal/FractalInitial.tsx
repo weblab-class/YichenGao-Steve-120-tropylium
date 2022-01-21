@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 
 import InitialRenderer from "./InitialRenderer"
 
-import { InitialState } from "../../pages/FractalCreator"
+import { Pattern, Point } from "../../pages/FractalCreator"
 import "./FractalInitial.css"
 import FractalInitialSidebar from "./FractalInitialSidebar";
 
 type FractalInitialProps = {
-    initialState: InitialState,
-    onInitialStateUpdate: (newInitialState: InitialState) => void,
+    pattern: Pattern,
+    onPatternUpdate: (newPattern: Pattern) => void,
 }
 
 // careful about changing the order of these, the numbering is important for optionstatus
@@ -31,15 +31,15 @@ const FractalInitial = (props: FractalInitialProps) => {
     const WIDTH = 800, HEIGHT = 800, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
     const [editorState, setEditorState] = useState(InitialEditorState.SELECT_REGULAR);
-    const [rectData, setRectData] = useState(getRectData(props.initialState));
+    const [rectData, setRectData] = useState(getRectData(props.pattern));
     const [optionStatus, setOptionStatus] = useState(
         [
-            props.initialState.selected_points.length > 0,
-            props.initialState.start_point.length > 0,
-            props.initialState.end_point.length > 0,
+            props.pattern.points.length > 0,
+            props.pattern.start_position.length > 0,
+            props.pattern.end_position.length > 0,
         ]
     );
-    function getRectData(initialState: InitialState): RectData[][] {
+    function getRectData(pattern: Pattern): RectData[][] {
         
         const rect_info: RectData[][] = [];
         for(let i = 0; i < GRID_SIZE; i++) {
@@ -64,16 +64,16 @@ const FractalInitial = (props: FractalInitialProps) => {
         // } as RectData]);
 
         //hello
-        initialState.selected_points.forEach(element => {
-            rect_info[element[0]][element[1]].is_selected = true;
+        pattern.points.forEach((element: Point) => {
+            rect_info[element.x][element.y].is_selected = true;
         });
 
-        if(initialState.start_point.length > 0)
-            rect_info[initialState.start_point[0]][ 
-            initialState.start_point[1]].is_startpoint = true;
-        if(initialState.end_point.length > 0)
-            rect_info[initialState.end_point[0]][ 
-            initialState.end_point[1]].is_endpoint = true;
+        if(pattern.start_position.length > 0)
+            rect_info[pattern.start_position[0]][ 
+            pattern.start_position[1]].is_startpoint = true;
+        if(pattern.end_position.length > 0)
+            rect_info[pattern.end_position[0]][ 
+            pattern.end_position[1]].is_endpoint = true;
         return rect_info;
     }
 
@@ -163,25 +163,30 @@ const FractalInitial = (props: FractalInitialProps) => {
         setEditorState(newState);
     }
 
-    const saveInitialState = (event) => {
+    const savePattern = (event) => {
         if(optionStatus[0]&&optionStatus[1]&&optionStatus[2]) {
             const newState = {
-                selected_points: [],
-                start_point: [],
-                end_point: [],
-            } as InitialState;
+                points: [],
+                start_position: [],
+                end_position: [],
+            } as Pattern;
             for(let i = 0; i < GRID_SIZE; i++) {
                 for(let j = 0; j < GRID_SIZE; j++) {
                     const rect = rectData[i][j];
                     if(rect.is_selected)
-                        newState.selected_points.push([i,j]);
+                        newState.points.push({
+                            x:i,
+                            y:j,
+                            color: 0x0,
+                            shape: ""
+                        } as Point);
                     if(rect.is_startpoint)
-                        newState.start_point.push(i,j);
+                        newState.start_position.push(i,j);
                     if(rect.is_endpoint)
-                        newState.end_point.push(i,j);
+                        newState.end_position.push(i,j);
                 }
             }
-            props.onInitialStateUpdate(newState);
+            props.onPatternUpdate(newState);
         }
     }
 //hello
@@ -196,7 +201,7 @@ const FractalInitial = (props: FractalInitialProps) => {
                 ? 'finished'
                 : ''
                 }`}
-                onClick = {saveInitialState}>
+                onClick = {savePattern}>
                 Save and Continue
             </div>
         </div>
