@@ -20,5 +20,36 @@ class Fractal extends Component {
           height:0,
           width:0,
       }
+    //   this.saveImage = this.saveImage.bind(this);
+    //   this.saveImageContinue = this.saveImageContinue.bind(this);
     }
+    
+    
+    
+
+    // toggleModal= () => {
+    //   if (this.state.modalActive) {
+    //       this.setState({titleGiven:true});
+    //       this.saveImageContinue();
+    //       this.setState({modalActive:false});
+    //   } else {
+    //       this.setState({modalActive:true})
+    //     }
+    //   }
+    // } 
+
+    // saveImage = () => {
+    //   if (this.props.clientId === undefined) {
+    //       window.alert("Please login to save work");
+    //       return;
+    //   } else if (this.props.savedImages >= 10) {
+    //       window.alert("Storage full: you can only save up to xx artworks! :(");
+    //       return;
+    //   } else {
+    //       this.changStatus();
+    //   }
+
 }
+
+
+
