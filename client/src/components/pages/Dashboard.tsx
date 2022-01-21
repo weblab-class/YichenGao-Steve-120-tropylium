@@ -1,19 +1,17 @@
 import { RouteComponentProps } from "@reach/router";
 import React, { Component } from "react";
 
-import "./Dashboard.css"
+import "./Dashboard.css";
 
-type DashboardProps = RouteComponentProps & {
-
-}
+type DashboardProps = RouteComponentProps & {};
 const Dashboard = (props: DashboardProps) => {
-    return (
-        <body className="dashboard-background">
-            <div className="dashboard-text">MY PROJECTS</div>
-            <button className="button">CREATE NEW</button>
-        </body>
-    );
-}
+  return (
+    <div className="dashboard-background">
+      <div className="dashboard-text">MY PROJECTS</div>
+      <button className="button">CREATE NEW</button>
+    </div>
+  );
+};
 
 // class Gallery extends Component {
 //     let imageList = null;

@@ -24,7 +24,8 @@
 }
 
 .dashboard-background {
-  background-color: #010040;
+  background-color: var(--primary--dark);
+  height: 100%;
 }
 
 .dashboard-text {
@@ -38,4 +39,5 @@
   position: relative;
   left: 50px;
   top: 20px;
+  max-width: fit-content;
 }

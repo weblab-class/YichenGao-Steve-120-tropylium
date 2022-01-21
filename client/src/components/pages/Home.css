@@ -8,7 +8,7 @@
 }
 
 .dashboard-background {
-  background-color: #010040;
+  background-color: var(--primary--dark);
 }
 
 img {
