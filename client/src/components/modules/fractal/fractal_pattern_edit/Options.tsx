@@ -1,18 +1,18 @@
 import React, {useState} from "react";
-import { InitialEditorState} from "./FractalInitial";
+import { PatternEditState} from "./PatternEdit";
 
-import "./FractalInitialOption.css";
+import "./Options.css";
 
-type FractalInitialOptionsProps = {
+type Props = {
     title: string,
     hint: string,
     is_selected: boolean,
     done: boolean,
-    associated_editor_state: InitialEditorState,
-    onClick: (newEditorState: InitialEditorState) => void,
+    associated_editor_state: PatternEditState,
+    onClick: (newEditorState: PatternEditState) => void,
 }
 
-const FractalInitialOptions = (props: FractalInitialOptionsProps) => {
+const PatternEditOptions = (props: Props) => {
     const onClickOption = (event) => {
         props.onClick(props.associated_editor_state);
     }
@@ -30,4 +30,4 @@ const FractalInitialOptions = (props: FractalInitialOptionsProps) => {
     </div>)
 }
 
-export default FractalInitialOptions;
+export default PatternEditOptions;

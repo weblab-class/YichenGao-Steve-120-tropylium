@@ -1,26 +1,26 @@
-.fractal-sidebar_container {
+.sidebar_container {
     height: 100%;
     width: 300px;
     background-color: lightgray;
     overflow-y:scroll;
 }
 
-.fractal-sidebar-open-initial_button {
+.sidebar-open-initial_button {
     background-color: var(--primary--dim);
     color:var(--white);
     padding: var(--m);
 }
 
-.fractal-sidebar_input {
+.sidebar_input {
     width: 100%;
     padding: var(--m);
 }
 
-.fractal-sidebar-warning_text {
+.sidebar-warning_text {
     color:red;
     display: none;
 }
 
-.fractal-sidebar-warning_text invalid {
+.sidebar-warning_text invalid {
     display: block;
 }

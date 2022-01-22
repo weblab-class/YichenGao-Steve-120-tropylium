@@ -1,46 +1,15 @@
 import React, {useEffect, useState, useRef} from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import FractalInitial from "../modules/fractal/FractalInitial"
-import FractalSidebar from "../modules/fractal/FractalSidebar";
-import "./FractalCreator.css";
+import PatternEdit from "../modules/fractal/fractal_pattern_edit/PatternEdit"
+import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
+import { Project, Symbol, Operator, Pattern, Point } from "../../constants/Types";
+
+import "./FractalCreator.css";
 
 type FractalCreatorProps = RouteComponentProps & {
     is_new_project: boolean;
-}
-
-type Project = {
-    id: string
-    title: string
-    patterns: Pattern[]
-    symbols: Symbol[]
-    operators: Operator[]
-    initial: string
-    iterations: number
-    background_color: number
-    //antialias: boolean
-}
-
-type Symbol = {
-    name: string;
-    replacement_rule: string;
-}
-type Operator = {
-    name: string;
-    rotation: number;
-}
-type Pattern = {
-    symbol_names: string[]
-    points: Point[],
-    start_position: number[],
-    end_position: number[],
-}
-type Point = {
-    x: number;
-    y: number;
-    color: number;
-    shape: string;
 }
 
 const FractalCreator = (props: FractalCreatorProps) => {
@@ -100,8 +69,6 @@ const FractalCreator = (props: FractalCreatorProps) => {
             new_num_iterations = 20;
         setNumIterations(new_num_iterations);
     }
-
-    console.log(operators);
     
     return (<div className = 'fractal-creator_container'>
         <div className = {`fractal-creator-initial_container 
@@ -109,7 +76,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
                 ? 'editor-open'
                 : ''
             }`}>
-            <FractalInitial 
+            <PatternEdit 
                 pattern={getTempPattern()} 
                 onPatternUpdate={updatePattern}/>
         </div>
@@ -142,4 +109,3 @@ const FractalCreator = (props: FractalCreatorProps) => {
 };
 
 export default FractalCreator;
-export type { Project, Symbol, Operator, Pattern, Point };

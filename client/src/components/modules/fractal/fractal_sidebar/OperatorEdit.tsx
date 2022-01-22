@@ -1,5 +1,5 @@
 import React, {useState, useRef} from "react";
-import { Operator } from "../../pages/FractalCreator";
+import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
 
 import "./OperatorEdit.css";
 

@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from "react";
 
-import InitialRenderer from "./InitialRenderer"
+import PatternEditRenderer from "./Renderer"
+import Sidebar from "./Sidebar";
 
-import { Pattern, Point } from "../../pages/FractalCreator"
-import "./FractalInitial.css"
-import FractalInitialSidebar from "./FractalInitialSidebar";
+import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
+import "./PatternEdit.css"
 
-type FractalInitialProps = {
+
+type PatternEditProps = {
     pattern: Pattern,
     onPatternUpdate: (newPattern: Pattern) => void,
 }
 
 // careful about changing the order of these, the numbering is important for optionstatus
-enum InitialEditorState {
+enum PatternEditState {
     SELECT_REGULAR=0,
     SELECT_START,
     SELECT_END,
@@ -26,11 +27,11 @@ type RectData = {
     is_endpoint: boolean;
 }
 
-const FractalInitial = (props: FractalInitialProps) => {
+const PatternEdit = (props: PatternEditProps) => {
     
     const WIDTH = 800, HEIGHT = 800, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
-    const [editorState, setEditorState] = useState(InitialEditorState.SELECT_REGULAR);
+    const [editorState, setEditorState] = useState(PatternEditState.SELECT_REGULAR);
     const [rectData, setRectData] = useState(getRectData(props.pattern));
     const [optionStatus, setOptionStatus] = useState(
         [
@@ -82,7 +83,7 @@ const FractalInitial = (props: FractalInitialProps) => {
         const newOptionStatus = [...optionStatus];
         const rect = newRectData[x][y];
         switch(editorState) {
-            case InitialEditorState.SELECT_START:
+            case PatternEditState.SELECT_START:
                 const nextStartState = !rect.is_startpoint;
                 if(nextStartState) {
                     rect.is_selected = true;
@@ -93,16 +94,16 @@ const FractalInitial = (props: FractalInitialProps) => {
                     }
                     if(rect.is_endpoint) {
                         rect.is_endpoint = false;
-                        newOptionStatus[InitialEditorState.SELECT_END] = false;
+                        newOptionStatus[PatternEditState.SELECT_END] = false;
                     }
-                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = true
+                    newOptionStatus[PatternEditState.SELECT_REGULAR] = true
                 }
-                newOptionStatus[InitialEditorState.SELECT_START] = nextStartState;
+                newOptionStatus[PatternEditState.SELECT_START] = nextStartState;
 
                 rect.is_startpoint = nextStartState; 
                 
                 break;
-            case InitialEditorState.SELECT_END:
+            case PatternEditState.SELECT_END:
                 const nextEndState = !rect.is_endpoint;
                 if(nextEndState) {
                     rect.is_selected = true;
@@ -113,25 +114,25 @@ const FractalInitial = (props: FractalInitialProps) => {
                     }
                     if(rect.is_startpoint) {
                         rect.is_startpoint = false;
-                        newOptionStatus[InitialEditorState.SELECT_START] = false;
+                        newOptionStatus[PatternEditState.SELECT_START] = false;
                     }
-                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = true
+                    newOptionStatus[PatternEditState.SELECT_REGULAR] = true
                 }
-                newOptionStatus[InitialEditorState.SELECT_END] = nextEndState;
+                newOptionStatus[PatternEditState.SELECT_END] = nextEndState;
 
                 rect.is_endpoint = nextEndState;
 
                 break;
-            case InitialEditorState.SELECT_REGULAR:
+            case PatternEditState.SELECT_REGULAR:
                 const nextRegularState = !rect.is_selected;
                 if(!nextRegularState) {
                     if(rect.is_startpoint) {
                         rect.is_startpoint = false;
-                        newOptionStatus[InitialEditorState.SELECT_START] = false;
+                        newOptionStatus[PatternEditState.SELECT_START] = false;
                     }
                     if(rect.is_endpoint) {
                         rect.is_endpoint = false;
-                        newOptionStatus[InitialEditorState.SELECT_END] = false;
+                        newOptionStatus[PatternEditState.SELECT_END] = false;
                     }
                     rect.is_selected = nextRegularState;
                     let any_selected = false;
@@ -144,9 +145,9 @@ const FractalInitial = (props: FractalInitialProps) => {
                             }
                         }
                     }
-                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = any_selected;
+                    newOptionStatus[PatternEditState.SELECT_REGULAR] = any_selected;
                 } else {
-                    newOptionStatus[InitialEditorState.SELECT_REGULAR] = true;
+                    newOptionStatus[PatternEditState.SELECT_REGULAR] = true;
                 }
                 rect.is_selected = nextRegularState;
 
@@ -159,7 +160,7 @@ const FractalInitial = (props: FractalInitialProps) => {
         setOptionStatus(newOptionStatus);
     }
 
-    const updateEditorState = (newState: InitialEditorState) => {
+    const updateEditorState = (newState: PatternEditState) => {
         setEditorState(newState);
     }
 
@@ -210,11 +211,11 @@ const FractalInitial = (props: FractalInitialProps) => {
             {/* <div className="create-initial-hint_text">
                 Select the boxes to make up the pattern and select one start point and one endpoint. 
             </div> */}
-            <InitialRenderer 
+            <PatternEditRenderer 
                 rectData={rectData}
                 onRectClick={onRectClick}
                 editorState={editorState}/>
-            <FractalInitialSidebar
+            <Sidebar
                 editorState={editorState}
                 onEditorStateUpdate={updateEditorState}
                 optionStatus={optionStatus}/>
@@ -222,5 +223,5 @@ const FractalInitial = (props: FractalInitialProps) => {
     </div>);
 }
 
-export default FractalInitial;
-export {InitialEditorState, RectData};
+export default PatternEdit;
+export {PatternEditState, RectData};

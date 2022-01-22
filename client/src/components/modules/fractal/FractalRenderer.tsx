@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from "react";
-import { Pattern, Point, Operator, Symbol } from "../../pages/FractalCreator";
+import { Project, Symbol, Operator, Pattern, Point } from "../../../constants/Types";
 import * as Pixi from 'pixi.js'
 import {Viewport} from 'pixi-viewport'
 
@@ -202,7 +202,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
         
         const endTime = performance.now();
 
-        console.log(`Render took ${endTime- startTime} milliseconds`);
+        console.log(`Render took ${(endTime- startTime).toFixed(1)} milliseconds`);
             // viewport.setTransform(
             //     container_ref.current.clientWidth/2 - CELL_WIDTH/2 - CELL_WIDTH*center_x,  
             //     container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*center_y)

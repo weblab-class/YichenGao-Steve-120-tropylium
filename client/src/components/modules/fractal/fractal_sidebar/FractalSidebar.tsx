@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import { Pattern, Operator, Symbol } from "../../pages/FractalCreator";
-import FractalPreviewRenderer from "./FractalPreviewRenderer";
+import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
+import PreviewRenderer from "./PreviewRenderer";
 import OperatorEdit from "./OperatorEdit";
 
 import "./FractalSidebar.css";
 
-type FractalSidebarProps = {
+type Props = {
     title: string
     updateTitle: (new_title: string) => void
     patterns: Pattern[]
@@ -25,7 +25,7 @@ type FractalSidebarProps = {
     //updateAntialias: (new_antialias: boolean) => void
 }
 
-const FractalSidebar = (props: FractalSidebarProps) => {
+const FractalSidebar = (props: Props) => {
     //const [initial_input_invalid, setInitialInputInvalid] = useState([] as string[]);
     
     function getValidatedColorString(hex_color: number): string {
@@ -74,15 +74,15 @@ const FractalSidebar = (props: FractalSidebarProps) => {
         props.updateOperators(new_operators);
     }
     
-    return <div className ='fractal-sidebar_container'>
-        <input className="fractal-sidebar_input" 
+    return <div className ='sidebar_container'>
+        <input className="sidebar_input" 
             type="text" value = {props.title} placeholder="Project Title"
             onChange={(event) => props.updateTitle(event.target.value)}/>
-        <div className = 'fractal-sidebar-open-initial_button' 
+        <div className = 'sidebar-open-initial_button' 
             onClick = {() => {props.onPatternClick("A")}}>
             Open Initial Editor
         </div>
-        <FractalPreviewRenderer
+        <PreviewRenderer
             pattern={getTempPattern()}/>
         <div>
             Initial Pattern
@@ -97,7 +97,7 @@ const FractalSidebar = (props: FractalSidebarProps) => {
             ${props.symbols.map((symbol: Symbol) => symbol.name).join(', ')}`
             }
         </div>
-        <input className="fractal-sidebar_input" 
+        <input className="sidebar_input" 
             type="text" 
             value = {props.initial} 
             placeholder={
@@ -106,7 +106,7 @@ const FractalSidebar = (props: FractalSidebarProps) => {
                 props.symbols.map((symbol: Symbol) => symbol.name).join(', ')} 
             maxLength={10}
             onChange={(event) => onInitialUpdate(event.target.value.toUpperCase())}/> 
-        {/* <div className={`fractal-sidebar-warning_text 
+        {/* <div className={`-sidebar-warning_text 
             ${initial_input_invalid.length === 0} 
                 ? '' 
                 : 'invalid'`}>
@@ -115,7 +115,7 @@ const FractalSidebar = (props: FractalSidebarProps) => {
         <div>
             Number of Iterations
         </div>
-        <input className = 'fractal-sidebar_input'
+        <input className = 'sidebar_input'
             type='number' 
             value={props.numIterations} 
             min={0} 
@@ -132,6 +132,12 @@ const FractalSidebar = (props: FractalSidebarProps) => {
             onChange={(event) => {
                 props.updateBackgroundColor(parseInt(event.target.value.substring(1), 16))}}
         />
+        <div> 
+            Symbols
+        </div>
+        <div>
+            Operators
+        </div>
         {
             props.operators.map((operator: Operator) => 
                 <OperatorEdit key = {operator.name} operator={operator} updateOperator={onOperatorUpdate}/>

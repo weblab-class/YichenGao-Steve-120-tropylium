@@ -1,14 +1,14 @@
 import React, {useState, useRef, useEffect} from "react";
-import { Pattern, Point } from "../../pages/FractalCreator";
+import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
 import * as d3 from 'd3'
 
-import "./FractalPreviewRenderer.css";
+import "./PreviewRenderer.css";
 
-type FractalPreviewRendererProps = {
+type PreviewRendererProps = {
     pattern: Pattern;
 }
 
-const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
+const PreviewRenderer = (props: PreviewRendererProps) => {
     const PREVIEW_WIDTH = 100, PREVIEW_HEIGHT = 100, GRID_SIZE = 10;
     const svg_container = useRef(undefined);
 
@@ -56,7 +56,7 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
         );
     });
 
-    return (<div ref = {svg_container} className="fractal-preview-svg_container">
+    return (<div ref = {svg_container} className="preview-svg_container">
         <svg width = {`${PREVIEW_WIDTH}px`} height = {`${PREVIEW_HEIGHT}px`}>
             <g>
 
@@ -65,4 +65,4 @@ const FractalPreviewRenderer = (props: FractalPreviewRendererProps) => {
     </div>);
 }
 
-export default FractalPreviewRenderer;
+export default PreviewRenderer;
