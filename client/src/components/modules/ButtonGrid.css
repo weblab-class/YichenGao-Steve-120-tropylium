@@ -14,6 +14,21 @@
   background-color: green;
 }
 
+.ButtonGrid-grid {
+  display: grid;
+}
+
+.ButtonGrid-row {
+  margin: 0 auto;
+  display: flex;
+}
+
 .ButtonGrid-button {
   color: white;
+  border: solid;
+  min-width: calc(9vmin - var(--s));
+  border-color: var(--primary--dark);
+  border-width: 0;
+  margin: 0.5%;
+  aspect-ratio: 1;
 }
