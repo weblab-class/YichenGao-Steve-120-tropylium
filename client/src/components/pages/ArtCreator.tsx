@@ -7,17 +7,18 @@ import StartPoint from "../modules/StartPoint";
 import EndPoint from "../modules/EndPoint";
 import Parameters from "../modules/Parameters";
 import Result from "../modules/Result";
+import "./ArtCreator.css";
 
 type ArtCreatorProps = RouteComponentProps & {
   userId: String;
 };
 
-const ArtCreator = (props: ArtCreatorProps) => {
+const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
   // info to get from inputs (grid pattern, start, end)
   const [grid, setGrid] = useState(
     new Array(GRID_SIZE).fill(0).map(() => new Array(GRID_SIZE).fill(false))
   );
-  const changeCellState = (x: number, y: number) => {
+  const changeCellState = (x: number, y: number): void => {
     let newGrid = grid.map((a) => {
       return [...a];
     });
@@ -30,14 +31,14 @@ const ArtCreator = (props: ArtCreatorProps) => {
 
   // keeping track of steps
   const [stepNumber, setStepNumber] = useState(0);
-  const nextStep = () => {
+  const nextStep = (): void => {
     setStepNumber(stepNumber + 1);
   };
-  const prevStep = () => {
+  const prevStep = (): void => {
     setStepNumber(stepNumber - 1);
   };
 
-  const renderFromStepNumber = (stepNumber: number) => {
+  const renderFromStepNumber = (stepNumber: number): JSX.Element => {
     switch (stepNumber) {
       case 0:
         return <Pattern nextStep={nextStep} grid={grid} changeCellState={changeCellState} />;
@@ -84,9 +85,13 @@ const ArtCreator = (props: ArtCreatorProps) => {
     }
   };
 
+  const renderLoginWarning = (): JSX.Element => {
+    return <div className="ArtCreator-loginWarning">You must be logged in to continue!</div>;
+  };
+
   return (
-    <div>
-      {props.userId ? renderFromStepNumber(stepNumber) : "You must be logged in to continue!"}
+    <div className="ArtCreator-background">
+      {props.userId ? renderFromStepNumber(stepNumber) : renderLoginWarning()}
     </div>
   );
 };

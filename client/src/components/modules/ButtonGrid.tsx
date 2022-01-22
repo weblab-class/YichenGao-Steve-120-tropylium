@@ -30,27 +30,24 @@ const ButtonGrid = (props: ButtonGridProps) => {
   };
 
   const rowMapper = (row: boolean[], ridx: number) => {
-    return row.map((cell, cidx) => {
-      return (
-        <button
-          onClick={() => props.handleClick(ridx, cidx)}
-          className={`ButtonGrid-button ${buttonClassifier(ridx, cidx)}`}
-        >
-          {ridx} {cidx}
-        </button>
-      );
-    });
+    return (
+      <div className="ButtonGrid-row">
+        {row.map((cell, cidx) => {
+          return (
+            <button
+              onClick={() => props.handleClick(ridx, cidx)}
+              className={`ButtonGrid-button ${buttonClassifier(ridx, cidx)}`}
+            ></button>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
-    <div>
+    <div className="ButtonGrid-grid">
       {props.grid.map((row, ridx) => {
-        return (
-          <>
-            {rowMapper(row, ridx)}
-            <br />
-          </>
-        );
+        return <>{rowMapper(row, ridx)}</>;
       })}
     </div>
   );
