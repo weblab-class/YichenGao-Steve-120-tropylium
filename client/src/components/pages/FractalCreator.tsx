@@ -13,6 +13,7 @@ type FractalCreatorProps = RouteComponentProps & {
 type Project = {
     id: string
     title: string
+    patterns: Pattern[]
     symbols: Symbol[]
     operators: Operator[]
     initial: string
@@ -23,8 +24,6 @@ type Project = {
 
 type Symbol = {
     name: string;
-    pattern_same_as: string;
-    pattern: Pattern;
     replacement_rule: string;
 }
 type Operator = {
@@ -32,6 +31,7 @@ type Operator = {
     rotation: number;
 }
 type Pattern = {
+    symbol_names: string[]
     points: Point[],
     start_position: number[],
     end_position: number[],
@@ -48,25 +48,20 @@ const FractalCreator = (props: FractalCreatorProps) => {
     // project states 
     // TODO: load and save these props from/to database
     const [title, setTitle] = useState("");
+    const [patterns, setPatterns] = useState([{
+        symbol_names: ["A", "B"],
+        points: [],
+        start_position: [],
+        end_position: [],
+    } as Pattern,    
+    ]);
     const [symbols, setSymbols] = useState([
         {
             name: "A",
-            pattern_same_as: "",
-            pattern: {
-                points: [],
-                start_position: [],
-                end_position: [],
-            } as Pattern,
             replacement_rule: "A+B",
         } as Symbol, 
         {
             name: "B",
-            pattern_same_as: "A",
-            pattern: {
-                points: [],
-                start_position: [],
-                end_position: [],
-            } as Pattern,
             replacement_rule: "A-B",
         } as Symbol, 
     ]);
@@ -88,16 +83,12 @@ const FractalCreator = (props: FractalCreatorProps) => {
     const [is_editor_open, setEditorOpen] = useState(false); 
 
     function updatePattern(newPattern: Pattern): void {
-        const newSymbols = [...symbols];
-        const operator = newSymbols.find((symbol: Symbol) => symbol.name === "A");
-        operator.pattern = newPattern;
-        setSymbols(newSymbols);
+        setPatterns([newPattern])
         setEditorOpen(false);
     }
 
     function getTempPattern(): Pattern {
-        const operator = symbols.find((symbol: Symbol) => symbol.name === "A");
-        return operator.pattern;
+        return patterns[0];
     }
 
     function openInitialEditor(event): void {
@@ -123,6 +114,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
         <FractalRenderer
             num_iterations={num_iterations}
             initial={initial}
+            patterns={patterns}
             symbols={symbols}
             operators={operators}
             background_color={background_color}
@@ -132,6 +124,8 @@ const FractalCreator = (props: FractalCreatorProps) => {
             updateTitle={setTitle}
             symbols={symbols}
             updateSymbols={setSymbols}
+            patterns={patterns}
+            updatePatterns={setPatterns}
             onPatternClick={openInitialEditor}
             numIterations={num_iterations}
             updateNumIterations={updateNumIterations}

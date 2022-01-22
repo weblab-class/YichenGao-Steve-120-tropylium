@@ -9,6 +9,8 @@ type FractalSidebarProps = {
     updateTitle: (new_title: string) => void
     symbols: Symbol[]
     updateSymbols: (new_symbols: Symbol[]) => void
+    patterns: Pattern[]
+    updatePatterns: (new_patterns: Pattern[]) => void
     onPatternClick: (symbol_ID: string) => void
     numIterations: number
     updateNumIterations: (new_num_iterations: number) => void
@@ -20,13 +22,12 @@ type FractalSidebarProps = {
 
 const FractalSidebar = (props: FractalSidebarProps) => {
     function getTempPattern(): Pattern {
-        const operator = props.symbols.find((symbol: Symbol) => symbol.name === "A");
-        return operator.pattern;
+        return props.patterns[0];
     }
     
     return <div className ='fractal-sidebar_container'>
         <input className="fractal-sidebar_input" 
-            type="text" value = {props.title} placeholder="New Project"
+            type="text" value = {props.title} placeholder="Project Title"
             onChange={(event) => props.updateTitle(event.target.value)}/>
         <div className = 'fractal-sidebar-open-initial_button' 
             onClick = {() => {props.onPatternClick("A")}}>

@@ -1,0 +1,9 @@
+.operator-edit_container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.operator-edit-name_text {
+    padding: var(--m);
+}

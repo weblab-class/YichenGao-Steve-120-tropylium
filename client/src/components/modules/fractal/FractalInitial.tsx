@@ -166,6 +166,7 @@ const FractalInitial = (props: FractalInitialProps) => {
     const savePattern = (event) => {
         if(optionStatus[0]&&optionStatus[1]&&optionStatus[2]) {
             const newState = {
+                symbol_names: props.pattern.symbol_names,
                 points: [],
                 start_position: [],
                 end_position: [],

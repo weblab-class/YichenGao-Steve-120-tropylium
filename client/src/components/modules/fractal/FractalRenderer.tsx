@@ -8,6 +8,7 @@ import "./FractalRenderer.css";
 type FractalRendererProps = {
     initial: string
     num_iterations: number
+    patterns: Pattern[]
     operators: Operator[]
     symbols: Symbol[]
     background_color: number
@@ -90,28 +91,23 @@ const FractalRenderer = (props: FractalRendererProps) => {
     }
 
     function getDrawPattern(instruction_ID: string): Pattern {
-        //console.log(draw_type);
-        const symbol = props.symbols.find((symbol) => symbol.name === instruction_ID);
-        if(symbol === undefined)
-            return {
-                points: [],
-                start_position: [],
-                end_position: [],
-            } as Pattern;
-        if(symbol.pattern_same_as.length != 0) {
-            const new_symbol = props.symbols.find((new_symbol) => new_symbol.name === symbol.pattern_same_as);
-            if(new_symbol === undefined)
-                return {
-                    points: [],
-                    start_position: [],
-                    end_position: [],
-                } as Pattern;
-            return new_symbol.pattern;
-        }
-        return symbol.pattern;
+        const found_pattern: Pattern = props.patterns.find((pattern: Pattern) => {
+            for(let i = 0; i < pattern.symbol_names.length; i++) {
+                if(pattern.symbol_names[i] === instruction_ID)
+                    return true;
+            }
+        })
+        if(found_pattern !== undefined)
+            return found_pattern;
+        return {
+            symbol_names: [],
+            points: [],
+            start_position: [],
+            end_position: [],
+        } as Pattern;
     }
 
-    const CELL_WIDTH = 32;
+    const CELL_WIDTH = 16;
     function drawShape(graphics: Pixi.Graphics, x:number, y: number):void {
         graphics.beginFill(0x0e782b);
         graphics.drawRect(CELL_WIDTH*x, CELL_WIDTH*y, CELL_WIDTH, CELL_WIDTH);
@@ -135,6 +131,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
         for(let instruction_ID of render_string) {
             if(isSymbol(instruction_ID)) {
                 const pattern = getDrawPattern(instruction_ID);
+                
                 const direction_radians = current_direction*Math.PI/180.0;
                 
                 pattern.points.forEach((value: Point) => {
@@ -225,7 +222,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
         // graphics.beginFill(0xFFF000);
         // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
         // graphics.endFill();
-    }, [props.initial, props.num_iterations, props.operators, props.symbols]);
+    }, [props.initial, props.num_iterations, props.patterns, props.operators, props.symbols]);
 
     useEffect(() => {
         const PixiApp = PixiAppRef.current;
