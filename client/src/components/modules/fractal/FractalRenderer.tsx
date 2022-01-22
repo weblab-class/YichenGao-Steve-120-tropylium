@@ -18,8 +18,9 @@ type FractalRendererProps = {
 const FractalRenderer = (props: FractalRendererProps) => {
     
     const container_ref = useRef(undefined);
-    let PixiAppRef = useRef<Pixi.Application>(undefined);
-    let viewportRef = useRef<Viewport>(undefined);
+    const PixiAppRef = useRef<Pixi.Application>(undefined);
+    const viewportRef = useRef<Viewport>(undefined);
+    const graphicsRef = useRef<Pixi.Graphics>(undefined);
 
     // run once only at the beginning
     useEffect(() => {
@@ -43,14 +44,22 @@ const FractalRenderer = (props: FractalRendererProps) => {
             .pinch()
             .wheel()
             .decelerate()
+
+        const graphics = new Pixi.Graphics();
+        viewport.addChild(graphics);
+
         PixiApp.stage.addChild(viewport);
         PixiAppRef.current = PixiApp;
         viewportRef.current = viewport;
+        graphicsRef.current = graphics;
 
         return () => {
             // kill everything to hopefully avoid memory leaks and cleanup properly
             viewportRef.current.destroy();
             PixiAppRef.current.destroy(true, true);
+            graphicsRef.current = undefined;
+            viewportRef.current = undefined;
+            PixiAppRef.current = undefined;
         };
     }, []);
 
@@ -116,18 +125,18 @@ const FractalRenderer = (props: FractalRendererProps) => {
     // run with every data change
     useEffect(() => {
         const viewport = viewportRef.current
-        viewport.removeChildren();
+        const graphics = graphicsRef.current
+        graphics.clear();
 
         const render_string = computeRenderString(props.num_iterations, props.initial, props.operators, props.symbols);
     
-        let graphics: Pixi.Graphics = new Pixi.Graphics();
-
         let current_start_position = [0,0];
         let current_direction = 0;
 
         let max_x = 0, min_x = 0, max_y = 0, min_y = 0;
 
         const startTime = performance.now();
+        console.log("starting rendering");
         for(let instruction_ID of render_string) {
             if(isSymbol(instruction_ID)) {
                 const pattern = getDrawPattern(instruction_ID);
@@ -166,8 +175,6 @@ const FractalRenderer = (props: FractalRendererProps) => {
                     current_direction += 360;
             }
         }
-
-        viewport.addChild(graphics);
 
         const fill_screen_height = container_ref.current.clientHeight/CELL_WIDTH, 
         fill_screen_width = container_ref.current.clientWidth/CELL_WIDTH;

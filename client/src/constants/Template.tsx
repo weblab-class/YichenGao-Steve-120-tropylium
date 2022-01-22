@@ -2,11 +2,11 @@ import React, {useState} from "react";
 
 import "./Template.css";
 
-type TemplateProps = {
+type Props = {
 
 }
 
-const Template = (props: TemplateProps) => {
+const Template = (props: Props) => {
     return (<div>
 
     </div>);

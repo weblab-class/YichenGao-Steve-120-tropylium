@@ -1,12 +1,12 @@
-import React, {useEffect, useState, useRef} from "react"
-import { RouteComponentProps } from "@reach/router"
-
-import PatternEdit from "../modules/fractal/fractal_pattern_edit/PatternEdit"
-import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
+import { RouteComponentProps } from "@reach/router";
+import React, { useState } from "react";
+import { Operator, Pattern, Symbol } from "../../constants/Types";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
-import { Project, Symbol, Operator, Pattern, Point } from "../../constants/Types";
-
+import PatternEdit from "../modules/fractal/fractal_pattern_edit/PatternEdit";
+import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
 import "./FractalCreator.css";
+
+
 
 type FractalCreatorProps = RouteComponentProps & {
     is_new_project: boolean;
@@ -47,21 +47,26 @@ const FractalCreator = (props: FractalCreatorProps) => {
     const [initial, setInitial] = useState("A");
     const [num_iterations, setNumIterations] = useState(0);
     const [background_color, setBackgroundColor] = useState(0xFFFFFF);
-    //const [antialias, setAntialias] = useState(true);
+    
+    const operator_names = '+-=<>*~:'.split('');
+    const symbol_names = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     const [is_editor_open, setEditorOpen] = useState(false); 
+    const [editing_pattern, setEditingPattern] = useState({
+        symbol_names: [],
+        points: [],
+        start_position: [],
+        end_position: [],
+    } as Pattern);
 
     function updatePattern(newPattern: Pattern): void {
         setPatterns([newPattern])
         setEditorOpen(false);
     }
 
-    function getTempPattern(): Pattern {
-        return patterns[0];
-    }
-
-    function openInitialEditor(event): void {
-        setEditorOpen(true);
+    function onPatternClick(pattern: Pattern) {
+        setEditingPattern(pattern);
+        setEditorOpen(true)
     }
 
     function updateNumIterations(new_num_iterations: number): void {
@@ -72,12 +77,12 @@ const FractalCreator = (props: FractalCreatorProps) => {
     
     return (<div className = 'fractal-creator_container'>
         <div className = {`fractal-creator-initial_container 
-            ${is_editor_open 
+            ${is_editor_open
                 ? 'editor-open'
                 : ''
             }`}>
             <PatternEdit 
-                pattern={getTempPattern()} 
+                pattern={editing_pattern} 
                 onPatternUpdate={updatePattern}/>
         </div>
         <FractalRenderer
@@ -97,7 +102,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
             updateSymbols={setSymbols}
             patterns={patterns}
             updatePatterns={setPatterns}
-            onPatternClick={openInitialEditor}
+            onPatternClick={onPatternClick}
             initial={initial}
             updateInitial={setInitial}
             numIterations={num_iterations}

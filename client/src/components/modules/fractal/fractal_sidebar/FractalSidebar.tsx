@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
-import PreviewRenderer from "./PreviewRenderer";
-import OperatorEdit from "./OperatorEdit";
-
+import React from "react";
+import { Operator, Pattern, Symbol } from "../../../../constants/Types";
 import "./FractalSidebar.css";
+import OperatorEdit from "./OperatorEdit";
+import PreviewRenderer from "./PreviewRenderer";
+import SymbolEdit from "./SymbolEdit";
 
 type Props = {
     title: string
     updateTitle: (new_title: string) => void
     patterns: Pattern[]
     updatePatterns: (new_patterns: Pattern[]) => void
-    onPatternClick: (symbol_ID: string) => void
+    onPatternClick: (pattern: Pattern) => void
     operators: Operator[]
     updateOperators: (new_operators: Operator[]) => void
     symbols: Symbol[]
@@ -37,7 +37,7 @@ const FractalSidebar = (props: Props) => {
         return props.patterns[0];
     }
 
-    function isInitialValid(initial: string):string[] {
+    function getInvalidInstructions(initial: string):string[] {
         const invalid_instructions: string[] = [];
         for(let instruction of initial) {
             const is_operator = props.operators.find(
@@ -56,22 +56,37 @@ const FractalSidebar = (props: Props) => {
     }
 
     function onInitialUpdate(raw_initial: string):void {
-        const invalid_instructions = isInitialValid(raw_initial)
-        console.log(invalid_instructions);
+        const invalid_instructions = getInvalidInstructions(raw_initial)
+        
         if(invalid_instructions.length === 0) 
             props.updateInitial(raw_initial);
         //setInitialInputInvalid(invalid_instructions);
     }
 
+    function onSymbolUpdate(new_symbol: Symbol): void {
+        if(getInvalidInstructions(new_symbol.replacement_rule).length === 0) {
+            const new_symbols: Symbol[] = [];
+            props.symbols.forEach((old_symbol: Symbol) => {
+                if(old_symbol.name === new_symbol.name)
+                    new_symbols.push(new_symbol);
+                else 
+                    new_symbols.push(old_symbol);
+            });
+            props.updateSymbols(new_symbols);
+        }
+    }
+
     function onOperatorUpdate(new_operator: Operator): void {
-        const new_operators: Operator[] = [];
-        props.operators.forEach((old_operator: Operator) => {
-            if(old_operator.name === new_operator.name)
-                new_operators.push(new_operator);
-            else 
-                new_operators.push(old_operator);
-        });
-        props.updateOperators(new_operators);
+        if(typeof new_operator.rotation === "number") {
+            const new_operators: Operator[] = [];
+            props.operators.forEach((old_operator: Operator) => {
+                if(old_operator.name === new_operator.name)
+                    new_operators.push(new_operator);
+                else 
+                    new_operators.push(old_operator);
+            });
+            props.updateOperators(new_operators);
+        }
     }
     
     return <div className ='sidebar_container'>
@@ -79,7 +94,7 @@ const FractalSidebar = (props: Props) => {
             type="text" value = {props.title} placeholder="Project Title"
             onChange={(event) => props.updateTitle(event.target.value)}/>
         <div className = 'sidebar-open-initial_button' 
-            onClick = {() => {props.onPatternClick("A")}}>
+            onClick = {() => {props.onPatternClick(props.patterns[0])}}>
             Open Initial Editor
         </div>
         <PreviewRenderer
@@ -135,6 +150,12 @@ const FractalSidebar = (props: Props) => {
         <div> 
             Symbols
         </div>
+        {
+            props.symbols.map((symbol: Symbol) => 
+                <SymbolEdit key = {symbol.name} symbol={symbol} updateSymbol={onSymbolUpdate}/>
+            )
+
+        }
         <div>
             Operators
         </div>
@@ -142,15 +163,7 @@ const FractalSidebar = (props: Props) => {
             props.operators.map((operator: Operator) => 
                 <OperatorEdit key = {operator.name} operator={operator} updateOperator={onOperatorUpdate}/>
             )
-        }
-        {/* <div>
-            Antialiasing on
-        </div>
-        <input 
-            type='checkbox' checked={props.antialias}
-            onChange={(event) => {props.updateAntialias(event.target.checked)}}/> */}
-        
-            
+        } 
     </div>
 }
 
