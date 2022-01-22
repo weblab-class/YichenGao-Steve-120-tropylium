@@ -2,8 +2,31 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    padding: var(--s);
+    justify-content: space-between;
 }
 
 .operator-edit-name_text {
-    padding: var(--m);
+    width: var(--l);
+    padding: var(--s);
+    font-weight: bold;
+    text-align: center;
+    font-size: var(--m);
+}
+
+.operator-edit_button {
+    width: var(--xxl);
+    padding: var(--s);
+
+    background-color: whitesmoke;
+    text-align: center;
+    font-size: var(--m);
+}
+
+.selected {
+    background-color: seagreen;
+}
+
+.spacer {
+    flex-grow: 1;
 }

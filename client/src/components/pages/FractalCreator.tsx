@@ -100,6 +100,8 @@ const FractalCreator = (props: FractalCreatorProps) => {
             new_num_iterations = 20;
         setNumIterations(new_num_iterations);
     }
+
+    console.log(operators);
     
     return (<div className = 'fractal-creator_container'>
         <div className = {`fractal-creator-initial_container 
@@ -122,11 +124,15 @@ const FractalCreator = (props: FractalCreatorProps) => {
         <FractalSidebar 
             title= {title}
             updateTitle={setTitle}
+            operators={operators}
+            updateOperators={setOperators}
             symbols={symbols}
             updateSymbols={setSymbols}
             patterns={patterns}
             updatePatterns={setPatterns}
             onPatternClick={openInitialEditor}
+            initial={initial}
+            updateInitial={setInitial}
             numIterations={num_iterations}
             updateNumIterations={updateNumIterations}
             backgroundColor={background_color}
