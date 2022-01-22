@@ -1,15 +1,17 @@
 import React, {useState, useRef, useEffect} from "react";
-import { Pattern, Point } from "../../pages/FractalCreator";
+import { Pattern, Point, Operator, Symbol } from "../../pages/FractalCreator";
 import * as Pixi from 'pixi.js'
 import {Viewport} from 'pixi-viewport'
 
 import "./FractalRenderer.css";
 
 type FractalRendererProps = {
-    //draw_data: DrawData[]
-    renderString: string
-    getDrawPattern: (string) => Pattern
-    getOperatorRotation: (string) => number
+    initial: string
+    num_iterations: number
+    operators: Operator[]
+    symbols: Symbol[]
+    background_color: number
+    //antialias: boolean
 }
 
 const FractalRenderer = (props: FractalRendererProps) => {
@@ -22,8 +24,8 @@ const FractalRenderer = (props: FractalRendererProps) => {
     useEffect(() => {
         const PixiApp = new Pixi.Application({
             resizeTo: container_ref.current,
-            backgroundColor: 0xFFFFFF,
-            antialias: false,
+            backgroundColor: props.background_color,
+            antialias: true,
         })
         container_ref.current.appendChild(PixiApp.view);
         //PixiApp.renderer.options.antialias = false;
@@ -51,6 +53,64 @@ const FractalRenderer = (props: FractalRendererProps) => {
         };
     }, []);
 
+    function isSymbol(instruction_ID: string): boolean {
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(instruction_ID);
+    }
+
+    function computeRenderString(num_iterations: number, initial: string, operators: Operator[], symbols: Symbol[],): string {
+        let render_string = initial;
+
+        const rules = {};
+
+        operators.forEach((symbol: Operator) => {
+            rules[symbol.name] = symbol.name;
+        });
+        symbols.forEach((symbol: Symbol) => {
+            rules[symbol.name] = symbol.replacement_rule;
+        });
+    
+        for(let i = 0; i < num_iterations; i++) {
+            let new_string = "";
+            for(let instruction_ID of render_string) {
+                const substitution = rules[instruction_ID];
+                if(substitution !== undefined)
+                    new_string += rules[instruction_ID];
+            }
+            render_string = new_string;
+        }
+        
+        return render_string;
+    }
+
+    function getOperatorRotation(operator_ID: string): number {
+        const operator = props.operators.find((operator) => operator.name === operator_ID);
+        if(operator === undefined)
+            return 0;
+        return operator.rotation;
+    }
+
+    function getDrawPattern(instruction_ID: string): Pattern {
+        //console.log(draw_type);
+        const symbol = props.symbols.find((symbol) => symbol.name === instruction_ID);
+        if(symbol === undefined)
+            return {
+                points: [],
+                start_position: [],
+                end_position: [],
+            } as Pattern;
+        if(symbol.pattern_same_as.length != 0) {
+            const new_symbol = props.symbols.find((new_symbol) => new_symbol.name === symbol.pattern_same_as);
+            if(new_symbol === undefined)
+                return {
+                    points: [],
+                    start_position: [],
+                    end_position: [],
+                } as Pattern;
+            return new_symbol.pattern;
+        }
+        return symbol.pattern;
+    }
+
     const CELL_WIDTH = 32;
     function drawShape(graphics: Pixi.Graphics, x:number, y: number):void {
         graphics.beginFill(0x0e782b);
@@ -62,23 +122,19 @@ const FractalRenderer = (props: FractalRendererProps) => {
         const viewport = viewportRef.current
         viewport.removeChildren();
 
-        const render_string = props.renderString;
-        //const draw_data = props.draw_data;
-
+        const render_string = computeRenderString(props.num_iterations, props.initial, props.operators, props.symbols);
+    
         let graphics: Pixi.Graphics = new Pixi.Graphics();
 
-        // const translation = initial_state.end_position.map(
-        //     (value: number, index: number) => (value - initial_state.start_position[index]));
-        
         let current_start_position = [0,0];
         let current_direction = 0;
 
         let max_x = 0, min_x = 0, max_y = 0, min_y = 0;
 
         const startTime = performance.now();
-        for(let instruction of render_string) {
-            if("QWERTYUIOPASDFGHJKLZXCVBNM".includes(instruction)) {
-                const pattern = props.getDrawPattern(instruction);
+        for(let instruction_ID of render_string) {
+            if(isSymbol(instruction_ID)) {
+                const pattern = getDrawPattern(instruction_ID);
                 const direction_radians = current_direction*Math.PI/180.0;
                 
                 pattern.points.forEach((value: Point) => {
@@ -105,7 +161,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
                     current_start_position[1] + displacement[0]*Math.sin(direction_radians) + displacement[1]*Math.cos(direction_radians),
                 ];
             } else {
-                const rotation = props.getOperatorRotation(instruction);
+                const rotation = getOperatorRotation(instruction_ID);
                 current_direction += rotation;
                 if(current_direction > 180)
                     current_direction -= 360;
@@ -169,7 +225,25 @@ const FractalRenderer = (props: FractalRendererProps) => {
         // graphics.beginFill(0xFFF000);
         // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
         // graphics.endFill();
-    });
+    }, [props.initial, props.num_iterations, props.operators, props.symbols]);
+
+    useEffect(() => {
+        const PixiApp = PixiAppRef.current;
+        PixiApp.renderer.backgroundColor = props.background_color;
+        PixiApp.renderer.render(PixiApp.stage);
+    },[props.background_color]);
+
+    
+    // This doesn't work
+    // useEffect(() => {
+    //     console.log("attempt to rerender antialias")
+    //     console.log(props.antialias)
+    //     const PixiApp = PixiAppRef.current;
+    //     PixiApp.renderer = new Pixi.Renderer({
+    //         antialias: props.antialias
+    //     })
+    //     PixiApp.renderer.render(PixiApp.stage);
+    // }, [props.antialias])
 
     return (<div ref = {container_ref} className="fractal-renderer_container">
         
