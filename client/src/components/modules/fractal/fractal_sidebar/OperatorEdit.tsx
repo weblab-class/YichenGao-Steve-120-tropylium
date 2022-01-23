@@ -5,7 +5,8 @@ import "./OperatorEdit.css";
 
 type OperatorEditProps = {
     operator: Operator
-    updateOperator: (newOperator: Operator) => void;
+    updateOperator: (new_operator: Operator) => void;
+    removeOperator: (remove_operator: Operator) => void;
 }
 
 const OperatorEdit = (props: OperatorEditProps) => {
@@ -15,7 +16,7 @@ const OperatorEdit = (props: OperatorEditProps) => {
 
     function updateOperator(raw_rotation_value: number, orientation: boolean): void {
         const new_rotation_value = (orientation ? raw_rotation_value : -raw_rotation_value);
-        console.log(`new rotation value for ${props.operator.name}: ${new_rotation_value}`)
+        
         const new_Operator = {
             name: props.operator.name,
             rotation: new_rotation_value,
@@ -28,6 +29,10 @@ const OperatorEdit = (props: OperatorEditProps) => {
             setOrientation(new_orientation);
             updateOperator(Number(input_ref.current.value), new_orientation);
         }
+    }
+
+    function removeOperator(): void {
+        props.removeOperator(props.operator);
     }
     
     return (<div className="operator-edit_container">
@@ -45,6 +50,11 @@ const OperatorEdit = (props: OperatorEditProps) => {
         <div className={`operator-edit_button ${orientation ? '' : 'selected'}`} 
             onClick={(event) => updateOrientation(false)}>
             CCW
+        </div>
+        <div className="spacer"/>
+        <div className="operator-edit-remove_button"
+            onClick={(event) => removeOperator()}>
+            Remove
         </div>
         
     </div>);

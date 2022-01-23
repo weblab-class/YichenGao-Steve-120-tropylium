@@ -15,16 +15,38 @@
 }
 
 .operator-edit_button {
-    width: var(--xxl);
-    padding: var(--s);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: var(--xl);
+    padding: var(--s) 0;
 
     background-color: whitesmoke;
     text-align: center;
-    font-size: var(--m);
+    font-size: var(--s);
+}
+
+.operator-edit-remove_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: var(--xl);
+    padding: var(--s) 0;
+    background-color: tomato;
+    text-align: center;
+    font-size: var(--s);
+    color: whitesmoke
+}
+
+.operator-edit-remove_button:hover {
+    color: tomato;
+    background-color: whitesmoke;
 }
 
 .selected {
     background-color: seagreen;
+    color: whitesmoke;
+    
 }
 
 .spacer {

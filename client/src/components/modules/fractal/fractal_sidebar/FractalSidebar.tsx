@@ -2,6 +2,7 @@ import React from "react";
 import { Operator, Pattern, Symbol } from "../../../../constants/Types";
 import "./FractalSidebar.css";
 import OperatorEdit from "./OperatorEdit";
+import OperatorEditList from "./OperatorEditList";
 import PatternEdit from "./PatternEdit";
 import PreviewRenderer from "./PreviewRenderer";
 import SymbolEdit from "./SymbolEdit";
@@ -73,18 +74,59 @@ const FractalSidebar = (props: Props) => {
         }
     }
 
-    function onOperatorUpdate(new_operator: Operator): void {
-        if(typeof new_operator.rotation === "number") {
-            const new_operators: Operator[] = [];
-            props.operators.forEach((old_operator: Operator) => {
-                if(old_operator.name === new_operator.name)
-                    new_operators.push(new_operator);
-                else 
-                    new_operators.push(old_operator);
-            });
-            props.updateOperators(new_operators);
+    function onOperatorsUpdate(new_operators: Operator[], removed_operator: Operator): void {
+        if(removed_operator !== undefined) {
+            purgeInstruction(removed_operator.name, false)
         }
+        props.updateOperators(new_operators);
     }
+
+    function purgeInstruction(instruction: string, isSymbol: boolean) {
+        let new_initial: string = '';
+        for(let old_instruction of props.initial) {
+            if(old_instruction !== instruction)
+                new_initial += old_instruction;
+        }
+
+        const new_symbols: Symbol[] = [];
+        for(let old_symbol of props.symbols) {
+            new_symbols.push({
+                name: old_symbol.name,
+                replacement_rule: old_symbol.replacement_rule
+                    .replace(instruction, ''),
+            } as Symbol);
+        }
+
+        if(isSymbol) {
+            const new_patterns: Pattern[] = [];
+            for(let old_pattern of props.patterns) {
+                new_patterns.push({
+                    symbol_names: old_pattern.symbol_names.filter(
+                        (old_symbol_name: string) => old_symbol_name !== instruction),
+                    points: old_pattern.points,
+                    start_position: old_pattern.start_position,
+                    end_position: old_pattern.end_position,
+                } as Pattern)
+            }
+            props.updatePatterns(new_patterns);
+        }
+
+        props.updateInitial(new_initial);
+        props.updateSymbols(new_symbols);
+    }
+
+    // function onOperatorUpdate(new_operator: Operator): void {
+    //     if(typeof new_operator.rotation === "number") {
+    //         const new_operators: Operator[] = [];
+    //         props.operators.forEach((old_operator: Operator) => {
+    //             if(old_operator.name === new_operator.name)
+    //                 new_operators.push(new_operator);
+    //             else 
+    //                 new_operators.push(old_operator);
+    //         });
+    //         props.updateOperators(new_operators);
+    //     }
+    // }
     
     return <div className ='sidebar_container'>
         <input className="sidebar_input" 
@@ -156,16 +198,12 @@ const FractalSidebar = (props: Props) => {
             props.symbols.map((symbol: Symbol) => 
                 <SymbolEdit key = {symbol.name} symbol={symbol} updateSymbol={onSymbolUpdate}/>
             )
-
         }
-        <div>
-            Operators
-        </div>
-        {
-            props.operators.map((operator: Operator) => 
-                <OperatorEdit key = {operator.name} operator={operator} updateOperator={onOperatorUpdate}/>
-            )
-        } 
+
+        <OperatorEditList
+            operators={props.operators}
+            updateOperators={onOperatorsUpdate}/>
+
     </div>
 }
 
