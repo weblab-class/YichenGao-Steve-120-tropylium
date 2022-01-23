@@ -1,8 +1,15 @@
 .sidebar_container {
-    height: 100%;
+    height: calc(100vh - var(--xxl));
     width: 300px;
-    background-color: lightgray;
-    overflow-y:scroll;
+    display: block;
+    background-color: whitesmoke;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.sidebar-scrolling_container {
+    width: 100%;
+
 }
 
 .sidebar-open-initial_button {

@@ -18,6 +18,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
     // TODO: load and save these props from/to database
     const [title, setTitle] = useState("");
     const [patterns, setPatterns] = useState([{
+        id: 0,
         symbol_names: ["A", "B"],
         points: [],
         start_position: [],
@@ -50,18 +51,31 @@ const FractalCreator = (props: FractalCreatorProps) => {
 
     const [is_editor_open, setEditorOpen] = useState(false); 
     const [editing_pattern, setEditingPattern] = useState({
+        id: 0,
         symbol_names: [],
         points: [],
         start_position: [],
         end_position: [],
     } as Pattern);
 
-    function updatePattern(newPattern: Pattern): void {
-        setPatterns([newPattern])
+    function updatePattern(new_pattern: Pattern): void {
+        console.log("new pattenrn")
+        console.log(new_pattern);
+        const new_patterns: Pattern[] = [];
+        for(let old_pattern of patterns) {
+            if(old_pattern.id === new_pattern.id)
+                new_patterns.push(new_pattern)
+            else
+                new_patterns.push(old_pattern)
+        }
+        setPatterns(new_patterns)
+        console.log(new_patterns);
         setEditorOpen(false);
     }
 
     function onPatternClick(pattern: Pattern) {
+        console.log(patterns);
+        console.log(pattern.id);
         setEditingPattern(pattern);
         setEditorOpen(true);
     }

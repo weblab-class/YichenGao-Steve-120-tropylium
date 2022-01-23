@@ -19,10 +19,11 @@ type Operator = {
     rotation: number;
 }
 type Pattern = {
+    id: number
     symbol_names: string[]
-    points: Point[],
-    start_position: number[],
-    end_position: number[],
+    points: Point[]
+    start_position: number[]
+    end_position: number[]
 }
 type Point = {
     x: number;

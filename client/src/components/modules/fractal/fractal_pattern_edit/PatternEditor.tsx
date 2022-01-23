@@ -167,6 +167,7 @@ const PatternEditor = (props: PatternEditorProps) => {
     const savePattern = (event) => {
         if(optionStatus[0]&&optionStatus[1]&&optionStatus[2]) {
             const newState = {
+                id: props.pattern.id,
                 symbol_names: props.pattern.symbol_names,
                 points: [],
                 start_position: [],

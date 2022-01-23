@@ -4,6 +4,7 @@ import "./FractalSidebar.css";
 import OperatorEdit from "./OperatorEdit";
 import OperatorEditList from "./OperatorEditList";
 import PatternEdit from "./PatternEdit";
+import PatternEditList from "./PatternEditList";
 import PreviewRenderer from "./PreviewRenderer";
 import SymbolEdit from "./SymbolEdit";
 import SymbolEditList from "./SymbolEditList";
@@ -62,12 +63,12 @@ const FractalSidebar = (props: Props) => {
         //setInitialInputInvalid(invalid_instructions);
     }
 
-    function onPatternUpdate(new_patterns: Pattern[]) {
+    function onPatternsUpdate(new_patterns: Pattern[]) {
         // no conflicts with removed patterns
         props.updatePatterns(new_patterns);
     }
 
-    function onSymbolUpdate(new_symbols: Symbol[], removed_symbol: Symbol): void {
+    function onSymbolsUpdate(new_symbols: Symbol[], removed_symbol: Symbol): void {
         if(removed_symbol !== undefined) {
             purgeInstruction(removed_symbol.name, true);
         } else {
@@ -118,20 +119,11 @@ const FractalSidebar = (props: Props) => {
     }
     
     return <div className ='sidebar_container'>
+        <div className = 'sidebar-scrolling_container'>
         <input className="sidebar_input" 
             type="text" value = {props.title} placeholder="Project Title"
             onChange={(event) => props.updateTitle(event.target.value)}/>
-        {/* <div className = 'sidebar-open-initial_button' 
-            onClick = {() => {props.onPatternClick(props.patterns[0])}}>
-            Open Initial Editor
-        </div>
-        <PreviewRenderer
-            pattern={getTempPattern()}/> */}
-        {
-            props.patterns.map((pattern: Pattern) => 
-                <PatternEdit pattern={pattern} onPatternClick={props.onPatternClick}/>
-            )
-        }
+    
         <div>
             Initial Pattern
         </div>
@@ -180,14 +172,18 @@ const FractalSidebar = (props: Props) => {
             onChange={(event) => {
                 props.updateBackgroundColor(parseInt(event.target.value.substring(1), 16))}}
         />
+        <PatternEditList
+            patterns={props.patterns}
+            updatePatterns={onPatternsUpdate}
+            onPatternClick={props.onPatternClick}/>
         <SymbolEditList
             symbols={props.symbols}
-            updateSymbols={onSymbolUpdate}
+            updateSymbols={onSymbolsUpdate}
             getInvalidInstructions={getInvalidInstructions}/>
         <OperatorEditList
             operators={props.operators}
             updateOperators={onOperatorsUpdate}/>
-
+        </div>
     </div>
 }
 
