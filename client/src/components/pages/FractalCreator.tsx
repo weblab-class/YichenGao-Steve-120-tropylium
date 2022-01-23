@@ -47,8 +47,6 @@ const FractalCreator = (props: FractalCreatorProps) => {
     const [initial, setInitial] = useState("A");
     const [num_iterations, setNumIterations] = useState(0);
     const [background_color, setBackgroundColor] = useState(0xFFFFFF);
-    
-    const symbol_names = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     const [is_editor_open, setEditorOpen] = useState(false); 
     const [editing_pattern, setEditingPattern] = useState({

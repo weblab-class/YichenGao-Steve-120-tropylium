@@ -246,7 +246,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
                     current_direction += 360;
             }
         }
-
+        viewport.addChild(graphics);
 
         const fill_screen_height = container_ref.current.clientHeight/CELL_WIDTH, 
         fill_screen_width = container_ref.current.clientWidth/CELL_WIDTH;
@@ -260,10 +260,10 @@ const FractalRenderer = (props: FractalRendererProps) => {
         const max_fill_zoom_level = Math.min(fill_screen_height/ distance_span_y, fill_screen_width/ distance_span_x);
         //console.log(getProperZoomLevel(max_fill_zoom_level));
         const center_x = (max_x-min_x)/2 + min_x, center_y = (max_y-min_y)/2 + min_y;
-        graphics.beginFill(0xFFF000);
-        graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
-        graphics.endFill();
-        viewport.addChild(graphics);
+        // graphics.beginFill(0xFFF000);
+        // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
+        // graphics.endFill();
+
         if(render_string.length < 200000) {
             viewport.animate({
                 time: 500,
