@@ -63,13 +63,15 @@ const FractalCreator = (props: FractalCreatorProps) => {
 
     function onPatternClick(pattern: Pattern) {
         setEditingPattern(pattern);
-        setEditorOpen(true)
+        setEditorOpen(true);
     }
 
-    function updateNumIterations(new_num_iterations: number): void {
-        if(new_num_iterations > 20) //pls don't go higher lol
-            new_num_iterations = 20;
-        setNumIterations(new_num_iterations);
+    function onRenderStart(): void {
+
+    }
+
+    function onRenderEnd(renderTimeMilli: number): void {
+
     }
     
     return (<div className = 'fractal-creator_container'>
@@ -89,6 +91,8 @@ const FractalCreator = (props: FractalCreatorProps) => {
             symbols={symbols}
             operators={operators}
             background_color={background_color}
+            onRenderStart={onRenderStart}
+            onRenderEnd={onRenderEnd}
             />
         <FractalSidebar 
             title= {title}
@@ -103,7 +107,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
             initial={initial}
             updateInitial={setInitial}
             numIterations={num_iterations}
-            updateNumIterations={updateNumIterations}
+            updateNumIterations={setNumIterations}
             backgroundColor={background_color}
             updateBackgroundColor={setBackgroundColor}
         />

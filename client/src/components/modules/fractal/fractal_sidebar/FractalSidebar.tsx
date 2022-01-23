@@ -62,6 +62,11 @@ const FractalSidebar = (props: Props) => {
         //setInitialInputInvalid(invalid_instructions);
     }
 
+    function onPatternUpdate(new_patterns: Pattern[]) {
+        // no conflicts with removed patterns
+        props.updatePatterns(new_patterns);
+    }
+
     function onSymbolUpdate(new_symbols: Symbol[], removed_symbol: Symbol): void {
         if(removed_symbol !== undefined) {
             purgeInstruction(removed_symbol.name, true);
