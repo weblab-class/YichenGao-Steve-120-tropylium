@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from "react";
 
-import PatternEditRenderer from "./Renderer"
+import PatternEditorRenderer from "./Renderer"
 import Sidebar from "./Sidebar";
 
 import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
-import "./PatternEdit.css"
+import "./PatternEditor.css"
 
 
-type PatternEditProps = {
+type PatternEditorProps = {
     pattern: Pattern,
     onPatternUpdate: (newPattern: Pattern) => void,
 }
 
 // careful about changing the order of these, the numbering is important for optionstatus
-enum PatternEditState {
+enum PatternEditorState {
     SELECT_REGULAR=0,
     SELECT_START,
     SELECT_END,
@@ -27,11 +27,11 @@ type RectData = {
     is_endpoint: boolean;
 }
 
-const PatternEdit = (props: PatternEditProps) => {
+const PatternEditor = (props: PatternEditorProps) => {
     
     const WIDTH = 800, HEIGHT = 800, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
-    const [editorState, setEditorState] = useState(PatternEditState.SELECT_REGULAR);
+    const [editorState, setEditorState] = useState(PatternEditorState.SELECT_REGULAR);
     const [rectData, setRectData] = useState(getRectData(props.pattern));
     const [optionStatus, setOptionStatus] = useState(
         [
@@ -83,7 +83,7 @@ const PatternEdit = (props: PatternEditProps) => {
         const newOptionStatus = [...optionStatus];
         const rect = newRectData[x][y];
         switch(editorState) {
-            case PatternEditState.SELECT_START:
+            case PatternEditorState.SELECT_START:
                 const nextStartState = !rect.is_startpoint;
                 if(nextStartState) {
                     rect.is_selected = true;
@@ -94,16 +94,16 @@ const PatternEdit = (props: PatternEditProps) => {
                     }
                     if(rect.is_endpoint) {
                         rect.is_endpoint = false;
-                        newOptionStatus[PatternEditState.SELECT_END] = false;
+                        newOptionStatus[PatternEditorState.SELECT_END] = false;
                     }
-                    newOptionStatus[PatternEditState.SELECT_REGULAR] = true
+                    newOptionStatus[PatternEditorState.SELECT_REGULAR] = true
                 }
-                newOptionStatus[PatternEditState.SELECT_START] = nextStartState;
+                newOptionStatus[PatternEditorState.SELECT_START] = nextStartState;
 
                 rect.is_startpoint = nextStartState; 
                 
                 break;
-            case PatternEditState.SELECT_END:
+            case PatternEditorState.SELECT_END:
                 const nextEndState = !rect.is_endpoint;
                 if(nextEndState) {
                     rect.is_selected = true;
@@ -114,25 +114,25 @@ const PatternEdit = (props: PatternEditProps) => {
                     }
                     if(rect.is_startpoint) {
                         rect.is_startpoint = false;
-                        newOptionStatus[PatternEditState.SELECT_START] = false;
+                        newOptionStatus[PatternEditorState.SELECT_START] = false;
                     }
-                    newOptionStatus[PatternEditState.SELECT_REGULAR] = true
+                    newOptionStatus[PatternEditorState.SELECT_REGULAR] = true
                 }
-                newOptionStatus[PatternEditState.SELECT_END] = nextEndState;
+                newOptionStatus[PatternEditorState.SELECT_END] = nextEndState;
 
                 rect.is_endpoint = nextEndState;
 
                 break;
-            case PatternEditState.SELECT_REGULAR:
+            case PatternEditorState.SELECT_REGULAR:
                 const nextRegularState = !rect.is_selected;
                 if(!nextRegularState) {
                     if(rect.is_startpoint) {
                         rect.is_startpoint = false;
-                        newOptionStatus[PatternEditState.SELECT_START] = false;
+                        newOptionStatus[PatternEditorState.SELECT_START] = false;
                     }
                     if(rect.is_endpoint) {
                         rect.is_endpoint = false;
-                        newOptionStatus[PatternEditState.SELECT_END] = false;
+                        newOptionStatus[PatternEditorState.SELECT_END] = false;
                     }
                     rect.is_selected = nextRegularState;
                     let any_selected = false;
@@ -145,9 +145,9 @@ const PatternEdit = (props: PatternEditProps) => {
                             }
                         }
                     }
-                    newOptionStatus[PatternEditState.SELECT_REGULAR] = any_selected;
+                    newOptionStatus[PatternEditorState.SELECT_REGULAR] = any_selected;
                 } else {
-                    newOptionStatus[PatternEditState.SELECT_REGULAR] = true;
+                    newOptionStatus[PatternEditorState.SELECT_REGULAR] = true;
                 }
                 rect.is_selected = nextRegularState;
 
@@ -160,7 +160,7 @@ const PatternEdit = (props: PatternEditProps) => {
         setOptionStatus(newOptionStatus);
     }
 
-    const updateEditorState = (newState: PatternEditState) => {
+    const updateEditorState = (newState: PatternEditorState) => {
         setEditorState(newState);
     }
 
@@ -211,7 +211,7 @@ const PatternEdit = (props: PatternEditProps) => {
             {/* <div className="create-initial-hint_text">
                 Select the boxes to make up the pattern and select one start point and one endpoint. 
             </div> */}
-            <PatternEditRenderer 
+            <PatternEditorRenderer 
                 rectData={rectData}
                 onRectClick={onRectClick}
                 editorState={editorState}/>
@@ -223,5 +223,5 @@ const PatternEdit = (props: PatternEditProps) => {
     </div>);
 }
 
-export default PatternEdit;
-export {PatternEditState, RectData};
+export default PatternEditor;
+export {PatternEditorState, RectData};

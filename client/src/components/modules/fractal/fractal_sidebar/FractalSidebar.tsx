@@ -2,6 +2,7 @@ import React from "react";
 import { Operator, Pattern, Symbol } from "../../../../constants/Types";
 import "./FractalSidebar.css";
 import OperatorEdit from "./OperatorEdit";
+import PatternEdit from "./PatternEdit";
 import PreviewRenderer from "./PreviewRenderer";
 import SymbolEdit from "./SymbolEdit";
 
@@ -31,10 +32,6 @@ const FractalSidebar = (props: Props) => {
     function getValidatedColorString(hex_color: number): string {
         const raw_string = props.backgroundColor.toString(0x10);
         return "#" + "0".repeat(6-raw_string.length) + raw_string;
-    }
-
-    function getTempPattern(): Pattern {
-        return props.patterns[0];
     }
 
     function getInvalidInstructions(initial: string):string[] {
@@ -93,12 +90,17 @@ const FractalSidebar = (props: Props) => {
         <input className="sidebar_input" 
             type="text" value = {props.title} placeholder="Project Title"
             onChange={(event) => props.updateTitle(event.target.value)}/>
-        <div className = 'sidebar-open-initial_button' 
+        {/* <div className = 'sidebar-open-initial_button' 
             onClick = {() => {props.onPatternClick(props.patterns[0])}}>
             Open Initial Editor
         </div>
         <PreviewRenderer
-            pattern={getTempPattern()}/>
+            pattern={getTempPattern()}/> */}
+        {
+            props.patterns.map((pattern: Pattern) => 
+                <PatternEdit pattern={pattern} onPatternClick={props.onPatternClick}/>
+            )
+        }
         <div>
             Initial Pattern
         </div>

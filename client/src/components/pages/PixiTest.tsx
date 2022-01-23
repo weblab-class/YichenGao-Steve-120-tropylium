@@ -15,6 +15,7 @@ const PixiTest = (props: PixiTestProps) => {
     const ref = useRef(undefined);
     const [change_state, setChangeState] = useState(0);
     let test = undefined;
+    let texture;
     let PixiAppRef = useRef<Pixi.Application>(undefined);
     let viewportRef = useRef<Viewport>(undefined);
     useEffect(() => {
@@ -46,6 +47,15 @@ const PixiTest = (props: PixiTestProps) => {
         PixiApp.stage.addChild(viewport);
         PixiAppRef.current = PixiApp;
         viewportRef.current = viewport;
+
+        let graphics: Pixi.Graphics= new Pixi.Graphics();
+        graphics.beginFill(0xABCDEF + 10000*change_state);
+        graphics.drawRect(0,0,100,100)
+        //graphics.drawCircle(0,-100*(change_state+1), 100)
+        //graphics.drawRect(0,100*change_state,100,100);
+        graphics.endFill();
+        texture = PixiApp.renderer.generateTexture(graphics);
+        graphics.destroy(true);
         return () => {
             // kill everything to hopefully avoid memory leaks
             PixiApp.destroy(true, true);
@@ -71,12 +81,16 @@ const PixiTest = (props: PixiTestProps) => {
         //graphics.removeChildren()
         //const pixiCanvas = D3.select(ref.current).select('canvas');
         //pixiCanvas.call(D3.zoom().on("zoom", zoom));
-        let graphics: Pixi.Graphics= new Pixi.Graphics();
-        graphics.beginFill(0xABCDEF + 10000*change_state);
-        graphics.drawCircle(0,-100*(change_state+1), 100)
-        graphics.drawRect(0,100*change_state,100,100);
-        graphics.endFill();
-        viewportRef.current.addChild(graphics);
+        
+                var circle = new Pixi.Sprite(texture);
+        //circle.y = -100*(change_state+1);
+        circle.x = 100*change_state;
+        circle.angle = 45*(change_state)
+       
+        console.log(`Texture Width ${circle.width}`)
+        console.log(`Texture Height ${circle.height}`)
+        viewportRef.current.addChild(circle);
+        //graphics.destroy(true)
         // if(!oldZoom === undefined) {
         //     const transform = D3.zoomtransform(D3.select(ref.current))
         //     graphics.position.x = transform.x;

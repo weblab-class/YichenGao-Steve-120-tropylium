@@ -2,7 +2,7 @@ import { RouteComponentProps } from "@reach/router";
 import React, { useState } from "react";
 import { Operator, Pattern, Symbol } from "../../constants/Types";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
-import PatternEdit from "../modules/fractal/fractal_pattern_edit/PatternEdit";
+import PatternEditor from "../modules/fractal/fractal_pattern_edit/PatternEditor";
 import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
 import "./FractalCreator.css";
 
@@ -81,7 +81,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
                 ? 'editor-open'
                 : ''
             }`}>
-            <PatternEdit 
+            <PatternEditor 
                 pattern={editing_pattern} 
                 onPatternUpdate={updatePattern}/>
         </div>

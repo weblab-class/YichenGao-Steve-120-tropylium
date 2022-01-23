@@ -6,6 +6,7 @@ import "./PreviewRenderer.css";
 
 type PreviewRendererProps = {
     pattern: Pattern;
+    onPreviewClick: (pattern: Pattern) => void 
 }
 
 const PreviewRenderer = (props: PreviewRendererProps) => {
@@ -56,7 +57,8 @@ const PreviewRenderer = (props: PreviewRendererProps) => {
         );
     });
 
-    return (<div ref = {svg_container} className="preview-svg_container">
+    return (<div ref = {svg_container} className="preview-svg_container" 
+            onClick={(event) => props.onPreviewClick(props.pattern)}>
         <svg width = {`${PREVIEW_WIDTH}px`} height = {`${PREVIEW_HEIGHT}px`}>
             <g>
 

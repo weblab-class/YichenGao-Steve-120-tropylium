@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { PatternEditState} from "./PatternEdit";
+import { PatternEditorState} from "./PatternEditor";
 
 import "./Options.css";
 
@@ -8,11 +8,11 @@ type Props = {
     hint: string,
     is_selected: boolean,
     done: boolean,
-    associated_editor_state: PatternEditState,
-    onClick: (newEditorState: PatternEditState) => void,
+    associated_editor_state: PatternEditorState,
+    onClick: (newEditorState: PatternEditorState) => void,
 }
 
-const PatternEditOptions = (props: Props) => {
+const PatternEditorOptions = (props: Props) => {
     const onClickOption = (event) => {
         props.onClick(props.associated_editor_state);
     }
@@ -30,4 +30,4 @@ const PatternEditOptions = (props: Props) => {
     </div>)
 }
 
-export default PatternEditOptions;
+export default PatternEditorOptions;

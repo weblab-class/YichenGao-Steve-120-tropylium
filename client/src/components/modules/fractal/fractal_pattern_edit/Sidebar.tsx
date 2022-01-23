@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import PatternEditOptions from "./Options";
-import {PatternEditState} from "./PatternEdit";
+import PatternEditorOptions from "./Options";
+import {PatternEditorState} from "./PatternEditor";
 
 import "./Sidebar.css"
 
 type Props = {
-    editorState: PatternEditState,
-    onEditorStateUpdate: (newEditorState: PatternEditState) => void,
+    editorState: PatternEditorState,
+    onEditorStateUpdate: (newEditorState: PatternEditorState) => void,
     optionStatus: boolean[],
 }
 
@@ -14,7 +14,7 @@ const Sidebar = (props: Props) => {
     
     const [currentEditorState, setCurrentEditorState] = useState(props.editorState);
     
-    const onOptionClick = (new_editor_state: PatternEditState): void => {
+    const onOptionClick = (new_editor_state: PatternEditorState): void => {
         if(!(new_editor_state === currentEditorState)) {
             props.onEditorStateUpdate(new_editor_state);
             setCurrentEditorState(new_editor_state);
@@ -22,26 +22,26 @@ const Sidebar = (props: Props) => {
     }
 
     return (<div className="fractal-initial-sidebar_container">
-        <PatternEditOptions
+        <PatternEditorOptions
             title='Select Cells'
             hint='Select one or more cells'
-            is_selected={props.editorState === PatternEditState.SELECT_REGULAR}
-            done={props.optionStatus[PatternEditState.SELECT_REGULAR]}
-            associated_editor_state={PatternEditState.SELECT_REGULAR}
+            is_selected={props.editorState === PatternEditorState.SELECT_REGULAR}
+            done={props.optionStatus[PatternEditorState.SELECT_REGULAR]}
+            associated_editor_state={PatternEditorState.SELECT_REGULAR}
             onClick={onOptionClick}/>
-        <PatternEditOptions
+        <PatternEditorOptions
             title='Select Start Point'
             hint='Select 1 start point'
-            is_selected={props.editorState === PatternEditState.SELECT_START}
-            done={props.optionStatus[PatternEditState.SELECT_START]}
-            associated_editor_state={PatternEditState.SELECT_START}
+            is_selected={props.editorState === PatternEditorState.SELECT_START}
+            done={props.optionStatus[PatternEditorState.SELECT_START]}
+            associated_editor_state={PatternEditorState.SELECT_START}
             onClick={onOptionClick}/>
-        <PatternEditOptions
+        <PatternEditorOptions
             title='Select End Point'
             hint='Select 1 end point'
-            is_selected={props.editorState === PatternEditState.SELECT_END}
-            done={props.optionStatus[PatternEditState.SELECT_END]}
-            associated_editor_state={PatternEditState.SELECT_END}
+            is_selected={props.editorState === PatternEditorState.SELECT_END}
+            done={props.optionStatus[PatternEditorState.SELECT_END]}
+            associated_editor_state={PatternEditorState.SELECT_END}
             onClick={onOptionClick}/>
     </div>)
 }

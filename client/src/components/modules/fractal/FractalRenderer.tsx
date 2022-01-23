@@ -15,12 +15,17 @@ type FractalRendererProps = {
     //antialias: boolean
 }
 
+type TextureContainer = {
+    symbol_names: string[]
+    texture: Pixi.RenderTexture
+}
+
 const FractalRenderer = (props: FractalRendererProps) => {
     
     const container_ref = useRef(undefined);
     const PixiAppRef = useRef<Pixi.Application>(undefined);
     const viewportRef = useRef<Viewport>(undefined);
-    const graphicsRef = useRef<Pixi.Graphics>(undefined);
+    //const graphicsRef = useRef<Pixi.Graphics>(undefined);
 
     // run once only at the beginning
     useEffect(() => {
@@ -45,19 +50,20 @@ const FractalRenderer = (props: FractalRendererProps) => {
             .wheel()
             .decelerate()
 
-        const graphics = new Pixi.Graphics();
-        viewport.addChild(graphics);
+        // const graphics = new Pixi.Graphics();
+        // viewport.addChild(graphics);
 
         PixiApp.stage.addChild(viewport);
         PixiAppRef.current = PixiApp;
         viewportRef.current = viewport;
-        graphicsRef.current = graphics;
+        //graphicsRef.current = graphics;
 
         return () => {
             // kill everything to hopefully avoid memory leaks and cleanup properly
+            //graphicsRef.current.destroy();
             viewportRef.current.destroy();
             PixiAppRef.current.destroy(true, true);
-            graphicsRef.current = undefined;
+            //graphicsRef.current = undefined;
             viewportRef.current = undefined;
             PixiAppRef.current = undefined;
         };
@@ -116,20 +122,83 @@ const FractalRenderer = (props: FractalRendererProps) => {
         } as Pattern;
     }
 
+
     const CELL_WIDTH = 16;
+
     function drawShape(graphics: Pixi.Graphics, x:number, y: number):void {
-        graphics.beginFill(0x0e782b);
-        graphics.drawRect(CELL_WIDTH*x, CELL_WIDTH*y, CELL_WIDTH, CELL_WIDTH);
-        graphics.endFill();
+            graphics.beginFill(0x0e782b);
+            graphics.drawRect(CELL_WIDTH*x, CELL_WIDTH*y, CELL_WIDTH, CELL_WIDTH);
+            graphics.endFill();
+        }
+
+    function createTextures(patterns: Pattern[]): TextureContainer[] {
+        const PixiApp = PixiAppRef.current;
+        const sprites: TextureContainer[] = [];
+        patterns.forEach((pattern: Pattern) => {
+            const graphics = new Pixi.Graphics();
+            pattern.points.forEach((point: Point) => {
+                drawShape(graphics, point.x, point.y)
+            })
+            const texture = PixiApp.renderer.generateTexture(graphics);
+            
+            sprites.push({
+                symbol_names: pattern.symbol_names,
+                texture: texture,
+            } as TextureContainer);
+            graphics.destroy();
+            //texture.destroy();
+        });
+        return sprites;
     }
+
+    function getTexture(textures: TextureContainer[], instruction_ID: string): Pixi.RenderTexture {
+        return textures.find((sprite_container: TextureContainer) => {
+            for(let i = 0; i < sprite_container.symbol_names.length; i++) {
+                if(sprite_container.symbol_names[i] === instruction_ID)
+                    return true;
+            }
+        }).texture;
+    }
+
+
+    function drawTexture(parent: Viewport, texture: Pixi.RenderTexture, 
+        x: number, y: number, angle: number): void {
+        
+            let graphics: Pixi.Graphics= new Pixi.Graphics();
+            graphics.beginFill(0xABCDEF);
+            graphics.drawRect(x*32,y*32,32,32)
+            //graphics.drawCircle(0,-100*(change_state+1), 100)
+            //graphics.drawRect(0,100*change_state,100,100);
+            graphics.endFill();
+            texture = PixiAppRef.current.renderer.generateTexture(graphics);
+            graphics.destroy(true);
+        
+        
+            const sprite = new Pixi.Sprite(texture);
+        
+        if(texture.orig === null)
+        console.log('SCREAM!');
+        //console.log(texture);
+        sprite.x = CELL_WIDTH*x;
+        sprite.y = CELL_WIDTH*y;
+        sprite.angle = -angle;
+        parent.addChild(sprite);
+    }
+
+
     // run with every data change
     useEffect(() => {
         const viewport = viewportRef.current
-        const graphics = graphicsRef.current
-        graphics.clear();
+        viewport.children.forEach((child) => {
+            child.destroy(true);
+        })
+        // const graphics = graphicsRef.current
+        // graphics.clear();
+        const graphics = new Pixi.Graphics();
 
         const render_string = computeRenderString(props.num_iterations, props.initial, props.operators, props.symbols);
-    
+        // const textures = createTextures(props.patterns);
+
         let current_start_position = [0,0];
         let current_direction = 0;
 
@@ -142,7 +211,9 @@ const FractalRenderer = (props: FractalRendererProps) => {
                 const pattern = getDrawPattern(instruction_ID);
                 
                 const direction_radians = current_direction*Math.PI/180.0;
-                
+                // drawTexture(viewport, getTexture(textures, instruction_ID), 
+                //     Math.round(current_start_position[0]), Math.round(current_start_position[1]), current_direction);
+
                 pattern.points.forEach((value: Point) => {
                     const relative_x = value.x - pattern.start_position[0];
                     const relative_y = value.y - pattern.start_position[1];
@@ -176,6 +247,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
             }
         }
 
+
         const fill_screen_height = container_ref.current.clientHeight/CELL_WIDTH, 
         fill_screen_width = container_ref.current.clientWidth/CELL_WIDTH;
         const distance_span_y = Math.abs(max_y-min_y)+1,
@@ -183,13 +255,16 @@ const FractalRenderer = (props: FractalRendererProps) => {
 
         // decreases zoom close to 1 and asymptotically approaches 0.75
         function getProperZoomLevel(max_fill_zoom: number): number {
-            return (-0.75/(1/max_fill_zoom_level+1) + 0.75)*max_fill_zoom_level;
+            return (-0.75/(1/max_fill_zoom+1) + 0.75)*max_fill_zoom;
         }
         const max_fill_zoom_level = Math.min(fill_screen_height/ distance_span_y, fill_screen_width/ distance_span_x);
         //console.log(getProperZoomLevel(max_fill_zoom_level));
         const center_x = (max_x-min_x)/2 + min_x, center_y = (max_y-min_y)/2 + min_y;
-        
-        if(render_string.length < 100000) {
+        graphics.beginFill(0xFFF000);
+        graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
+        graphics.endFill();
+        viewport.addChild(graphics);
+        if(render_string.length < 200000) {
             viewport.animate({
                 time: 500,
                 scale: getProperZoomLevel(max_fill_zoom_level),
@@ -226,9 +301,7 @@ const FractalRenderer = (props: FractalRendererProps) => {
         //     y: container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*center_y,
         // });
 
-        // graphics.beginFill(0xFFF000);
-        // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
-        // graphics.endFill();
+        
     }, [props.initial, props.num_iterations, props.patterns, props.operators, props.symbols]);
 
     useEffect(() => {

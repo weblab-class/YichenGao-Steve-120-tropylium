@@ -2,17 +2,17 @@ import { RouteComponentProps } from "@reach/router";
 import React, {useState, useRef, useEffect} from "react";
 import * as d3 from 'd3';
 //import {Pattern, onPatternUpdate} from "../pages/FractalCreator"
-import { PatternEditState , RectData} from "./PatternEdit";
+import { PatternEditorState , RectData} from "./PatternEditor";
 
 import "./Renderer.css"
 
 type Props = RouteComponentProps & {
     rectData: RectData[][];
     onRectClick: (x: number, y: number) => void;
-    editorState: PatternEditState;
+    editorState: PatternEditorState;
 }
 
-const PatternEditRenderer = (props: Props) => {
+const PatternEditorRenderer = (props: Props) => {
     // console.log("INITIAL RENDERER RERENDER");
     // console.log(props.editorState);
     //const [editorState, setEditorState] = useState[props.editorState];
@@ -33,11 +33,11 @@ const PatternEditRenderer = (props: Props) => {
     }
     function getHoverFill(data:RectData): string {
         switch(props.editorState) {
-            case PatternEditState.SELECT_START:
+            case PatternEditorState.SELECT_START:
                 return '#0d0'
-            case PatternEditState.SELECT_END:
+            case PatternEditorState.SELECT_END:
                 return '#d00'
-            case PatternEditState.SELECT_REGULAR:
+            case PatternEditorState.SELECT_REGULAR:
                 return '#444'
         }
     }
@@ -145,4 +145,4 @@ const PatternEditRenderer = (props: Props) => {
         );
 }
 
-export default PatternEditRenderer;
+export default PatternEditorRenderer;
