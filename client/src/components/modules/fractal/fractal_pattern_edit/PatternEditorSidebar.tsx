@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import PatternEditorOptions from "./Options";
+import PatternEditorOptions from "./PatternEditorOptions";
 import {PatternEditorState} from "./PatternEditor";
 
-import "./Sidebar.css"
+import "./PatternEditorSidebar.css"
 
 type Props = {
     editorState: PatternEditorState,
@@ -10,7 +10,7 @@ type Props = {
     optionStatus: boolean[],
 }
 
-const Sidebar = (props: Props) => {
+const PatternEditorSidebar = (props: Props) => {
     
     const [currentEditorState, setCurrentEditorState] = useState(props.editorState);
     
@@ -46,4 +46,4 @@ const Sidebar = (props: Props) => {
     </div>)
 }
 
-export default Sidebar;
+export default PatternEditorSidebar;

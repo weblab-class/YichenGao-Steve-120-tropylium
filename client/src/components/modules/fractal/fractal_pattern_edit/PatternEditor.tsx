@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
-import PatternEditorRenderer from "./Renderer"
-import Sidebar from "./Sidebar";
+import PatternEditorRenderer from "./PatternEditorRenderer"
+import PatternEditorSidebar from "./PatternEditorSidebar";
 
 import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
 import "./PatternEditor.css"
@@ -31,8 +31,13 @@ const PatternEditor = (props: PatternEditorProps) => {
     
     const WIDTH = 800, HEIGHT = 800, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
-    const [editorState, setEditorState] = useState(PatternEditorState.SELECT_REGULAR);
+    
     const [rectData, setRectData] = useState(getRectData(props.pattern));
+    useEffect(() => {
+        setRectData(getRectData(props.pattern))
+    }, [props.pattern]);
+
+    const [editorState, setEditorState] = useState(PatternEditorState.SELECT_REGULAR);
     const [optionStatus, setOptionStatus] = useState(
         [
             props.pattern.points.length > 0,
@@ -40,8 +45,8 @@ const PatternEditor = (props: PatternEditorProps) => {
             props.pattern.end_position.length > 0,
         ]
     );
+
     function getRectData(pattern: Pattern): RectData[][] {
-        
         const rect_info: RectData[][] = [];
         for(let i = 0; i < GRID_SIZE; i++) {
             rect_info.push([]);
@@ -55,16 +60,7 @@ const PatternEditor = (props: PatternEditorProps) => {
                 } as RectData)
             }
         };
-        // rect_info.push([
-        //     {
-        //     x: 3,
-        //     y: 2,
-        //     is_selected: false,
-        //     is_startpoint: false,
-        //     is_endpoint: false,
-        // } as RectData]);
 
-        //hello
         pattern.points.forEach((element: Point) => {
             rect_info[element.x][element.y].is_selected = true;
         });
@@ -180,7 +176,7 @@ const PatternEditor = (props: PatternEditorProps) => {
                         newState.points.push({
                             x:i,
                             y:j,
-                            color: 0x0,
+                            color: 0x012345,
                             shape: ""
                         } as Point);
                     if(rect.is_startpoint)
@@ -192,7 +188,7 @@ const PatternEditor = (props: PatternEditorProps) => {
             props.onPatternUpdate(newState);
         }
     }
-//hello
+
     return (
     <div className = "create-initial_container">
         <div className="create-initial_container2">
@@ -216,7 +212,7 @@ const PatternEditor = (props: PatternEditorProps) => {
                 rectData={rectData}
                 onRectClick={onRectClick}
                 editorState={editorState}/>
-            <Sidebar
+            <PatternEditorSidebar
                 editorState={editorState}
                 onEditorStateUpdate={updateEditorState}
                 optionStatus={optionStatus}/>

@@ -13,27 +13,6 @@ type Props = {
 }
 
 const PatternEdit = (props: Props) => {
-    console.log(props.symbol_names)
-    console.log(props.pattern.symbol_names)
-    const test = props.symbol_names.filter((symbol_name: string) => {
-        props.pattern.symbol_names.find(
-            (current_symbol_name: string) => {
-                symbol_name === current_symbol_name
-        }) === undefined
-    })
-
-    console.log(test)
-
-    const test2 = []
-    for(let symbol_name of props.symbol_names) {
-        if(props.pattern.symbol_names.find(
-            (current_symbol_name: string) => {
-                symbol_name === current_symbol_name
-        }) === undefined) {
-        test2.push(symbol_name)
-        }
-    }
-    console.log(test2)
     
     function removeSymbol(symbol_name: string): void {
         props.updatePattern({

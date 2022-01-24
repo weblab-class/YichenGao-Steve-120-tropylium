@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 //import {Pattern, onPatternUpdate} from "../pages/FractalCreator"
 import { PatternEditorState , RectData} from "./PatternEditor";
 
-import "./Renderer.css"
+import "./PatternEditorRenderer.css"
 
 type Props = RouteComponentProps & {
     rectData: RectData[][];

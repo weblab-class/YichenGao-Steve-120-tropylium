@@ -135,7 +135,7 @@ const FractalRenderer = (props: Props) => {
                     if(absolute_x < min_x) min_x = absolute_x;
                     if(absolute_y < min_y) min_y = absolute_y;
 
-                    drawShape(graphics, absolute_x, absolute_y);
+                    drawShape(graphics, absolute_x, absolute_y, value.color);
                 })
 
                 const displacement = [pattern.end_position[0] - pattern.start_position[0], pattern.end_position[1] - pattern.start_position[1]]
@@ -227,8 +227,8 @@ const FractalRenderer = (props: Props) => {
 
     const CELL_WIDTH = 16;
 
-    function drawShape(graphics: Pixi.Graphics, x:number, y: number):void {
-            graphics.beginFill(0x0e782b);
+    function drawShape(graphics: Pixi.Graphics, x:number, y: number, color: number):void {
+            graphics.beginFill(color);
             graphics.drawRect(CELL_WIDTH*x, CELL_WIDTH*y, CELL_WIDTH, CELL_WIDTH);
             graphics.endFill();
     }

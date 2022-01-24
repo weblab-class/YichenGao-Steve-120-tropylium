@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { PatternEditorState} from "./PatternEditor";
 
-import "./Options.css";
+import "./PatternEditorOptions.css";
 
 type Props = {
     title: string,
