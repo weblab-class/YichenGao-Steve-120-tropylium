@@ -25,6 +25,7 @@ type Props = {
     updateInitial: (new_initial: string) => void
     backgroundColor: number
     updateBackgroundColor: (new_background_color: number) => void
+    onDownloadClick: () => void
     //antialias: boolean
     //updateAntialias: (new_antialias: boolean) => void
 }
@@ -120,6 +121,11 @@ const FractalSidebar = (props: Props) => {
     
     return <div className ='sidebar_container'>
         <div className = 'sidebar-scrolling_container'>
+        <div onClick = {(event) => {
+            //console.log("download attempt from sidebar");
+            props.onDownloadClick()}}>
+            DOWNLOAD IMAGE!!!!!
+        </div>
         <input className="sidebar_input" 
             type="text" value = {props.title} placeholder="Project Title"
             onChange={(event) => props.updateTitle(event.target.value)}/>

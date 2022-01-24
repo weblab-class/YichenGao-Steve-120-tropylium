@@ -12,6 +12,7 @@ type Props = {
     operators: Operator[]
     symbols: Symbol[]
     background_color: number
+    setDownloadCallback: (downloadCallback: () => (string)) => void
     onRenderStart: () => void
     onRenderEnd: (renderTimeMilli: number) => void
     //antialias: boolean
@@ -75,11 +76,13 @@ const FractalRenderer = (props: Props) => {
                 1000,
                 1000,
             );
-            zoomToCenter(true);
+            zoomToPoint(computeIdealZoom(),computeCenter(),true);
             //console.log('resize')
         }
 
         window.addEventListener('resize', onWindowResize);
+
+        props.setDownloadCallback(getDownloadImage);
 
         return () => {
             // kill everything to hopefully avoid memory leaks and cleanup properly
@@ -152,7 +155,7 @@ const FractalRenderer = (props: Props) => {
         viewport.addChild(graphics);
 
         updateFractalBounds(max_x, min_x, max_y, min_y);
-        zoomToCenter(render_string.length < 2e5);
+        zoomToPoint(computeIdealZoom(), computeCenter(), render_string.length < 2e5);
 
         // graphics.beginFill(0xFFF000);
         // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
@@ -232,7 +235,7 @@ const FractalRenderer = (props: Props) => {
 
     // decreases zoom close to 1 and asymptotically approaches 0.75
     function getProperZoomLevel(max_fill_zoom: number): number {
-        return (-0.75/(1/max_fill_zoom+1) + 0.75)*max_fill_zoom;
+        return (-0.9/(1/max_fill_zoom+1) + 0.9)*max_fill_zoom;
     }
 
     function updateFractalBounds(max_x: number, min_x: number, max_y: number, min_y: number,) {
@@ -244,7 +247,7 @@ const FractalRenderer = (props: Props) => {
         } as FractalBounds;
     }
 
-    function computeZoomLevel(): number {
+    function computeIdealZoom(): number {
         const fractalBounds = fractalBoundsRef.current;
         const max_x = fractalBounds.max_x;
         const min_x = fractalBounds.min_x;
@@ -271,9 +274,7 @@ const FractalRenderer = (props: Props) => {
         return [center_x, center_y];
     }
 
-    function zoomToCenter(animate: boolean) {
-        const zoom = computeZoomLevel()
-        const center = computeCenter()
+    function zoomToPoint(zoom: number, point: number[], animate: boolean) {
         const viewport = viewportRef.current;
 
         if(animate) {
@@ -281,18 +282,40 @@ const FractalRenderer = (props: Props) => {
                 time: 500,
                 scale: zoom,
                 position: {
-                    x: CELL_WIDTH/2 + CELL_WIDTH*center[0],
-                    y: CELL_WIDTH/2 + CELL_WIDTH*center[1],
+                    x: CELL_WIDTH/2 + CELL_WIDTH*point[0],
+                    y: CELL_WIDTH/2 + CELL_WIDTH*point[1],
                 },
                 ease: 'easeInOutSine',
                 removeOnInterrupt: true,
             })
         } else {
             viewport.setTransform(
-                container_ref.current.clientWidth/2 - CELL_WIDTH/2 - CELL_WIDTH*center[0],  
-                container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*center[1])
+                container_ref.current.clientWidth/2 - CELL_WIDTH/2 - CELL_WIDTH*point[0],  
+                container_ref.current.clientHeight/2 - CELL_WIDTH/2 - CELL_WIDTH*point[1])
                 .setZoom(zoom, true)
         }
+    }
+
+    function getDownloadImage(): string {
+        const viewport = viewportRef.current;
+        const old_zoom = viewport.scale.x;
+        
+        const old_center = [viewport.position.x, viewport.y];
+        console.log(old_center)
+        console.log([container_ref.current.clientWidth/2, container_ref.current.clientHeight/2])
+        // console.log(old_center[1]+container_ref.current.clientWidth/2);
+        // console.log(computeCenter())
+        const image_zoom = 2*computeIdealZoom();
+        zoomToPoint(image_zoom, computeCenter(), false);
+        const image = PixiAppRef.current.renderer.plugins.extract
+            .image(PixiAppRef.current.stage, "image/png", 1).getAttribute('src');
+        viewport.setTransform(
+            old_center[0],  
+            old_center[1], 
+            old_zoom, old_zoom);
+                //.setZoom(old_zoom, true)
+                
+        return image;
     }
 
     return (<div ref = {container_ref} className="fractal-renderer_container">

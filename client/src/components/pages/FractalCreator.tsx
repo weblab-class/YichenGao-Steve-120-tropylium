@@ -1,5 +1,5 @@
 import { RouteComponentProps } from "@reach/router";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Operator, Pattern, Symbol } from "../../constants/Types";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
 import PatternEditor from "../modules/fractal/fractal_pattern_edit/PatternEditor";
@@ -59,8 +59,6 @@ const FractalCreator = (props: FractalCreatorProps) => {
     } as Pattern);
 
     function updatePattern(new_pattern: Pattern): void {
-        console.log("new pattenrn")
-        console.log(new_pattern);
         const new_patterns: Pattern[] = [];
         for(let old_pattern of patterns) {
             if(old_pattern.id === new_pattern.id)
@@ -69,13 +67,11 @@ const FractalCreator = (props: FractalCreatorProps) => {
                 new_patterns.push(old_pattern)
         }
         setPatterns(new_patterns)
-        console.log(new_patterns);
+        //console.log(new_patterns);
         setEditorOpen(false);
     }
 
     function onPatternClick(pattern: Pattern) {
-        console.log(patterns);
-        console.log(pattern.id);
         setEditingPattern(pattern);
         setEditorOpen(true);
     }
@@ -86,6 +82,22 @@ const FractalCreator = (props: FractalCreatorProps) => {
 
     function onRenderEnd(renderTimeMilli: number): void {
 
+    }
+
+    const downloadCallbackRef = useRef(undefined);
+    function onDownloadClick() {
+        //console.log("download attempt");
+        const image = downloadCallbackRef.current();
+        const a = document.createElement('a');
+            document.body.append(a);
+            a.download = `${title.length > 0 ? title : 'Untitled Fractal'}`;
+            a.href = image;
+            a.click();
+            a.remove();
+    }
+
+    function setDownloadCallback(downloadCallback: () => string): void {
+        downloadCallbackRef.current = downloadCallback;
     }
     
     return (<div className = 'fractal-creator_container'>
@@ -107,6 +119,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
             background_color={background_color}
             onRenderStart={onRenderStart}
             onRenderEnd={onRenderEnd}
+            setDownloadCallback={setDownloadCallback}
             />
         <FractalSidebar 
             title= {title}
@@ -124,6 +137,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
             updateNumIterations={setNumIterations}
             backgroundColor={background_color}
             updateBackgroundColor={setBackgroundColor}
+            onDownloadClick={onDownloadClick}
         />
     </div>);
 };

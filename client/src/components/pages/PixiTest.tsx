@@ -48,14 +48,7 @@ const PixiTest = (props: PixiTestProps) => {
         PixiAppRef.current = PixiApp;
         viewportRef.current = viewport;
 
-        let graphics: Pixi.Graphics= new Pixi.Graphics();
-        graphics.beginFill(0xABCDEF + 10000*change_state);
-        graphics.drawRect(0,0,100,100)
-        //graphics.drawCircle(0,-100*(change_state+1), 100)
-        //graphics.drawRect(0,100*change_state,100,100);
-        graphics.endFill();
-        texture = PixiApp.renderer.generateTexture(graphics);
-        graphics.destroy(true);
+        
         return () => {
             // kill everything to hopefully avoid memory leaks
             PixiApp.destroy(true, true);
@@ -71,25 +64,50 @@ const PixiTest = (props: PixiTestProps) => {
     //     graphics.scale.y = event.transform.k;
     // }
     let firstTime = useRef(true);
+    function download_sprite_as_png(renderer = PixiAppRef.current.renderer, sprite = null) {
+        renderer.options.antialias = true;
+        const image = renderer.plugins.extract.image(PixiAppRef.current.stage, "image/webp", 1).getAttribute('src');
+        ;
+        console.log(typeof image);
+        //image.toBlob(function(b) {
+ var a = document.createElement('a');
+            document.body.append(a);
+            a.download = "image";
+            a.href = image;
+            a.click();
+            a.remove();
+        //});
+        
+           
+        
+    }
     useEffect(() => {
         //console.log(`${test === undefined ? 'Screeamamamamam' : 'Phewww'}`)
         //console.log('UseEffect() rerender every time ' + change_state
         const PixiApp = PixiAppRef.current;
+        let graphics: Pixi.Graphics= new Pixi.Graphics();
+        graphics.beginFill(0xABCDEF + 10000*change_state);
+        //graphics.drawRect(0,100,100,100)
+        graphics.drawCircle(0,-100*(change_state+1), 100)
+        graphics.drawRect(0,100*change_state,100,100);
+        graphics.endFill();
+        //texture = PixiApp.renderer.generateTexture(graphics);
+        //graphics.destroy(true);
         //PixiApp.stage.removeChildren();
-        
+        viewportRef.current.addChild(graphics);
         
         //graphics.removeChildren()
         //const pixiCanvas = D3.select(ref.current).select('canvas');
         //pixiCanvas.call(D3.zoom().on("zoom", zoom));
         
-                var circle = new Pixi.Sprite(texture);
-        //circle.y = -100*(change_state+1);
-        circle.x = 100*change_state;
-        circle.angle = 45*(change_state)
+        //         var circle = new Pixi.Sprite(texture);
+        // //circle.y = -100*(change_state+1);
+        // circle.x = 100*change_state;
+        // circle.angle = 45*(change_state)
        
-        console.log(`Texture Width ${circle.width}`)
-        console.log(`Texture Height ${circle.height}`)
-        viewportRef.current.addChild(circle);
+        // console.log(`Texture Width ${circle.width}`)
+        // console.log(`Texture Height ${circle.height}`)
+        // viewportRef.current.addChild(circle);
         //graphics.destroy(true)
         // if(!oldZoom === undefined) {
         //     const transform = D3.zoomtransform(D3.select(ref.current))
@@ -138,6 +156,9 @@ const PixiTest = (props: PixiTestProps) => {
     return (<div className = "pixi-test_container">
         <div className="pixi-test_button" onClick = {(event) => setChangeState(change_state+1)}>
             Button State change
+        </div>
+        <div className="pixi-test_button2" onClick = {(event) => download_sprite_as_png()}>
+            Download as image
         </div>
         <div className="pixi_container" ref = {ref}>
 
