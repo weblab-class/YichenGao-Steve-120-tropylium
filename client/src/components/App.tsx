@@ -20,6 +20,7 @@ import PixiTest from "./pages/PixiTest";
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
 
+  
   useEffect(() => {
     get("/api/whoami")
       .then((user: User) => {
@@ -47,6 +48,64 @@ const App = () => {
     setUserId(undefined);
     post("/api/logout");
   };
+
+  // render() {
+  //   return (
+  //     <>
+  //       <Router>
+  //         <Home
+  //           path="/"
+  //           handleLogin={this.handleLogin}
+  //           handleLogout={this.handleLogout}
+  //           loggedIn={this.state.loggedIn}
+  //           userId={this.state.userId}
+  //           loggedOut={this.state.loggedOut}
+  //           resetLogout={this.state.resetLogout}
+  //         />
+  //         <FractalCreator
+  //           path="/create/"
+  //           userId={this.state.userId}
+  //           loggedIn={this.state.loggedIn}
+  //           userId={this.state.userId}
+  //           handleLogin={this.handleLogin}
+  //           handleLogout={this.handleLogout}
+  //           loggedOut={this.state.loggedOut}
+  //           loadId={this.state.loadId}
+  //           resetLoadId={this.resetLoadId}
+  //           name={this.state.name}
+  //           handleSave={this.handleSave}
+  //           savedImages={this.state.savedImages}
+
+
+  //         />
+  //         <Dashboard
+  //           path="/play/"
+  //           userId={this.state.userId}
+  //           loggedIn={this.state.loggedIn}
+  //           userId={this.state.userId}
+  //           handleLogin={this.handleLogin}
+  //           handleLogout={this.handleLogout}
+  //           loggedOut={this.state.loggedOut}
+
+  //         />
+  //         <Gallery
+  //           path="/gallery/"
+  //           userId={this.state.userId}
+  //           loggedIn={this.state.loggedIn}
+  //           handleLogin={this.handleLogin}
+  //           handleLogout={this.handleLogout}
+  //           loggedOut={this.state.loggedOut}
+  //           handleClick={this.handleClick}
+  //           name={this.state.name}
+  //           handleDelete={this.handleDelete}
+  //           numCreated={this.state.numCreated}
+
+  //         />
+          
+    //       <NotFound default />
+    //     </Router>
+    //   </>
+    // );
 
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.

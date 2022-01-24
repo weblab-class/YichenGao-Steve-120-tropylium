@@ -19,3 +19,5 @@ class Card extends Component {
         this.setDownload = this.setDownload.bind(this);
         this.handleLikeable = this.handleLikeable.bind(this);
     }
+
+export Card
