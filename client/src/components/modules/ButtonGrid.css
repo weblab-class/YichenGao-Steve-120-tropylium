@@ -1,17 +1,17 @@
 .ButtonGrid-clicked {
-  background-color: blue;
+  background-color: var(--light-blue);
 }
 
 .ButtonGrid-unclicked {
-  background-color: red;
+  background-color: var(--darkgrey);
 }
 
 .ButtonGrid-startPoint {
-  background-color: yellow;
+  background-color: var(--green);
 }
 
 .ButtonGrid-endPoint {
-  background-color: green;
+  background-color: var(--red);
 }
 
 .ButtonGrid-grid {
@@ -25,11 +25,13 @@
 }
 
 .ButtonGrid-button {
+  width: calc(min(9vh, 7vw) - var(--s));
+
   color: white;
   border: solid;
-  width: calc(9vmin - var(--s));
+  border-radius: var(--xs);
   border-color: var(--primary--dark);
   border-width: 0;
-  margin: 0.5%;
+  margin: 0.4%;
   aspect-ratio: 1;
 }

@@ -49,7 +49,7 @@ class D3Drawer {
           .attr("y", dy)
           .attr("width", 1)
           .attr("height", 1)
-          .attr("fill", "#000000");
+          .attr("fill", "#ffffff");
       }
 
       let [x, y] = this.endDelta;

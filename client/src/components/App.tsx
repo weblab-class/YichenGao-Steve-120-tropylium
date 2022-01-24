@@ -8,6 +8,7 @@ import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
 
+import "./App.css";
 import NavBar from "./modules/NavBar";
 import ArtCreator from "./pages/ArtCreator";
 import Dashboard from "./pages/Dashboard";
@@ -50,22 +51,26 @@ const App = () => {
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
-    <>
-      <NavBar
-        handleLogin={handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void}
-        handleLogout={handleLogout}
-        userId={userId}
-      />
-      <Router>
+    <div className="App-container">
+      <div className="App-navbar">
+        <NavBar
+          handleLogin={
+            handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void
+          }
+          handleLogout={handleLogout}
+          userId={userId}
+        />
+      </div>
+      <Router className="App-content">
         <Home path="/" />
         <ArtCreator path="/fractal_creator" userId={userId} />
         <Dashboard path="/dashboard" />
         <Account path="/account" />
-        <Dtest default={true}/>
-        <FractalCreator path = "/create" is_new_project = {false}/>
-        <PixiTest path="/pixitest"/>
+        <Dtest default={true} />
+        <FractalCreator path="/create" is_new_project={false} />
+        <PixiTest path="/pixitest" />
       </Router>
-    </>
+    </div>
   );
 };
 

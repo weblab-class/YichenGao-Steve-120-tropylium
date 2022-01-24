@@ -41,7 +41,14 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
   const renderFromStepNumber = (stepNumber: number): JSX.Element => {
     switch (stepNumber) {
       case 0:
-        return <Pattern nextStep={nextStep} grid={grid} changeCellState={changeCellState} />;
+        return (
+          <Pattern
+            stepNumber={stepNumber}
+            nextStep={nextStep}
+            grid={grid}
+            changeCellState={changeCellState}
+          />
+        );
       case 1:
         return (
           <StartPoint
