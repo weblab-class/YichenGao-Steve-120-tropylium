@@ -55,8 +55,8 @@ const SymbolEditList = (props: Props) => {
     }
     
     return (<div>
-        <div>
-            Symbols
+        <div className = "fractal-sidebar-section-title_text">
+            SYMBOLS
         </div>
         {
             props.symbols.map((symbol: Symbol) => 

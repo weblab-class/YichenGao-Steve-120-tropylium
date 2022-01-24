@@ -181,7 +181,8 @@ const FractalSidebar = (props: Props) => {
         <PatternEditList
             patterns={props.patterns}
             updatePatterns={onPatternsUpdate}
-            onPatternClick={props.onPatternClick}/>
+            onPatternClick={props.onPatternClick}
+            symbol_names={props.symbols.map((symbol: Symbol) => symbol.name)}/>
         <SymbolEditList
             symbols={props.symbols}
             updateSymbols={onSymbolsUpdate}

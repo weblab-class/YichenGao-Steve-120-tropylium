@@ -2,14 +2,14 @@
     height: calc(100vh - var(--xxl));
     width: 300px;
     display: block;
-    background-color: whitesmoke;
+    background-color: #fdfdfd;
     overflow: scroll;
     overflow-x: hidden;
+    box-shadow: 0 calc(var(--s) / 8) calc(var(--s)/2) 0 #fdfdfd;
 }
 
 .sidebar-scrolling_container {
     width: 100%;
-
 }
 
 .sidebar-open-initial_button {
@@ -30,4 +30,65 @@
 
 .sidebar-warning_text invalid {
     display: block;
+}
+
+.fractal-sidebar-section-title_text {
+    width: 100%;
+    
+    padding: var(--s) var(--m);
+    background-color: var(--primary);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--m);
+    font-weight: 400;
+    box-shadow: 0 calc(var(--s) / 8) calc(var(--s)/2) 0 var(--primary);
+}
+
+.pattern-edit-symbol-names_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.pattern-edit-symbol-name_text {
+    padding: var(--s);
+    background-color: whitesmoke;
+}
+
+.pattern-edit-symbol-name_text:hover {
+    background-color: crimson;
+}
+
+.pattern-edit-symbol-dropdown_container {
+    width: var(--xxl);
+    position: relative;
+    display: inline-block;
+}
+
+.pattern-edit-symbol-add_button {
+    width: 100%;
+    padding: var(--s);
+    background-color: whitesmoke;
+}
+
+.pattern-edit-symbol-dropdown-content_container {
+    width: 100%;
+    display: none;
+    position: absolute;
+}
+
+/**
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
+*/
+
+.pattern-edit-symbol-dropdown_container:hover .pattern-edit-symbol-dropdown-content_container {
+    display: block;
+}
+
+.pattern-edit-symbol-dropdown_container:hover .pattern-edit-symbol-add_button{
+    background-color: lawngreen;
+}
+
+.pattern-edit-symbol-dropdown-content_container div:hover {
+    background-color: gray;
 }

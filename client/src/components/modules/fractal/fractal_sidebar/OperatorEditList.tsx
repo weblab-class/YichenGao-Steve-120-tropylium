@@ -54,8 +54,8 @@ const OperatorEditList = (props: Props) => {
     }
     
     return (<div>
-        <div>
-            Operators
+        <div className = "fractal-sidebar-section-title_text">
+            OPERATORS
         </div>
         {
             props.operators.map((operator: Operator) => 

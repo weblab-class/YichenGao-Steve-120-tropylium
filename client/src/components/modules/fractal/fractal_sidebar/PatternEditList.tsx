@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import { Pattern } from "../../../../constants/Types";
+import { symbolName } from "typescript";
+import { Pattern} from "../../../../constants/Types";
 
 import "./FractalSidebar.css";
 import PatternEdit from "./PatternEdit";
@@ -8,16 +9,34 @@ type Props = {
     patterns: Pattern[]
     updatePatterns: (new_patterns: Pattern[]) => void
     onPatternClick: (pattern: Pattern) => void
+    symbol_names: string[]
 }
 
 const PatternEditList = (props: Props) => {
-    function updatePattern(new_pattern: Pattern): void {
+    function updatePattern(new_pattern: Pattern, new_symbol_name: string): void {
         const new_patterns: Pattern[] = [];
-        for(let old_pattern of props.patterns) {
-            if(old_pattern.id === new_pattern.id)
-                new_patterns.push(new_pattern)
-            else
-                new_patterns.push(old_pattern)
+        if(new_symbol_name === undefined) {
+            for(let old_pattern of props.patterns) {
+                if(old_pattern.id === new_pattern.id)
+                    new_patterns.push(new_pattern)
+                else
+                    new_patterns.push(old_pattern)
+            }
+        } else {
+            for(let old_pattern of props.patterns) {
+                if(old_pattern.id === new_pattern.id)
+                    new_patterns.push(new_pattern)
+                else
+                    new_patterns.push({
+                        id: old_pattern.id,
+                        symbol_names: old_pattern.symbol_names.filter(
+                            (symbol_name: string) => symbol_name !== new_symbol_name
+                        ),
+                        points: old_pattern.points,
+                        start_position: old_pattern.start_position,
+                        end_position: old_pattern.end_position,
+                    } as Pattern)
+            }
         }
         props.updatePatterns(new_patterns);
     }
@@ -52,8 +71,8 @@ const PatternEditList = (props: Props) => {
     }
     
     return (<div>
-        <div>
-            Patterns
+        <div className = "fractal-sidebar-section-title_text">
+            PATTERNS
         </div>
         {
             props.patterns.map((pattern: Pattern, index: number) => 
@@ -62,6 +81,7 @@ const PatternEditList = (props: Props) => {
                     updatePattern={updatePattern}
                     removePattern={removePattern}
                     onPatternClick={props.onPatternClick}
+                    symbol_names={props.symbol_names}
                     />
             )
         }
