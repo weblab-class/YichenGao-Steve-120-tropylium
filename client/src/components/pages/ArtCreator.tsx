@@ -27,7 +27,7 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
   };
   const [startCoords, setStartCoords] = useState([-1, -1]);
   const [endCoords, setEndCoords] = useState([-1, -1]);
-  const [numIterations, setNumIterations] = useState(undefined);
+  const [numIterations, setNumIterations] = useState(1);
 
   // keeping track of steps
   const [stepNumber, setStepNumber] = useState(0);
@@ -52,6 +52,7 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
       case 1:
         return (
           <StartPoint
+            stepNumber={stepNumber}
             nextStep={nextStep}
             prevStep={prevStep}
             grid={grid}
@@ -62,6 +63,7 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
       case 2:
         return (
           <EndPoint
+            stepNumber={stepNumber}
             nextStep={nextStep}
             prevStep={prevStep}
             grid={grid}
@@ -73,6 +75,7 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
       case 3:
         return (
           <Parameters
+            stepNumber={stepNumber}
             nextStep={nextStep}
             prevStep={prevStep}
             numIterations={numIterations}
@@ -82,6 +85,7 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
       case 4:
         return (
           <Result
+            stepNumber={stepNumber}
             prevStep={prevStep}
             grid={grid}
             startCoords={startCoords}

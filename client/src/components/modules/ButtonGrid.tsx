@@ -35,7 +35,7 @@ const ButtonGrid = (props: ButtonGridProps) => {
         {row.map((cell, cidx) => {
           return (
             <button
-              key={ridx * 10 + cidx}
+              key={ridx.toString() + cidx.toString()}
               onClick={() => props.handleClick(ridx, cidx)}
               className={`ButtonGrid-button ${buttonClassifier(ridx, cidx)}`}
             ></button>
@@ -49,7 +49,7 @@ const ButtonGrid = (props: ButtonGridProps) => {
     <div className="ButtonGrid-grid">
       {props.grid.map((row, ridx) => {
         return (
-          <div key={ridx} className="ButtonGrid-row">
+          <div key={ridx.toString()} className="ButtonGrid-row">
             {rowMapper(row, ridx)}
           </div>
         );

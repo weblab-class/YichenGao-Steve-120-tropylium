@@ -9,16 +9,13 @@ class D3Drawer {
   width: number;
   height: number;
   svgCanvas: any;
+  bounds: { [key: string]: number };
 
   constructor(cellDeltas: number[][], endDelta: number[], numIterations: number, svg) {
     this.cellDeltas = cellDeltas;
     this.endDelta = endDelta;
     this.numIterations = numIterations;
     this.svg = svg;
-    this.width = 1000;
-    this.height = 1000;
-
-    this.svg.attr("viewBox", `-500 -500 ${this.width} ${this.height}`);
     this.svgCanvas = this.svg.append("g").attr("class", "D3Drawer-svgCanvas");
   }
 
@@ -50,6 +47,28 @@ class D3Drawer {
           .attr("width", 1)
           .attr("height", 1)
           .attr("fill", "#ffffff");
+
+        let lowerXCoord: number = origin[0];
+        let lowerYCoord: number = origin[1];
+        if (rotateIdx === 0) {
+          lowerXCoord += dx;
+          lowerYCoord += dy;
+        } else if (rotateIdx === 1) {
+          lowerXCoord -= dy;
+          lowerYCoord += dx;
+        } else if (rotateIdx === 2) {
+          lowerXCoord -= dx;
+          lowerYCoord -= dy;
+        } else if (rotateIdx === 3) {
+          lowerXCoord += dy;
+          lowerYCoord -= dx;
+        }
+        let higherXCoord: number = lowerXCoord + 1;
+        let higherYCoord: number = lowerYCoord + 1;
+        this.bounds.minX = Math.min(this.bounds.minX, lowerXCoord);
+        this.bounds.minY = Math.min(this.bounds.minY, lowerYCoord);
+        this.bounds.maxX = Math.max(this.bounds.maxX, higherXCoord);
+        this.bounds.maxY = Math.max(this.bounds.maxY, higherYCoord);
       }
 
       let [x, y] = this.endDelta;
@@ -70,12 +89,14 @@ class D3Drawer {
   }
 
   render() {
+    this.bounds = { minX: 0, maxX: 0, minY: 0, maxY: 0 };
     this.renderIteration(this.numIterations, 0, [0, 0]);
-    this.extra();
-  }
-
-  extra() {
-    this.svgCanvas.attr("transform", "scale(8)");
+    this.svg.attr(
+      "viewBox",
+      `${this.bounds.minX} ${this.bounds.minY} ${this.bounds.maxX - this.bounds.minX} ${
+        this.bounds.maxY - this.bounds.minY
+      }`
+    );
   }
 }
 

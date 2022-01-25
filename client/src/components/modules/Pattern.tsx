@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import { GRID_SIZE } from "../../constants/Constants";
 import "./Pattern.css";
 import ButtonGrid from "./ButtonGrid";
 import Steps from "./Steps";
@@ -34,7 +35,21 @@ const theme = createTheme({
 });
 
 const Pattern = (props: PatternProp) => {
-  // const hasTwoCells = (): boolean => {};
+  // handling condition for allowing next step
+  const [disableNext, setDisableNext] = useState<boolean>(true);
+  const hasTwoCells = (): boolean => {
+    let count: number = 0;
+    for (let i = 0; i < GRID_SIZE; i++) {
+      for (let j = 0; j < GRID_SIZE; j++) {
+        if (props.grid[i][j]) count++;
+        if (count >= 2) return true;
+      }
+    }
+    return false;
+  };
+  useEffect(() => {
+    setDisableNext(!hasTwoCells());
+  }, [props.grid]);
 
   return (
     <div className="Pattern-container">
@@ -49,7 +64,12 @@ const Pattern = (props: PatternProp) => {
         </p>
         <div className="Pattern-stepNav">
           <ThemeProvider theme={theme}>
-            <Button variant="contained" size="large" onClick={props.nextStep}>
+            <Button
+              variant="contained"
+              size="large"
+              disabled={disableNext}
+              onClick={props.nextStep}
+            >
               NEXT
             </Button>
           </ThemeProvider>

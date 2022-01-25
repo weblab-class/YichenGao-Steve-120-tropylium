@@ -1,8 +1,15 @@
 import React, { SetStateAction, useEffect, useState } from "react";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 import ButtonGrid from "./ButtonGrid";
+import Steps from "./Steps";
+import PopUp from "./PopUp";
 import { isEqual } from "../../constants/Constants";
 
 type EndPointProp = {
+  stepNumber: number;
   nextStep: () => void;
   prevStep: () => void;
   grid: boolean[][];
@@ -11,7 +18,33 @@ type EndPointProp = {
   setEndCoords: React.Dispatch<SetStateAction<number[]>>;
 };
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#3454c5",
+      contrastText: "#ffffff",
+    },
+    action: {
+      hover: "#6987db",
+      disabledBackground: "rgba(0,0,0,0.20)",
+      disabled: "#444444",
+    },
+  },
+  typography: {
+    fontFamily: "Montserrat, sans-serif",
+    button: {
+      fontWeight: 700,
+    },
+  },
+});
+
 const EndPoint = (props: EndPointProp) => {
+  // handle condition for allowing next step
+  const [disableNext, setDisableNext] = useState<boolean>(true);
+  useEffect(() => {
+    setDisableNext(props.endCoords[0] === -1);
+  }, [props.endCoords]);
+
   const [outOfPattern, setOutOfPattern] = useState(false);
   const [sameAsStart, setSameAsStart] = useState(false);
 
@@ -39,27 +72,62 @@ const EndPoint = (props: EndPointProp) => {
   }, []);
 
   return (
-    <div>
-      <h1>Step 3: Choose End Point</h1>
-      <p>Select the ending point. New copies are attached to the original's ending point.</p>
-
-      {outOfPattern ? (
-        <p>ERROR: Ending point has to be part of the pattern!</p>
-      ) : sameAsStart ? (
-        <p>ERROR: Ending point cannot be the same as the starting point!</p>
-      ) : (
-        <></>
-      )}
-
-      <ButtonGrid
-        grid={props.grid}
-        startCoords={props.startCoords}
-        endCoords={props.endCoords}
-        handleClick={setNewEndPoint}
-      />
-
-      <button onClick={props.prevStep}>BACK</button>
-      <button onClick={props.nextStep}>NEXT</button>
+    <div className="Pattern-container">
+      <div className="Pattern-sidebar">
+        <div className="Pattern-steps">
+          <Steps stepNumber={props.stepNumber} />
+        </div>
+        <h1 className="Pattern-title">Step 3: Choose End Point</h1>
+        <p className="Pattern-body">
+          Select the ending point. New copies are attached to the original's ending point, but
+          rotated 90 degrees.
+        </p>
+        {outOfPattern ? (
+          <PopUp
+            delay={3000}
+            visible={outOfPattern}
+            setVisible={setOutOfPattern}
+            message="Ending point has to be part of the pattern!"
+          />
+        ) : (
+          <></>
+        )}
+        {sameAsStart ? (
+          <PopUp
+            delay={3000}
+            visible={sameAsStart}
+            setVisible={setSameAsStart}
+            message="Ending point cannot be the same as the starting point!"
+          />
+        ) : (
+          <></>
+        )}
+        <div className="Pattern-stepNav">
+          <ThemeProvider theme={theme}>
+            <Stack spacing={2} direction="row">
+              <Button variant="contained" size="large" onClick={props.prevStep}>
+                BACK
+              </Button>
+              <Button
+                variant="contained"
+                size="large"
+                onClick={props.nextStep}
+                disabled={disableNext}
+              >
+                NEXT
+              </Button>
+            </Stack>
+          </ThemeProvider>
+        </div>
+      </div>
+      <div className="Pattern-content">
+        <ButtonGrid
+          grid={props.grid}
+          startCoords={props.startCoords}
+          endCoords={props.endCoords}
+          handleClick={setNewEndPoint}
+        />
+      </div>
     </div>
   );
 };
