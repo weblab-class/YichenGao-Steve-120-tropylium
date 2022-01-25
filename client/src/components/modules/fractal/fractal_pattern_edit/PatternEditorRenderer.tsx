@@ -28,34 +28,6 @@ const PatternEditorRenderer = (props: Props) => {
     const WIDTH = 800, HEIGHT = WIDTH, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
 
-    function getFill(data:RectData): string {
-        if(props.start_point && data.point.x === props.start_point[0] && data.point.y === props.start_point[1])
-            return '#0f0'
-        if(props.end_point && data.point.x === props.end_point[0] && data.point.y === props.end_point[1])
-            return '#f00'
-        if(data.is_selected)
-            return '#000'
-        return '#fff';
-    }
-    function getHoverFill(data:RectData): string {
-        switch(props.editorState) {
-            case PatternEditorState.SELECT_START:
-                return '#0d0'
-            case PatternEditorState.SELECT_END:
-                return '#d00'
-            case PatternEditorState.SELECT_REGULAR:
-                return '#444'
-        }
-    }
-    function getStroke(data:RectData): string {
-        if(props.start_point && data.point.x === props.start_point[0] && data.point.y === props.start_point[1])
-            return '#0d0'
-        if(props.end_point && data.point.x === props.end_point[0] && data.point.y === props.end_point[1])
-            return '#d00'
-        if(data.is_selected)
-            return '#444'
-        return '#ddd';
-    }
 
     useEffect(() => {
         const svg = d3.select(svg_container_ref.current).select('svg');
@@ -74,28 +46,37 @@ const PatternEditorRenderer = (props: Props) => {
                 color = 0xFF0000;
                 break;
             case PatternEditorState.SELECT_REGULAR:
-                shape = 'rect';
+                shape = props.selected_shape;
                 color = props.selected_color;
                 break;
         }
         Util.drawGraphic_d3(hover_visual, shape, WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, color)
         hover_visual.attr('opacity', 0.0);
 
-        svg.on("mouseover", function(event: MouseEvent) {
+        const mouseover = (event: MouseEvent) => {
             hover_visual
             .attr('opacity', 0.4);
-        });
-        svg.on("mouseout", function(event: MouseEvent) {
+        }
+        svg.on("mouseover", mouseover);
+
+        const mouseout = (event: MouseEvent) => {
             hover_visual
             .attr('opacity', 0);
-        });
-        svg.on("mousemove", function(event: MouseEvent) {
+        }
+        svg.on("mouseout", mouseout);
+
+        const mousemove = (event: MouseEvent) => {
             const step_x = event.offsetX - event.offsetX % (WIDTH/GRID_SIZE), 
             step_y= event.offsetY - event.offsetY % (HEIGHT/GRID_SIZE);
             hover_visual.attr('transform', `translate(${step_x},${step_y})`);
-        });
+        }
+        svg.on("mousemove", mousemove);
 
-
+        return () => {
+            svg.on("mouseover", undefined);
+            svg.on("mouseout", undefined);
+            svg.on("mousemove", undefined);
+        }
     }, [props.editorState, props.selected_color, props.selected_shape]);
 
 
@@ -129,7 +110,7 @@ const PatternEditorRenderer = (props: Props) => {
         const focus_graphic = d3.select(svg_container_ref.current).select('svg').select("#focus");
         Util.drawGraphic_d3(focus_graphic, 'focus', WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, 0x0000FF)
         
-        if(props.focus_point.x && props.focus_point.y) {
+        if(props.focus_point.x && props.focus_point.y && props.editorState === PatternEditorState.SELECT_REGULAR) {
             focus_graphic
                 .transition()
                 .duration(200)
@@ -138,7 +119,7 @@ const PatternEditorRenderer = (props: Props) => {
         } else {
             focus_graphic.attr('opacity', 0).attr('z');
         }
-    }, [props.focus_point]);
+    }, [props.focus_point, props.editorState]);
 
     useEffect(() => {
         const svg = d3.select(svg_container_ref.current).select('svg');
@@ -188,121 +169,17 @@ const PatternEditorRenderer = (props: Props) => {
                 // .attr('opacity',1);
         }
 
-        // const rects = g
-        //         .selectAll('g')
-        //         .data(rect_data)
-        //         .join(
-        //             function(enter) {
-        //                 const new_g = enter.append('g');
-        //                 Util.drawGraphic_d3(new_g, 'circ', WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, )
-        //                 return new_g;
-        //                     .attr('x', (data_value: RectData) => data_value.point.x*HEIGHT/GRID_SIZE)
-        //                     .attr('y', (data_value: RectData) => data_value.point.y*HEIGHT/GRID_SIZE)
-        //                     .attr('width', WIDTH/GRID_SIZE)
-        //                     .attr('height', HEIGHT/GRID_SIZE)
-        //                     .attr('fill', (data_value: RectData) => { 
-        //                         return (data_value.is_selected) ? Util.colorNumberToString(data_value.point.color) : "#fff"})
-        //                     .attr('stroke', (data_value: RectData) => {
-        //                         return "#ddd";
-        //                     })
-        //             },
-        //             function(update) {
-        //                 return update
-        //                 .transition()
-        //                 .duration(200)
-        //                 .attr('x', (data_value: RectData) => data_value.point.x*HEIGHT/GRID_SIZE)
-        //                 .attr('y', (data_value: RectData) => data_value.point.y*HEIGHT/GRID_SIZE)
-        //                 .attr('width', WIDTH/GRID_SIZE)
-        //                 .attr('height', HEIGHT/GRID_SIZE)
-        //                 .attr('fill', (data_value: RectData) => { 
-        //                     //console.log(getValidatedColorString(data_value.point.color));
-        //                     return (data_value.is_selected) ? Util.colorNumberToString(data_value.point.color) : "#fff"})
-        //                 .attr('stroke', (data_value: RectData) => {
-        //                     return "#ddd";
-        //                 });
-        //             },
-        //             function(exit) {
-        //                 return exit;
-        //             },
-        //         )
-        //     ;
+        const click = (event: MouseEvent, data:RectData) => {
+            const rect_x = Math.floor(event.offsetX/(WIDTH/GRID_SIZE)), rect_y = Math.floor(event.offsetY/(HEIGHT/GRID_SIZE));
+            props.onRectClick(rect_x, rect_y);
+        }
             
-            svg.on("click", function(event: MouseEvent, data:RectData) {
-                const rect_x = Math.floor(event.offsetX/(WIDTH/GRID_SIZE)), rect_y = Math.floor(event.offsetY/(HEIGHT/GRID_SIZE));
-                //console.log(`(${rect_x},${rect_y})`)
-                props.onRectClick(rect_x, rect_y);
-                //console.log(props.rectData[data.point.x][data.point.y].point); 
-                
-            });
+        svg.on("click", click);
+
+        return () => {
+            svg.on("click", undefined);
+        }
     });
-
-    // useEffect(() => {
-    //     function init(selection, rectData: RectData[][]) {
-    //         // i don't want to deal with d3 and 2d data right now, but it is possible:
-    //         // https://codepen.io/bungholio/pen/KrEOLj
-    //         // getting the index would be slightly annoying because v6 d3 doesn't pass in index anymore...
-    
-    //         // const new_rect_data: RectData[] = [];
-    //         // rectData.forEach(element => {
-    //         //     new_rect_data.push(...element);
-    //         // });
-                
-    //         // const rects = selection
-    //         //     .selectAll('rect')
-    //         //     .data(new_rect_data)
-    //         //     .join(
-    //         //         function(enter) {
-    //         //             return enter.append('rect')
-    //         //                 .attr('x', (data_value) => data_value.x*HEIGHT/GRID_SIZE)
-    //         //                 .attr('y', (data_value) => data_value.y*HEIGHT/GRID_SIZE)
-    //         //                 .attr('width', WIDTH/GRID_SIZE)
-    //         //                 .attr('height', HEIGHT/GRID_SIZE)
-    //         //                 .attr('fill', (data_value: RectData) => {
-    //         //                     return getFill(data_value);
-    //         //                 })
-    //         //                 .attr('stroke', (data_value: RectData) => {
-    //         //                     return getStroke(data_value);
-    //         //                 })
-    //         //         },
-    //         //         function(update) {
-    //         //             return update
-    //         //             .transition()
-    //         //             .duration(200)
-    //         //             .attr('x', (data_value) => data_value.x*HEIGHT/GRID_SIZE)
-    //         //             .attr('y', (data_value) => data_value.y*HEIGHT/GRID_SIZE)
-    //         //             .attr('width', WIDTH/GRID_SIZE)
-    //         //             .attr('height', HEIGHT/GRID_SIZE)
-    //         //             .attr('fill', (data_value: RectData) => {
-    //         //                 return getFill(data_value);
-    //         //             })
-    //         //             .attr('stroke', (data_value: RectData) => {
-    //         //                 return getStroke(data_value);
-    //         //             });
-    //         //         },
-    //         //         function(exit) {
-    //         //             return exit;
-    //         //         },
-    //         //     )
-    //         // ;
-    
-    //         // rects.on("mouseover", function(event: MouseEvent, data: RectData) {
-    //         //     d3.select(this)
-    //         //     .attr('fill', getHoverFill(data));
-                
-    //         // });
-    //         // rects.on("mouseout", function(event: MouseEvent, data: RectData) {
-    //         //     d3.select(this)
-    //         //     .transition()
-    //         //     .duration(100)
-    //         //     .attr('fill', getFill(data));
-    //         // });
-    //         // rects.on("click", function(event: MouseEvent, data:RectData) {
-    //         //     props.onRectClick(data.x, data.y);
-    //         // });
-    //     }
-
-    //     //init(d3.select(svg_container_ref.current).select('svg').select('g'), props.rectData);
-    // });
 
     return (
             <div ref={svg_container_ref} className="create-initial-svg_container">
@@ -310,8 +187,8 @@ const PatternEditorRenderer = (props: Props) => {
                     <g id="grid"></g>
                     <g id="rects"></g>
                     <g id="hover"></g>
-                    <g id="start"></g>
                     <g id="end"></g>
+                    <g id="start"></g>
                     <g id="focus"></g>
                 </svg>
             </div>

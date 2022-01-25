@@ -4,8 +4,10 @@ import * as d3 from 'd3'
 import Util from "../../../../constants/Util";
 
 import "./PatternEditorCell.css";
+import { PatternEditorState } from "./PatternEditor";
 
 type Props = {
+    editorState: PatternEditorState
     focus_point: Point
     updateSelectedColor: (new_color: number) => void
     updateSelectedShape: (new_shape: string) => void
@@ -28,7 +30,7 @@ const PatternEditorCell = (props: Props) => {
     }, []);
     
     
-    return (<div>
+    return (<div className={`pattern-editor-cell_container ${props.editorState === PatternEditorState.SELECT_REGULAR ? '' : 'invisible'}`}>
         
         <input type='color' 
             value = {Util.colorNumberToString(props.focus_point.color)} 

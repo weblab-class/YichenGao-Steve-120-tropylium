@@ -105,7 +105,7 @@ const FractalRenderer = (props: Props) => {
         const graphics = new Pixi.Graphics();
 
         const render_string = computeRenderString(props.num_iterations, props.initial, props.operators, props.symbols);
-        console.log(render_string);
+        
         let current_start_position = [0,0];
         let current_direction = 0;
 

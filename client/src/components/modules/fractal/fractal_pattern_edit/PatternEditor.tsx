@@ -59,11 +59,26 @@ const PatternEditor = (props: PatternEditorProps) => {
             const newRectData = [...rectData];
             const rect = newRectData[focus_point.x][focus_point.y];
             rect.point.color = selected_color;
+            setRectData(newRectData);
+        }
+        
+    }, [selected_color])
+
+    useEffect(() => {
+        setFocusPoint({
+            x: focus_point.x,
+            y: focus_point.y,
+            color: selected_color,
+            shape: selected_shape,
+        })
+        if(focus_point.x && focus_point.y) {
+            const newRectData = [...rectData];
+            const rect = newRectData[focus_point.x][focus_point.y];
             rect.point.shape = selected_shape;
             setRectData(newRectData);
         }
         
-    }, [selected_color, selected_shape])
+    }, [selected_shape])
 
     const [editorState, setEditorState] = useState(PatternEditorState.SELECT_REGULAR);
     const [optionStatus, setOptionStatus] = useState(
@@ -103,17 +118,19 @@ const PatternEditor = (props: PatternEditorProps) => {
         const newRectData = [...rectData];
         const newOptionStatus = [...optionStatus];
         const rect = newRectData[x][y];
-        if(rectData[x][y].is_selected)
-            setFocusPoint(rectData[x][y].point);
-        else
-            setFocusPoint({
-                x: x,
-                y: y,
-                color: selected_color,
-                shape: selected_shape,
-            } as Point)
+        
         switch(editorState) {
             case PatternEditorState.SELECT_REGULAR:
+                if(rectData[x][y].is_selected)
+                    setFocusPoint(rectData[x][y].point);
+                else
+                    setFocusPoint({
+                        x: x,
+                        y: y,
+                        color: selected_color,
+                        shape: selected_shape,
+                    } as Point)
+
                 if(!rect.is_selected) {
                     rect.is_selected = true;
                     rect.point.color = selected_color;
@@ -289,6 +306,7 @@ const PatternEditor = (props: PatternEditorProps) => {
                 onEditorStateUpdate={updateEditorState}
                 optionStatus={optionStatus}/>
             <PatternEditorCell
+                editorState={editorState}
                 focus_point={focus_point}
                 updateSelectedColor={setSelectedColor}
                 updateSelectedShape={setSelectedShape}

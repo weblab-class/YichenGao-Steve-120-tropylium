@@ -14,61 +14,89 @@ export default abstract class Util {
     public static drawGraphic_d3(selection, shape: string, width: number, height: number, color: number) {
         switch(shape) {
             case 'start':
+                // const path_start = d3.path();
+                // path_start.moveTo(width/2, width/20);
+                // path_start.arcTo(width*0.95, width/20, width*0.95, width*0.95, width*0.45);
+                // path_start.arcTo(width*0.95, width*0.95, width*0.05, width*0.95, width*0.45);
+                // path_start.arcTo(width*0.05, width*0.95, width*0.05, width*0.05, width*0.45);
+                // path_start.arcTo(width*0.05, width*0.05, width*0.95, width*0.05, width*0.45);
+                // path_start.closePath();
+                // selection.append('path')
+                //     .attr('d', path_start)
+                //     .attr('fill', 'none')
+                //     .attr('stroke', Util.colorNumberToString(color))
+                //     .attr('stroke-width', width*0.10)
                 selection.append('rect')
                 .attr('x', 0)
                 .attr('y', 0)
-                .attr('width', width/5.0)
+                .attr('width', width/10.0)
                 .attr('height', height)
                 .attr('fill', Util.colorNumberToString(color))
 
                 selection.append('rect')
-                .attr('x', width*4/5)
+                .attr('x', width*9/10)
                 .attr('y', 0)
-                .attr('width', width/5.0)
+                .attr('width', width/10.0)
                 .attr('height', height)
                 .attr('fill', Util.colorNumberToString(color))
 
                 selection.append('rect')
-                .attr('x', width/5.0)
+                .attr('x', width/10.0)
                 .attr('y', 0)
-                .attr('width', width*3/5)
-                .attr('height', height/5.0)
+                .attr('width', width*8/10)
+                .attr('height', height/10.0)
                 .attr('fill', Util.colorNumberToString(color))
 
                 selection.append('rect')
-                .attr('x', width/5.0)
-                .attr('y', width*4/5)
-                .attr('width', width*3/5)
-                .attr('height', height/5.0)
+                .attr('x', width/10.0)
+                .attr('y', width*9/10)
+                .attr('width', width*8/10)
+                .attr('height', height/10.0)
                 .attr('fill', Util.colorNumberToString(color))
+
+                const path_start = d3.path();
+                path_start.moveTo(width*0.35, width*0.3);
+                path_start.lineTo(width*0.35, width*0.7);
+                path_start.lineTo(width*0.7, width*0.5);
+                path_start.closePath();
+                selection.append('path')
+                    .attr('d', path_start)
+                    .attr('fill', Util.colorNumberToString(color))
                 break;
             case 'end':
                 selection.append('rect')
                 .attr('x', 0)
                 .attr('y', 0)
-                .attr('width', width/5.0)
+                .attr('width', width/10.0)
                 .attr('height', height)
                 .attr('fill', Util.colorNumberToString(color))
 
                 selection.append('rect')
-                .attr('x', width*4/5)
+                .attr('x', width*9/10)
                 .attr('y', 0)
-                .attr('width', width/5.0)
+                .attr('width', width/10.0)
                 .attr('height', height)
                 .attr('fill', Util.colorNumberToString(color))
 
                 selection.append('rect')
-                .attr('x', width/5.0)
+                .attr('x', width/10.0)
                 .attr('y', 0)
-                .attr('width', width*3/5)
-                .attr('height', height/5.0)
+                .attr('width', width*8/10)
+                .attr('height', height/10.0)
                 .attr('fill', Util.colorNumberToString(color))
 
                 selection.append('rect')
-                .attr('x', width/5.0)
-                .attr('y', width*4/5)
-                .attr('width', width*3/5)
-                .attr('height', height/5.0)
+                .attr('x', width/10.0)
+                .attr('y', width*9/10)
+                .attr('width', width*8/10)
+                .attr('height', height/10.0)
+                .attr('fill', Util.colorNumberToString(color))
+
+                selection.append('rect')
+                .attr('x', width*0.35)
+                .attr('y', width*0.35)
+                .attr('width', width*0.3)
+                .attr('height', height*0.3)
                 .attr('fill', Util.colorNumberToString(color))
                 break;
             case 'focus':
