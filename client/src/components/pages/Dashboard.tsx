@@ -10,7 +10,7 @@ import { Link } from "@reach/router";
 
 
 type DashboardProps = RouteComponentProps & {
-    userId: string
+    userId: String;
 };
 const Dashboard = (props: DashboardProps) => {
   return (

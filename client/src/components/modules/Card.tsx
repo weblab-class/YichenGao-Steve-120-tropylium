@@ -71,9 +71,9 @@ class Card extends Component {
     
         let creatorBox = null;
         if (!this.props.galleryLoaded) {
-            creatorBox =    <div className="Creator-info">
-                                <div className="Creator-name">created by: {this.props.shortName}</div>
-                                <div className="Creator-stats">canvases created: {this.props.fractalTotal}</div>
+            creatorBox =    <div className="Card-container">
+                                <div className="Card-container">created by: {this.props.shortName}</div>
+                                <div className="Card-container">canvases created: {this.props.fractalTotal}</div>
                             </div>
         }
         
@@ -82,19 +82,19 @@ class Card extends Component {
         return (
             <div>
                 <div className={this.state.delModalActive ? "Card-Canvas-modal" : "Card-Canvas-modal-hidden"} ref={modal => this.modal = modal}>
-                        <div className="Card-Modal-content">
+                        <div className="Card-container">
                             Are you sure?
-                            <button className="halfButton-Card" style={{margin:'5px'}} onClick={this.delete}>delete</button>
-                            <button className="halfButton-Card" onClick={this.toggleDelModal}>cancel</button>
+                            <button className="Card-container" style={{margin:'5px'}} onClick={this.delete}>delete</button>
+                            <button className="Card-container" onClick={this.toggleDelModal}>cancel</button>
 
                         </div>
                     </div>
 
                     <div className={this.state.downModalActive ? "Card-Canvas-modal" : "Card-Canvas-modal-hidden"} ref={modal => this.modal = modal}>
-                        <div className="Card-Modal-content">
+                        <div className="Card-container">
                             Are you sure?
-                            <a className="halfButton-Card" style={{margin:'5px',textDecoration:'none'}} onClick={this.toggleDownModal} href='#' ref={imgFile => this.imgFile = imgFile} download={this.props.imageTitle + '.png'}>download</a>
-                            <button className="halfButton-Card" onClick={this.toggleDownModal}>cancel</button>
+                            <a className="Card-container" style={{margin:'5px',textDecoration:'none'}} onClick={this.toggleDownModal} href='#' ref={imgFile => this.imgFile = imgFile} download={this.props.imageTitle + '.png'}>download</a>
+                            <button className="Card-container" onClick={this.toggleDownModal}>cancel</button>
 
                         </div>
                     </div>
@@ -107,21 +107,8 @@ class Card extends Component {
                             
                         </div>
                         {/* <div className="Delete" onClick={this.handleDelete}>Delete Image</div> */}
-                        <div className="Gallery-bar">
-                            <div className="Icon-list">
-                                {/* <div className="Icon-wrapper" onClick={() => handleDelete(this.props.creator_id,this.props._id)}> */}
-                                {deleteButton}
-                                <a className="Icon-wrapper" onClick={this.setDownload} /*{this.props.content}*/ >
-                                    <span className="Icon-tooltip">Download</span>
-                                    <i className="fa fa-download"></i>
-                                </a>
-                                <Link to='/create' onClick={() => handleClick(this.props._id)}>
-                                <div className="Icon-wrapper">
-                                    <span className="Icon-tooltip">Load Session</span>
-                                    <i className="fa fa-edit"></i>
-                                </div>
-                                </Link>
-                            </div>
+                        <div className="Card-container">
+                            {/* //TODO: delete menu */}
                             
                         </div>
                         <div className="Gallery-title">{this.props.fractalTitle}</div>
