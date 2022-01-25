@@ -10,6 +10,18 @@ export default abstract class Util {
         return parseInt(color_string.substring(1), 16);
     }
 
+    // assumes arrays are same length
+    // returns new array
+    public static arrayOpp(arr_1: number[], arr_2: number[], operation: (a1: number, a2: number) => number) {
+        const sum_arr = [];
+        for(let i = 0; i < arr_1.length; i++) {
+            sum_arr.push(operation(arr_1[i], arr_2[i]));
+        }
+        return sum_arr;
+    }
+
+    static all_shapes: string[] = ['rect', 'circ', 'diam', 'oct', 'ecirN', 'ecirE', 'ecirS', 'ecirW'];
+
     // draws to 0,0; you will need to transform it yourself
     public static drawGraphic_d3(selection, shape: string, width: number, height: number, color: number) {
         switch(shape) {
@@ -154,6 +166,21 @@ export default abstract class Util {
                 .attr('d', path_diam)
                 .attr('fill', Util.colorNumberToString(color))
                 break;
+            case 'oct':
+                const path_oct = d3.path();
+                path_oct.moveTo(width*.293, 0);
+                path_oct.lineTo(width*.707, 0);
+                path_oct.lineTo(width, width*.293);
+                path_oct.lineTo(width, width*.707);
+                path_oct.lineTo(width*.707, width);
+                path_oct.lineTo(width*.293, width);
+                path_oct.lineTo(0, width*.707);
+                path_oct.lineTo(0, width*.293);
+                path_oct.closePath();
+                selection.append('path')
+                    .attr('d', path_oct)
+                    .attr('fill', Util.colorNumberToString(color));
+                break;
             case 'ecirN':
                 const path_ecirN = d3.path();
                 path_ecirN.moveTo(0, width/2);
@@ -213,15 +240,6 @@ export default abstract class Util {
                 xy[0]*Math.sin(rotation_radians) + xy[1]*Math.cos(rotation_radians)];
     }
 
-    // assumes arrays are same length
-    // returns modified arr_1
-    public static arrayOpp(arr_1: number[], arr_2: number[], operation: (a1: number, a2: number) => number) {
-        const sum_arr = [];
-        for(let i = 0; i < arr_1.length; i++) {
-            sum_arr.push(operation(arr_1[i], arr_2[i]));
-        }
-        return sum_arr;
-    }
     // x and y denote the center
     // begin fill and end fill yourself
     public static drawGraphic_pixi(graphics: Graphics, 
@@ -246,13 +264,24 @@ export default abstract class Util {
         const mid_41 = [0.5*(rot_4[0]+rot_1[0]), 0.5*(rot_4[1]+rot_1[1])];
         switch(shape) {
             case 'rect':
-                graphics.drawPolygon([...rot_1].concat([...rot_2]).concat([...rot_3]).concat([...rot_4]));
+                graphics.drawPolygon(rot_1.concat(rot_2, rot_3, rot_4));
                 break;
             case 'circ':
                 graphics.drawCircle(x,y,width/2);
                 break;
             case 'diam':
-                graphics.drawPolygon([...mid_12].concat([...mid_23]).concat([...mid_34]).concat([...mid_41]));
+                graphics.drawPolygon(mid_12.concat(mid_23, mid_34, mid_41));
+                break;
+            case 'oct':
+                const oct_12 = Util.arrayOpp(rot_1, rot_2, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_21 = Util.arrayOpp(rot_2, rot_1, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_23 = Util.arrayOpp(rot_2, rot_3, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_32 = Util.arrayOpp(rot_3, rot_2, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_34 = Util.arrayOpp(rot_3, rot_4, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_43 = Util.arrayOpp(rot_4, rot_3, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_41 = Util.arrayOpp(rot_4, rot_1, (a1,a2) => a1*0.707+a2*0.293);
+                const oct_14 = Util.arrayOpp(rot_1, rot_4, (a1,a2) => a1*0.707+a2*0.293);
+                graphics.drawPolygon(oct_12.concat(oct_21, oct_23, oct_32, oct_34, oct_43, oct_41, oct_14));
                 break;
             case 'ecirN':
                 graphics.arc(x,y,width/2,Math.PI*(1+rotation/180), Math.PI*(rotation/180));

@@ -16,13 +16,8 @@ type Props = {
     setDownloadCallback: (downloadCallback: () => (string)) => void
     onRenderStart: () => void
     onRenderEnd: (renderTimeMilli: number) => void
-    //antialias: boolean
+    raiseWarning: (response: ((proceed: boolean) => void), num_shapes: number) => void
 }
-
-// type TextureContainer = {
-//     symbol_names: string[]
-//     texture: Pixi.RenderTexture
-// }
 
 type FractalBounds = {
     max_x: number
@@ -97,6 +92,19 @@ const FractalRenderer = (props: Props) => {
 
     // run with every data change
     useEffect(() => {
+        const num_shapes = estimateNumberShapes()
+        if(num_shapes > 2e6) {
+            props.raiseWarning((proceed: boolean) => {
+                if(proceed)
+                    render();
+            }, num_shapes)
+        } else {
+            render();
+        }
+        
+    }, [props.initial, props.num_iterations, props.patterns, props.operators, props.symbols]);
+
+    function render() {
         const viewport = viewportRef.current
         viewport.children.forEach((child) => {
             child.destroy(true);
@@ -156,20 +164,30 @@ const FractalRenderer = (props: Props) => {
         updateFractalBounds(max_x, min_x, max_y, min_y);
         zoomToPoint(computeIdealZoom(), computeCenter(), render_string.length < 2e5);
 
-        // graphics.beginFill(0xFFF000);
-        // graphics.drawCircle(center_x*CELL_WIDTH, center_y*CELL_WIDTH, 100);
-        // graphics.endFill();
-        
         const endTime = performance.now();
         props.onRenderEnd(endTime-startTime);
-        //console.log(`Render took ${(endTime- startTime).toFixed(1)} milliseconds`);
-    }, [props.initial, props.num_iterations, props.patterns, props.operators, props.symbols]);
+    }
 
     useEffect(() => {
         const PixiApp = PixiAppRef.current;
         PixiApp.renderer.backgroundColor = props.background_color;
         PixiApp.renderer.render(PixiApp.stage);
     },[props.background_color]);
+
+    function estimateNumberShapes(): number {
+        let max_pattern_shapes = 0;
+        for(let pattern of props.patterns) {
+            if(pattern.points.length > max_pattern_shapes)
+                max_pattern_shapes = pattern.points.length;
+        }
+        let max_exp_base = 1;
+        for(let symbol of props.symbols) {
+            const alphaletters = symbol.replacement_rule.match(/[a-z]/gi);
+            if(alphaletters && alphaletters.length > max_exp_base)
+                max_exp_base = alphaletters.length;
+        }
+        return max_pattern_shapes*Math.pow(max_exp_base, props.num_iterations);
+    }
 
     function isSymbol(instruction_ID: string): boolean {
         return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(instruction_ID);
@@ -320,6 +338,11 @@ const FractalRenderer = (props: Props) => {
     return (<div ref = {container_ref} className="fractal-renderer_container">
         
     </div>);
+
+    // type TextureContainer = {
+    //     symbol_names: string[]
+    //     texture: Pixi.RenderTexture
+    // }
 
     // function createTextures(patterns: Pattern[]): TextureContainer[] {
     //     const PixiApp = PixiAppRef.current;

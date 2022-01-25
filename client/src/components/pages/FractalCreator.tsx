@@ -4,6 +4,7 @@ import { Operator, Pattern, Symbol } from "../../constants/Types";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
 import PatternEditor from "../modules/fractal/fractal_pattern_edit/PatternEditor";
 import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
+import Warning from "../modules/fractal/Warning";
 import "./FractalCreator.css";
 
 
@@ -57,6 +58,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
         start_position: [],
         end_position: [],
     } as Pattern);
+    const [is_warning_open, setWarningOpen] = useState(false);
 
     function updatePattern(new_pattern: Pattern): void {
         const new_patterns: Pattern[] = [];
@@ -84,6 +86,25 @@ const FractalCreator = (props: FractalCreatorProps) => {
 
     }
 
+    const warningCallbackRef = useRef(undefined);
+    const [warning_num_shapes, setWarningNumShapes] = useState(0);
+    function raiseWarning(callback: ((proceed: boolean) => void), num_shapes: number): void {
+        
+        warningCallbackRef.current = callback;
+        setWarningNumShapes(num_shapes);
+        setWarningOpen(true);
+    }
+
+    function onWarningResponse(proceed: boolean) {
+        if(proceed)
+            warningCallbackRef.current(proceed);
+        else {
+            setNumIterations(num_iterations-2);
+            warningCallbackRef.current(false);
+        }
+        setWarningOpen(false);
+    }
+
     const downloadCallbackRef = useRef(undefined);
     function onDownloadClick() {
         //console.log("download attempt");
@@ -101,15 +122,6 @@ const FractalCreator = (props: FractalCreatorProps) => {
     }
     
     return (<div className = 'fractal-creator_container'>
-        <div className = {`fractal-creator-initial_container 
-            ${is_editor_open
-                ? 'editor-open'
-                : ''
-            }`}>
-            <PatternEditor 
-                pattern={editing_pattern} 
-                onPatternUpdate={updatePattern}/>
-        </div>
         <FractalRenderer
             num_iterations={num_iterations}
             initial={initial}
@@ -119,6 +131,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
             background_color={background_color}
             onRenderStart={onRenderStart}
             onRenderEnd={onRenderEnd}
+            raiseWarning={raiseWarning}
             setDownloadCallback={setDownloadCallback}
             />
         <FractalSidebar 
@@ -139,6 +152,24 @@ const FractalCreator = (props: FractalCreatorProps) => {
             updateBackgroundColor={setBackgroundColor}
             onDownloadClick={onDownloadClick}
         />
+        <div className = {`fractal-creator-pattern-editor_container 
+            ${is_editor_open
+                ? 'visible'
+                : ''
+            }`}>
+            <PatternEditor 
+                pattern={editing_pattern} 
+                onPatternUpdate={updatePattern}/>
+        </div>
+        <div className = {`fractal-creator-warning_container 
+            ${is_warning_open
+                ? 'visible'
+                : ''
+            }`}>
+            <Warning
+                onWarningResponse={onWarningResponse}
+                num_shapes={warning_num_shapes}/>
+        </div>
     </div>);
 };
 

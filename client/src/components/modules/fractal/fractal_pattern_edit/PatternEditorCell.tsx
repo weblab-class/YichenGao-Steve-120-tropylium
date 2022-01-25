@@ -16,7 +16,7 @@ type Props = {
 const PatternEditorCell = (props: Props) => {
     const container_ref = useRef(undefined);
     const WIDTH = 50;
-    const shapes = ['rect', 'circ', 'diam', 'ecirN', 'ecirE', 'ecirS', 'ecirW'];
+    const shapes = Util.all_shapes;
 
     useEffect(() => {
         for(let shape of shapes) {
