@@ -1,5 +1,5 @@
 .create-initial-svg_container {
-    background-color: darkkhaki;
+    background-color: var(--white);
     width: 800px;
     height: 800px;
 }

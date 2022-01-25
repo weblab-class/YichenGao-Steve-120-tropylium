@@ -1,5 +1,6 @@
 import React from "react";
 import { Operator, Pattern, Symbol } from "../../../../constants/Types";
+import Util from "../../../../constants/Util";
 import "./FractalSidebar.css";
 import OperatorEdit from "./OperatorEdit";
 import OperatorEditList from "./OperatorEditList";
@@ -32,11 +33,6 @@ type Props = {
 
 const FractalSidebar = (props: Props) => {
     //const [initial_input_invalid, setInitialInputInvalid] = useState([] as string[]);
-    
-    function getValidatedColorString(hex_color: number): string {
-        const raw_string = props.backgroundColor.toString(0x10);
-        return "#" + "0".repeat(6-raw_string.length) + raw_string;
-    }
 
     function getInvalidInstructions(initial: string):string[] {
         const invalid_instructions: string[] = [];
@@ -174,9 +170,9 @@ const FractalSidebar = (props: Props) => {
         </div>
         <input 
             type='color' 
-            value={getValidatedColorString(props.backgroundColor)}
+            value={Util.colorNumberToString(props.backgroundColor)}
             onChange={(event) => {
-                props.updateBackgroundColor(parseInt(event.target.value.substring(1), 16))}}
+                props.updateBackgroundColor(Util.colorStringToNumber(event.target.value))}}
         />
         <PatternEditList
             patterns={props.patterns}

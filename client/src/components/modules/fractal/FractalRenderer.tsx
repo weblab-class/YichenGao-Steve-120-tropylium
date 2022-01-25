@@ -4,6 +4,7 @@ import * as Pixi from 'pixi.js'
 import {Viewport} from 'pixi-viewport'
 
 import "./FractalRenderer.css";
+import Util from "../../../constants/Util";
 
 type Props = {
     initial: string
@@ -104,7 +105,7 @@ const FractalRenderer = (props: Props) => {
         const graphics = new Pixi.Graphics();
 
         const render_string = computeRenderString(props.num_iterations, props.initial, props.operators, props.symbols);
-
+        console.log(render_string);
         let current_start_position = [0,0];
         let current_direction = 0;
 
@@ -121,6 +122,7 @@ const FractalRenderer = (props: Props) => {
                 const direction_radians = current_direction*Math.PI/180.0;
 
                 pattern.points.forEach((value: Point) => {
+
                     const relative_x = value.x - pattern.start_position[0];
                     const relative_y = value.y - pattern.start_position[1];
     
@@ -135,14 +137,11 @@ const FractalRenderer = (props: Props) => {
                     if(absolute_x < min_x) min_x = absolute_x;
                     if(absolute_y < min_y) min_y = absolute_y;
 
-                    drawShape(graphics, absolute_x, absolute_y, value.color);
+                    drawShape(graphics, value.shape, absolute_x, absolute_y, current_direction, value.color);
                 })
 
                 const displacement = [pattern.end_position[0] - pattern.start_position[0], pattern.end_position[1] - pattern.start_position[1]]
-                current_start_position = [
-                    current_start_position[0] + displacement[0]*Math.cos(direction_radians) - displacement[1]*Math.sin(direction_radians),
-                    current_start_position[1] + displacement[0]*Math.sin(direction_radians) + displacement[1]*Math.cos(direction_radians),
-                ];
+                current_start_position = Util.arrayOpp(current_start_position, Util.rotateXY(displacement, current_direction), (a1, a2) => a1 + a2);
             } else {
                 const rotation = getOperatorRotation(instruction_ID);
                 current_direction += rotation;
@@ -227,9 +226,9 @@ const FractalRenderer = (props: Props) => {
 
     const CELL_WIDTH = 16;
 
-    function drawShape(graphics: Pixi.Graphics, x:number, y: number, color: number):void {
+    function drawShape(graphics: Pixi.Graphics, shape: string, x:number, y: number, rotation: number, color: number):void {
             graphics.beginFill(color);
-            graphics.drawRect(CELL_WIDTH*x, CELL_WIDTH*y, CELL_WIDTH, CELL_WIDTH);
+            Util.drawGraphic_pixi(graphics, shape, x*CELL_WIDTH, y*CELL_WIDTH, CELL_WIDTH, rotation);
             graphics.endFill();
     }
 
@@ -301,8 +300,8 @@ const FractalRenderer = (props: Props) => {
         const old_zoom = viewport.scale.x;
         
         const old_center = [viewport.position.x, viewport.y];
-        console.log(old_center)
-        console.log([container_ref.current.clientWidth/2, container_ref.current.clientHeight/2])
+        // console.log(old_center)
+        // console.log([container_ref.current.clientWidth/2, container_ref.current.clientHeight/2])
         // console.log(old_center[1]+container_ref.current.clientWidth/2);
         // console.log(computeCenter())
         const image_zoom = 2*computeIdealZoom();
