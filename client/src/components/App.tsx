@@ -123,7 +123,7 @@ const App = () => {
       <Router className="App-content">
         <Home path="/" />
         <ArtCreator path="/fractal_creator" userId={userId} />
-        <Dashboard path="/dashboard" />
+        <Dashboard path="/dashboard" userId={userId} />
         <Account path="/account" />
         <Dtest default={true} />
         <FractalCreator path="/create" is_new_project={false} />
