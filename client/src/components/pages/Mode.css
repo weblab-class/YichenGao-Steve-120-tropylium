@@ -30,7 +30,8 @@
 .left {
   left: 0;
   background-color: var(--primary--dark);
-  /* background-image: "../../images/mode_simple.png"; */
+  background-image: url("../../images/simple_creator.png");
+  background-size: 100% 100%;
 }
 
 /* Control the right side */
