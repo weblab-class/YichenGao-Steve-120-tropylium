@@ -38,5 +38,9 @@ img {
 }
 
 .home-text {
-  text-shadow: 2px 2px 15px var(--primary);
+  /* text-shadow: 2px 2px 15px var(--primary); */
+  color: white;
+  font-size: 20px;
+  text-shadow: 0.07em 0 var(--primary--dark), 0 0.07em var(--primary--dark),
+    -0.07em 0 var(--primary--dark), 0 -0.07em var(--primary--dark);
 }
