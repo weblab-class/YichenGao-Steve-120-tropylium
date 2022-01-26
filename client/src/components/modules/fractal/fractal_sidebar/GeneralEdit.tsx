@@ -31,8 +31,8 @@ const GeneralEdit = (props: Props) => {
             symbols={props.symbols}
             operators={props.operators}
             />
-        <div>
-            Number of Iterations
+        <div className="fractal-sidebar-edit-hint_text hint_text-extra-margin">
+            Number of Iterations:
         </div>
         <input className = 'sidebar_input'
             type='number' 
