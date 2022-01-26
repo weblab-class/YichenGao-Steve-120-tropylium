@@ -16,7 +16,7 @@ const Dashboard = (props: DashboardProps) => {
   return (
     <div className="dashboard-background">
       <div className="dashboard-text">MY PROJECTS</div>
-        <Link to="/fractal_creator" className="NavBar-linkText">
+        <Link to="/fractal_creator">
             <button className="button">CREATE NEW</button>
         </Link>
 //     </div>
