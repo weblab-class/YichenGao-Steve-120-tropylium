@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import { Pattern, Symbol } from "../../../../constants/Types";
 import PatternPreviewRenderer from "./PatternPreviewRenderer";
-
-import "./FractalSidebar.css";
+import delete_icon from "../../../../images/delete.svg"
+import "./PatternEdit.css";
 
 type Props = {
     pattern: Pattern
@@ -35,48 +35,59 @@ const PatternEdit = (props: Props) => {
         } as Pattern, symbol_name);
     }
 
-    return (<div>
-        <div>
-            {`Pattern for`}
-        </div>
-        <div className="pattern-edit-symbol-names_container">
-            {
-                props.pattern.symbol_names.map((name: string) => 
-                    <div key={name} className="pattern-edit-symbol-name_text" 
-                            onClick={(event) => removeSymbol(name)}>
-                        {name}
-                    </div>
-                )   
-            }
-            <div className="pattern-edit-symbol-dropdown_container">
-                <div className="pattern-edit-symbol-add_button" >
-                    Add
-                </div>
-                <div className="pattern-edit-symbol-dropdown-content_container">
-                {
-                    props.symbol_names.filter((symbol_name: string) => 
-                        props.pattern.symbol_names.find(
-                            (current_symbol_name: string) => 
-                                symbol_name === current_symbol_name
-                        ) === undefined
-                    ).map((other_symbol_name: string) => 
-                    <div 
-                    key={other_symbol_name}
-                    onClick={(event) => addSymbol(other_symbol_name)}>
-                        {other_symbol_name}
-                    </div>    
-                    )
-                }
-                </div>
+    function getOtherSymbolNames():string[] {
+        return props.symbol_names.filter((symbol_name: string) => 
+        props.pattern.symbol_names.find(
+            (current_symbol_name: string) => 
+                symbol_name === current_symbol_name
+        ) === undefined);
+    }
+
+    return (<div className="pattern-edit_container">
+        <div className="pattern-edit_container2">
+            <div className="pattern-edit-name_text">
+                {`Pattern ${props.pattern.id + 1}`}
             </div>
-            
+            <div className="fractal-sidebar-edit-remove_button"
+                onClick={(event) => props.removePattern(props.pattern)}>
+                <img src={delete_icon}/>
+            </div>        
         </div>
-        <PatternPreviewRenderer 
-            pattern={props.pattern}
-            onPreviewClick={(event) => props.onPatternClick(props.pattern)}/>
-        <div onClick = {(event) => props.removePattern(props.pattern)}>
-            Remove
+
+        <div className="pattern-edit_container3">
+            <PatternPreviewRenderer 
+                pattern={props.pattern}
+                onPreviewClick={(event) => props.onPatternClick(props.pattern)}/>
+            <div className="pattern-edit-symbol-names_container">
+                {
+                    props.pattern.symbol_names.map((name: string) => 
+                        <div key={name} className="pattern-edit-symbol-name_text" 
+                                onClick={(event) => removeSymbol(name)}>
+                            {name}
+                        </div>
+                    )   
+                }
+                <div className="pattern-edit-symbol-dropdown_container">
+                    <div className="pattern-edit-symbol-add_button" >
+                        Add
+                    </div>
+                    <div className="pattern-edit-symbol-dropdown-content_container">
+                    {
+                        getOtherSymbolNames().map((other_symbol_name: string) => 
+                        <div 
+                        key={other_symbol_name}
+                        onClick={(event) => addSymbol(other_symbol_name)}>
+                            {other_symbol_name}
+                        </div>    
+                        )
+                    }
+                    </div>
+                </div> 
+            </div>
         </div>
+        <div className="fractal-sidebar_divider">
+                    </div>
+        
     </div>);
 }
 

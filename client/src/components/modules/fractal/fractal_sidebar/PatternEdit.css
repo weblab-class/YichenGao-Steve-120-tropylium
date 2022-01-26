@@ -1,0 +1,28 @@
+.pattern-edit_container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.pattern-edit_container2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--s) 0;
+}
+
+.pattern-edit_container3 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: var(--s);
+}
+
+.pattern-edit-name_text {
+    font-weight: bold;
+    font-size: 18px;
+}

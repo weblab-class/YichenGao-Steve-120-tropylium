@@ -83,7 +83,7 @@ const PatternPreviewRenderer = (props: PatternPreviewRendererProps) => {
         // );
     });
 
-    return (<div ref = {svg_container} className="preview-svg_container" 
+    return (<div ref = {svg_container} className="preview-svg_container box-shadow" 
             onClick={(event) => props.onPreviewClick(props.pattern)}>
         <svg width = {`${PREVIEW_WIDTH}px`} height = {`${PREVIEW_HEIGHT}px`}>
             <g>

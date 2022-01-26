@@ -70,22 +70,25 @@ const PatternEditList = (props: Props) => {
         } as Pattern));
     }
     
-    return (<div>
-        <div className = "fractal-sidebar-section-title_text">
+    return (<div className="fractal-sidebar-section-edit_container box-shadow">
+        <div className = "fractal-sidebar-section-title_text box-shadow">
             PATTERNS
         </div>
-        {
-            props.patterns.map((pattern: Pattern, index: number) => 
-                <PatternEdit key = {index} 
-                    pattern={pattern} 
-                    updatePattern={updatePattern}
-                    removePattern={removePattern}
-                    onPatternClick={props.onPatternClick}
-                    symbol_names={props.symbol_names}
-                    />
-            )
-        }
-        <div onClick={(event) => addPattern()}>
+        <div className="fractal-sidebar-section-list_container">
+            {
+                        props.patterns.map((pattern: Pattern, index: number) => 
+                            <PatternEdit key = {index} 
+                                pattern={pattern} 
+                                updatePattern={updatePattern}
+                                removePattern={removePattern}
+                                onPatternClick={props.onPatternClick}
+                                symbol_names={props.symbol_names}
+                                />
+                        )
+                    }
+        </div>
+        
+        <div className="fractal-sidebar-add-new_button" onClick={(event) => addPattern()}>
             Add Pattern
         </div> 
     </div>);
