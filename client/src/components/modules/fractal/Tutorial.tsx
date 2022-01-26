@@ -41,7 +41,7 @@ const Tutorial = (props: Props) => {
             </li>
             <li>
                 As you might have expected from the example of replacement rules, the complexity of fractals grows exponentially with the number of iterations. At higher numbers of iterations (roughly beyond 12, depending on your computer) 
-                you may experience increasing amounts of lag and performance issues.
+                you may experience increasing amounts of lag and performance issues. Experimenting is best done at lower iterations, then increasing the number of iterations towards the limit once you've found a fractal you'd like to explore on.
             </li>
             <li>
                 Want to learn more? Want more examples? Check out <a href="https://en.wikipedia.org/wiki/L-system" target="_blank">Lindenmayer systems</a>.
