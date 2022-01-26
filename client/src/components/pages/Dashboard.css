@@ -1,43 +1,16 @@
-.button {
-  padding: 10px 40px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #fff;
-  background-color: #3454c5;
-  border: none;
-  border-radius: 15px;
-  font-size: var(--m);
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  position: relative;
-  left: 50px;
-  top: 30px;
-}
-
-.button:hover {
-  background-color: var(--primary--dim);
-}
-.button:active {
-  background-color: #3454c5;
-  transform: translateY(4px);
-}
-
-.dashboard-background {
+.Dashboard-background {
   background-color: var(--primary--dark);
+  display: flex;
+  flex-wrap: wrap;
   height: 100%;
+  padding: var(--l);
 }
 
-.dashboard-text {
-  color: #fff;
-  display: flex;
-  justify-content: start;
-  font-size: var(--m);
+.Dashboard-loginWarning {
   font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: var(--m);
-  position: relative;
-  left: 50px;
-  top: 20px;
-  max-width: fit-content;
+  font-size: 8vmin;
+  color: white;
+
+  margin: auto;
+  text-align: center;
 }

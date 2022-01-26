@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "@reach/router";
 
 import { GRID_SIZE } from "../../constants/Constants";
@@ -6,7 +6,7 @@ import Pattern from "../modules/Pattern";
 import StartPoint from "../modules/StartPoint";
 import EndPoint from "../modules/EndPoint";
 import Parameters from "../modules/Parameters";
-//import Result from "../modules/Result";
+import Result from "../modules/Result";
 import "./ArtCreator.css";
 
 type ArtCreatorProps = RouteComponentProps & {
@@ -83,16 +83,16 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
           />
         );
       case 4:
-        // return (
-        //   <Result
-        //     stepNumber={stepNumber}
-        //     prevStep={prevStep}
-        //     grid={grid}
-        //     startCoords={startCoords}
-        //     endCoords={endCoords}
-        //     numIterations={numIterations}
-        //   />
-        // );
+        return (
+          <Result
+            stepNumber={stepNumber}
+            prevStep={prevStep}
+            grid={grid}
+            startCoords={startCoords}
+            endCoords={endCoords}
+            numIterations={numIterations}
+          />
+        );
     }
   };
 

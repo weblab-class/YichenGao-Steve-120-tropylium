@@ -2,8 +2,8 @@ import * as d3 from "d3";
 import { GRID_SIZE, addArray } from "../../constants/Constants";
 
 class D3Drawer {
-  cellDeltas: number[][];
-  endDelta: number[];
+  cellDeltas: [number, number][];
+  endDelta: [number, number];
   numIterations: number;
   svg: any;
   width: number;
@@ -11,7 +11,12 @@ class D3Drawer {
   svgCanvas: any;
   bounds: { [key: string]: number };
 
-  constructor(cellDeltas: number[][], endDelta: number[], numIterations: number, svg) {
+  constructor(
+    cellDeltas: [number, number][],
+    endDelta: [number, number],
+    numIterations: number,
+    svg
+  ) {
     this.cellDeltas = cellDeltas;
     this.endDelta = endDelta;
     this.numIterations = numIterations;
@@ -24,7 +29,7 @@ class D3Drawer {
     // origin = where the iteration starts from
     // returns coordinates of end point
 
-    const rotateDelta: number[][] = [
+    const rotateDelta: [number, number][] = [
       [0, 0],
       [1, 0],
       [1, 1],
