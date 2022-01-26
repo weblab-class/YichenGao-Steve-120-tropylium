@@ -1,13 +1,38 @@
 .Card-container {
-  border-color: white;
-  flex: 1 0 21%;
-  /* height: 100px; */
+  /* flex-basis: 21%; */
+  height: 320px;
+  width: 21%;
+  display: flex;
+  flex-flow: column;
+  row-gap: var(--l);
+  padding: var(--l);
 }
 
 .Card-svgRenderer {
+  flex: 3;
   display: inline-block;
   position: relative;
   width: 100%;
   vertical-align: top;
   overflow: hidden;
+
+  border: 2px solid var(--primary);
+  border-radius: var(--l);
+  padding: var(--xl);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#svgContainer {
+  display: block;
+  margin: auto;
+}
+
+.Card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Card-caption {
+  flex: 1;
+  text-align: center;
 }
