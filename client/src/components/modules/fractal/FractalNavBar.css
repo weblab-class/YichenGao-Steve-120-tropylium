@@ -45,6 +45,16 @@
     line-height: 100%;
     font-weight: bold;
     transition: 500ms;
+    text-decoration: none;
+}
+
+.fractal-navbar-tutorial_button a {
+    text-decoration: none;
+    color: white;
+}
+
+.fractal-navbar-tutorial_button a:hover {
+    color: white;
 }
 
 .fractal-navbar-download_button:hover, .fractal-navbar-tutorial_button:hover {

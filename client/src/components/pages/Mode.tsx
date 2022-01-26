@@ -25,9 +25,10 @@ const Mode = (props: ModeProps) => {
                     <Link to="/create/advanced_fractal_creator/" className="Dashboard-linkText">
                         <button className="button">ADVANCED FRACTAL CREATOR</button>
                     </Link>
-                        <h2>Build Fractals using more adavanced features</h2>
+                        <h2>Build Fractals using more advanced features</h2>
                         <p>Have custom shapes, colors, patterns, iteration rules, etc. 
                         Use your imagination to make intricate and beautiful fractals.
+                        Unfortunately, saving is not yet enabled in this mode.
                         </p>
                 </div>
             </div>
