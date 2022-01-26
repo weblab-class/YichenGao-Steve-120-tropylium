@@ -45,8 +45,8 @@ const Home = (props: HomeProps) => {
                   <Carousel.Caption>
                     <div className="centerImage">
                       <img className="navbar-logo-icon" height="125" width="700" src={logo_shadow} />
-                      <h3 className="home-text">Create Your Fractal Art in just a few steps.</h3>
-                      <p className="home-text">Log in to turn your imaginamtion into reality.</p>
+                      <h3 className="home-text">Create Fractal Art in just a few steps.</h3>
+                      <p className="home-text">Log in to turn your imagination into reality.</p>
                       {/* <Link to="/fractal_creator">
                         <button className="button">CREATE YOUR FRACTAL NOW!</button>
                             </Link> */}
@@ -78,8 +78,8 @@ const Home = (props: HomeProps) => {
                   <Carousel.Caption>
                     <div className="centerImage">
                       <img className="navbar-logo-icon" height="125" width="700" src={logo_shadow} />
-                      <h3 className="home-text">Create Your Fractal Art in just a few steps.</h3>
-                      <p className="home-text">Log in to turn your imaginamtion into reality.</p>
+                      <h3 className="home-text">Create Fractal Art in just a few steps.</h3>
+                      <p className="home-text">Log in to turn your imagination into reality.</p>
                       {/* <Link to="/fractal_creator">
                         <button className="button">CREATE YOUR FRACTAL NOW!</button>
                             </Link> */}
@@ -111,8 +111,8 @@ const Home = (props: HomeProps) => {
                   <Carousel.Caption>
                     <div className="centerImage">
                       <img className="navbar-logo-icon" height="125" width="700" src={logo_shadow} />
-                      <h3 className="home-text">Create Your Fractal Art in just a few steps.</h3>
-                      <p className="home-text">Log in to turn your imaginamtion into reality.</p>
+                      <h3 className="home-text">Create Fractal Art in just a few steps.</h3>
+                      <p className="home-text">Log in to turn your imagination into reality.</p>
                       {/* <Link to="/fractal_creator">
                         <button className="button">CREATE YOUR FRACTAL NOW!</button>
                             </Link> */}
@@ -144,8 +144,8 @@ const Home = (props: HomeProps) => {
                   <Carousel.Caption>
                     <div className="centerImage">
                       <img className="navbar-logo-icon" height="125" width="700" src={logo_shadow} />
-                      <h3 className="home-text">Create Your Fractal Art in just a few steps.</h3>
-                      <p className="home-text">Log in to turn your imaginamtion into reality.</p>
+                      <h3 className="home-text">Create Fractal Art in just a few steps.</h3>
+                      <p className="home-text">Log in to turn your imagination into reality.</p>
                       {/* <Link to="/fractal_creator">
                         <button className="button">CREATE YOUR FRACTAL NOW!</button>
                             </Link> */}
@@ -177,8 +177,8 @@ const Home = (props: HomeProps) => {
                   <Carousel.Caption>
                     <div className="centerImage">
                       <img className="navbar-logo-icon" height="125" width="700" src={logo_shadow} />
-                      <h3 className="home-text">Create Your Fractal Art in just a few steps.</h3>
-                      <p className="home-text">Log in to turn your imaginamtion into reality.</p>
+                      <h3 className="home-text">Create Fractal Art in just a few steps.</h3>
+                      <p className="home-text">Log in to turn your imagination into reality.</p>
                       {/* <Link to="/fractal_creator">
                         <button className="button">CREATE YOUR FRACTAL NOW!</button>
                             </Link> */}
@@ -210,8 +210,8 @@ const Home = (props: HomeProps) => {
                   <Carousel.Caption>
                     <div className="centerImage">
                       <img className="navbar-logo-icon" height="125" width="700" src={logo_shadow} />
-                      <h3 className="home-text">Create Your Fractal Art in just a few steps.</h3>
-                      <p className="home-text">Log in to turn your imaginamtion into reality.</p>
+                      <h3 className="home-text">Create Fractal Art in just a few steps.</h3>
+                      <p className="home-text">Log in to turn your imagination into reality.</p>
                       {/* <Link to="/fractal_creator">
                         <button className="button">CREATE YOUR FRACTAL NOW!</button>
                             </Link> */}
