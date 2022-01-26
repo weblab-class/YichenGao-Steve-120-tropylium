@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "@reach/router";
 import React, { useState, useRef } from "react";
 import { Operator, Pattern, Symbol } from "../../constants/Types";
+import FractalNavBar from "../modules/fractal/FractalNavBar";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
 import PatternEditor from "../modules/fractal/fractal_pattern_edit/PatternEditor";
 import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
@@ -59,6 +60,10 @@ const FractalCreator = (props: FractalCreatorProps) => {
         end_position: [],
     } as Pattern);
     const [is_warning_open, setWarningOpen] = useState(false);
+
+    function saveProject(): void {
+
+    }
 
     function updatePattern(new_pattern: Pattern): void {
         const new_patterns: Pattern[] = [];
@@ -122,7 +127,14 @@ const FractalCreator = (props: FractalCreatorProps) => {
     }
     
     return (<div className = 'fractal-creator_container'>
-        <FractalRenderer
+        <FractalNavBar 
+            onSaveClick={saveProject}
+            onDownloadImageClick={onDownloadClick}
+            title={title}
+            updateTitle={setTitle}
+        />
+        <div className="fractal-creator-editor_container">
+            <FractalRenderer
             num_iterations={num_iterations}
             initial={initial}
             patterns={patterns}
@@ -135,8 +147,6 @@ const FractalCreator = (props: FractalCreatorProps) => {
             setDownloadCallback={setDownloadCallback}
             />
         <FractalSidebar 
-            title= {title}
-            updateTitle={setTitle}
             operators={operators}
             updateOperators={setOperators}
             symbols={symbols}
@@ -150,8 +160,9 @@ const FractalCreator = (props: FractalCreatorProps) => {
             updateNumIterations={setNumIterations}
             backgroundColor={background_color}
             updateBackgroundColor={setBackgroundColor}
-            onDownloadClick={onDownloadClick}
         />
+        </div>
+        
         <div className = {`fractal-creator-pattern-editor_container 
             ${is_editor_open
                 ? 'visible'

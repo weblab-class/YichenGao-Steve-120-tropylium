@@ -1,14 +1,18 @@
 .fractal-creator_container {
     width:100%;
-    height:100%;
+    height:100vh;
+} 
+
+.fractal-creator-editor_container {
+    height: calc(100vh - var(--xxl));
     display: flex;
     flex-direction: row;
     position: relative;
 }
 
 .fractal-creator-pattern-editor_container  {
-    width:100%;
-    height: 100%;
+    width:100vw;
+    height: 100vh;
     display: none;
     position: absolute;
     top: 0;

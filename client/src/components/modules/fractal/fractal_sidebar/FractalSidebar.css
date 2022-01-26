@@ -1,5 +1,5 @@
 .sidebar_container {
-    height: calc(100vh - var(--xxl));
+    height: calc(100vh-var(--xxl));
     width: 300px;
     display: block;
     background-color: var(--lightgrey);
@@ -43,7 +43,7 @@
 
 .fractal-sidebar-section-edit_container {
     width: calc(100% - 1 * var(--s));
-    margin: var(--s) 0 var(--s) var(--s);
+    margin: 0 0 0 var(--s);
     border-radius: var(--m);
     background-color: var(--white);
     display: flex;
