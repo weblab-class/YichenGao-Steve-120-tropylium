@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Pattern, Symbol } from "../../../../constants/Types";
 import PatternPreviewRenderer from "./PatternPreviewRenderer";
 import delete_icon from "../../../../images/delete.svg"
+import add_circle from "../../../../images/add_circle.svg"
 import "./PatternEdit.css";
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 }
 
 const PatternEdit = (props: Props) => {
-    
+    console.log(props.pattern.id);
     function removeSymbol(symbol_name: string): void {
         props.updatePattern({
             id: props.pattern.id,
@@ -61,7 +62,7 @@ const PatternEdit = (props: Props) => {
             <div className="pattern-edit-symbol-names_container">
                 {
                     props.pattern.symbol_names.map((name: string) => 
-                        <div key={name} className="pattern-edit-symbol-name_text" 
+                        <div key={name} className="instruction-icon symbol pattern-edit-symbol-name_text" 
                                 onClick={(event) => removeSymbol(name)}>
                             {name}
                         </div>
@@ -69,12 +70,12 @@ const PatternEdit = (props: Props) => {
                 }
                 <div className="pattern-edit-symbol-dropdown_container">
                     <div className="pattern-edit-symbol-add_button" >
-                        Add
+                        <img src={add_circle}/>
                     </div>
                     <div className="pattern-edit-symbol-dropdown-content_container">
                     {
                         getOtherSymbolNames().map((other_symbol_name: string) => 
-                        <div 
+                        <div className="instruction-icon symbol" 
                         key={other_symbol_name}
                         onClick={(event) => addSymbol(other_symbol_name)}>
                             {other_symbol_name}
