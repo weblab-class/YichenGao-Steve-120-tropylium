@@ -14,11 +14,11 @@ const Mode = (props: ModeProps) => {
              <div className="split left">
                 <div className="centered">
                 <Link to="/create/simple_fractal_creator/" className="Dashboard-linkText">
-                    <Button variant="contained" size="large">
-                         SIMPLE FRACTAL CREATOR
-                    </Button>
+                    <button className="button">ADVANCED FRACTAL CREATOR</button>
                  </Link>
                      <h2>Follow 5 simple steps to create fractals</h2>
+                     <p>Learn the process of creating fractals with a basic step-by-step tutorial.
+                          Recommended for those who are using Fractory for the first time.</p>
                 </div>
             </div>
             <div className="split right">
@@ -27,6 +27,9 @@ const Mode = (props: ModeProps) => {
                         <button className="button">ADVANCED FRACTAL CREATOR</button>
                     </Link>
                         <h2>Build Fractals usring more adavanced features</h2>
+                        <p>Have custom shapes, colors, patterns, iteration rules, etc. 
+                        Use your imagination to make intricate and beautiful fractals.
+                        </p>
                 </div>
             </div>
         </div>

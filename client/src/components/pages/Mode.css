@@ -75,3 +75,11 @@
   background-color: var(--primary);
   transform: translateY(4px);
 }
+
+h2 {
+  color: white;
+}
+
+p {
+  color: white;
+}
