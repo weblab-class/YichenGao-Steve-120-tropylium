@@ -80,6 +80,14 @@ router.post("/artwork/:artworkId", auth.ensureLoggedIn, async (req, res) => {
   }
 });
 
+router.post("/title/:artworkId", auth.ensureLoggedIn, async (req, res) => {
+  if (req.user) {
+    let oldArtwork = await Artwork.findOne({ _id: req.params.artworkId });
+    oldArtwork.title = req.body.title;
+    await oldArtwork.save().then((artwork: ArtworkInterface) => res.send(artwork));
+  }
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;

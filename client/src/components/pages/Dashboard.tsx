@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "@reach/router";
 import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
+import Stack from "@mui/material/Stack";
 import { Link } from "@reach/router";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -12,6 +14,7 @@ type DashboardProps = RouteComponentProps & {
   userId: String;
 };
 
+// mui button css
 const theme = createTheme({
   palette: {
     primary: {
@@ -45,6 +48,8 @@ const Dashboard = (props: DashboardProps) => {
     }
   }, [props.userId]);
 
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   const renderCards = (): JSX.Element => {
     return (
       <>
@@ -53,10 +58,12 @@ const Dashboard = (props: DashboardProps) => {
             return (
               <Card
                 artworkId={artwork._id}
+                title={artwork.title}
                 cellDeltas={artwork.cellDeltas}
                 endDelta={artwork.endDelta}
                 numIterations={artwork.numIterations}
                 position={idx + 1}
+                isEditing={isEditing}
                 key={idx}
               />
             );
@@ -73,14 +80,31 @@ const Dashboard = (props: DashboardProps) => {
   return (
     <div className="Dashboard-background">
       <div className="Dashboard-description">
-        MY PROJECTS&emsp;
-        <ThemeProvider theme={theme}>
-          <Link to="/fractal_creator" className="Dashboard-linkText">
-            <Button variant="contained" size="large">
-              CREATE NEW PROJECT
+        <Stack spacing={4} direction="row" alignItems="center">
+          <div>MY PROJECTS</div>
+          <ThemeProvider theme={theme}>
+            <Link to="/fractal_creator" className="Dashboard-linkText">
+              <Button variant="contained" size="large">
+                NEW PROJECT
+              </Button>
+            </Link>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => {
+                setIsEditing(!isEditing);
+              }}
+              sx={
+                isEditing
+                  ? { bgcolor: "rgb(3, 150, 3)", "&:hover": { bgcolor: "rgb(3, 150, 3, 0.7)" } }
+                  : {}
+              }
+            >
+              <EditIcon />
+              &nbsp; RENAME
             </Button>
-          </Link>
-        </ThemeProvider>
+          </ThemeProvider>
+        </Stack>
       </div>
       <div className="Dashboard-cardList">
         {props.userId ? renderCards() : renderLoginWarning()}
