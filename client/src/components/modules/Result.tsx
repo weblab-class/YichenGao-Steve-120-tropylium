@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -13,6 +13,8 @@ import "./Result.css";
 import Steps from "./Steps";
 
 type ResultProp = {
+  artworkId: string;
+  setArtworkId: React.Dispatch<SetStateAction<string>>;
   stepNumber: number;
   prevStep: () => void;
   grid: boolean[][];
@@ -65,8 +67,23 @@ const Result = (props: ResultProp) => {
     props.endCoords[0] - props.startCoords[0],
   ];
 
-  const body = { cellDeltas: cellDeltas, endDelta: endDelta, numIterations: props.numIterations };
-  post("/api/artwork", body);
+  const body = {
+    grid: props.grid,
+    startCoords: props.startCoords,
+    endCoords: props.endCoords,
+    cellDeltas: cellDeltas,
+    endDelta: endDelta,
+    numIterations: props.numIterations,
+  };
+  useEffect(() => {
+    if (props.artworkId.length > 0) {
+      post(`/api/artwork/${props.artworkId}`, body);
+    } else {
+      post("/api/artwork", body).then((artwork) => {
+        props.setArtworkId(artwork._id);
+      });
+    }
+  }, []);
 
   const [bounds, setBounds] = useState<{ [key: string]: number }>({});
 

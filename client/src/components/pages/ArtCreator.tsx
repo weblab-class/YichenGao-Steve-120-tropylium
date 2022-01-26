@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "@reach/router";
 
 import { GRID_SIZE } from "../../constants/Constants";
+import { get } from "../../utilities";
 import Pattern from "../modules/Pattern";
 import StartPoint from "../modules/StartPoint";
 import EndPoint from "../modules/EndPoint";
@@ -14,6 +15,10 @@ type ArtCreatorProps = RouteComponentProps & {
 };
 
 const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
+  const [artworkId, setArtworkId] = useState<string>("");
+
+  // check if loading existing artwork
+
   // info to get from inputs (grid pattern, start, end)
   const [grid, setGrid] = useState(
     new Array(GRID_SIZE).fill(0).map(() => new Array(GRID_SIZE).fill(false))
@@ -28,6 +33,24 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
   const [startCoords, setStartCoords] = useState([-1, -1]);
   const [endCoords, setEndCoords] = useState([-1, -1]);
   const [numIterations, setNumIterations] = useState(1);
+
+  // if editing existing artwork, load data
+  useEffect(() => {
+    if (props["*"].length > 0) {
+      setArtworkId(props["*"]);
+    }
+    if (artworkId.length > 0) {
+      console.log(artworkId);
+      get(`/api/artwork/${props.userId}`, { artworkId: artworkId }).then((artworks) => {
+        console.log(artworks);
+        let artwork = artworks[0];
+        setGrid(artwork.grid);
+        setStartCoords(artwork.startCoords);
+        setEndCoords(artwork.endCoords);
+        setNumIterations(artwork.numIterations);
+      });
+    }
+  }, [props.userId, artworkId]);
 
   // keeping track of steps
   const [stepNumber, setStepNumber] = useState(0);
@@ -85,6 +108,8 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
       case 4:
         return (
           <Result
+            artworkId={artworkId}
+            setArtworkId={setArtworkId}
             stepNumber={stepNumber}
             prevStep={prevStep}
             grid={grid}
