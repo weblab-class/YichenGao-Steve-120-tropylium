@@ -28,50 +28,101 @@ const PatternEditorRenderer = (props: Props) => {
     const WIDTH = 800, HEIGHT = WIDTH, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
 
+    useEffect(() => {
+
+        const svg = d3.select(svg_container_ref.current).select('svg');
+        
+        const start_hover_graphic = svg.select("#start_hover");
+        Util.drawGraphic_d3(start_hover_graphic, 'start', WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, 0x00FF00)
+        start_hover_graphic.attr('opacity', 0.5);
+
+        const end_hover_graphic = svg.select("#end_hover");
+        Util.drawGraphic_d3(end_hover_graphic, 'end', WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, 0xFF0000)
+        end_hover_graphic.attr('opacity', 0.5);
+
+        const focus_hover_graphic = svg.select("#focus_hover");
+        Util.drawGraphic_d3(focus_hover_graphic, 'focus', WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, 0x0000FF)
+        focus_hover_graphic.attr('opacity', 0.5);
+
+        const select_hover_graphic = svg.select("#select_hover").append('g');
+        Util.drawGraphic_d3(select_hover_graphic, props.selected_shape, WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, props.selected_color)
+        select_hover_graphic.attr('opacity', 0.5);
+    }, []);
 
     useEffect(() => {
         const svg = d3.select(svg_container_ref.current).select('svg');
-        svg.select("#hover").remove();
+        
+        const start_hover_graphic = svg.select("#start_hover");
+        const end_hover_graphic = svg.select("#end_hover");
+        const focus_hover_graphic = svg.select("#focus_hover");
+        svg.select("#select_hover").select('g').remove();
+        const select_hover_graphic = svg.select("#select_hover").append('g');
+        Util.drawGraphic_d3(select_hover_graphic, props.selected_shape, WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, props.selected_color)
+        select_hover_graphic.attr('opacity', 0.5);
+        select_hover_graphic.style('visibility', 'hidden');
 
-        const hover_visual = svg.append('g').attr('id', 'hover');
-        let shape;
-        let color;
-        switch(props.editorState) {
-            case PatternEditorState.SELECT_START:
-                shape = 'start';
-                color = 0x00FF00;
-                break;
-            case PatternEditorState.SELECT_END:
-                shape = 'end';
-                color = 0xFF0000;
-                break;
-            case PatternEditorState.SELECT_REGULAR:
-                shape = props.selected_shape;
-                color = props.selected_color;
-                break;
+        function updateVisibliity() {
+            switch(props.editorState) {
+                case PatternEditorState.SELECT_REGULAR:
+                    start_hover_graphic.style('visibility', 'hidden');
+                    end_hover_graphic.style('visibility', 'hidden');
+                    focus_hover_graphic.style('visibility', 'hidden');
+                    select_hover_graphic.style('visibility', 'hidden');
+                    break;
+                case PatternEditorState.SELECT_START:
+                    start_hover_graphic.style('visibility', 'visible');
+                    end_hover_graphic.style('visibility', 'hidden');
+                    focus_hover_graphic.style('visibility', 'hidden');
+                    select_hover_graphic.style('visibility', 'hidden');
+                    break;
+                case PatternEditorState.SELECT_END:
+                    start_hover_graphic.style('visibility', 'hidden');
+                    end_hover_graphic.style('visibility', 'visible');
+                    focus_hover_graphic.style('visibility', 'hidden');
+                    select_hover_graphic.style('visibility', 'hidden');
+                    break;
+            }
         }
-        Util.drawGraphic_d3(hover_visual, shape, WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, color)
-        hover_visual.attr('opacity', 0.0);
+
+        updateVisibliity();
 
         const mouseover = (event: MouseEvent) => {
-            hover_visual
-            .attr('opacity', 0.4);
+            updateVisibliity();
         }
         svg.on("mouseover", mouseover);
 
         const mouseout = (event: MouseEvent) => {
-            hover_visual
-            .attr('opacity', 0);
+            start_hover_graphic.style('visibility', 'hidden');
+            end_hover_graphic.style('visibility', 'hidden');
+            focus_hover_graphic.style('visibility', 'hidden');
+            select_hover_graphic.style('visibility', 'hidden');
         }
         svg.on("mouseout", mouseout);
 
         const mousemove = (event: MouseEvent) => {
             const step_x = event.offsetX - event.offsetX % (WIDTH/GRID_SIZE), 
             step_y= event.offsetY - event.offsetY % (HEIGHT/GRID_SIZE);
-            hover_visual.attr('transform', `translate(${step_x},${step_y})`);
-            if(props.rectData[step_x][step_y]) {
-                
+            
+            start_hover_graphic.attr('transform', `translate(${step_x},${step_y})`);
+            end_hover_graphic.attr('transform', `translate(${step_x},${step_y})`);
+            focus_hover_graphic.attr('transform', `translate(${step_x},${step_y})`);
+            select_hover_graphic.attr('transform', `translate(${step_x},${step_y})`);
+
+            if(props.editorState === PatternEditorState.SELECT_REGULAR) {
+                const x = Math.round(step_x/(WIDTH/GRID_SIZE)), y = Math.round(step_y/(HEIGHT/GRID_SIZE));
+                if(props.rectData[x][y].is_selected) {
+                    focus_hover_graphic.style('visibility', 'visible');
+                    select_hover_graphic.style('visibility', 'hidden');
+                } else {
+                    focus_hover_graphic.style('visibility', 'hidden');
+                    select_hover_graphic.style('visibility', 'visible');
+                }
+            } else {
+                focus_hover_graphic.style('visibility', 'hidden');
+                select_hover_graphic.style('visibility', 'hidden');
             }
+            
+            
         }
         svg.on("mousemove", mousemove);
 
@@ -80,8 +131,20 @@ const PatternEditorRenderer = (props: Props) => {
             svg.on("mouseout", undefined);
             svg.on("mousemove", undefined);
         }
-    }, [props.editorState, props.selected_color, props.selected_shape]);
+    }, [props.editorState, props.selected_color, props.selected_shape, props.rectData]);
 
+    useEffect(() => {
+        const start_hover_graphic = d3.select(svg_container_ref.current).select('svg').select("#hover");
+        Util.drawGraphic_d3(start_hover_graphic, 'start', WIDTH/GRID_SIZE, HEIGHT/GRID_SIZE, 0x00FF00)
+        
+        if(props.start_point && props.start_point.length == 2) {
+            start_hover_graphic
+                .attr('transform', `translate(${props.start_point[0]*WIDTH/GRID_SIZE},${props.start_point[1]*HEIGHT/GRID_SIZE})`)
+                .attr('opacity', 0.5);
+        } else {
+            start_hover_graphic.attr('opacity', 0);
+        }
+    }, [props.editorState, props.start_point]);
 
     useEffect(() => {
         const start_graphic = d3.select(svg_container_ref.current).select('svg').select("#start");
@@ -189,10 +252,14 @@ const PatternEditorRenderer = (props: Props) => {
                 <svg width={WIDTH+"px"} height={HEIGHT + "px"}>
                     <g id="grid"></g>
                     <g id="rects"></g>
-                    <g id="hover"></g>
+                    
                     <g id="end"></g>
                     <g id="start"></g>
                     <g id="focus"></g>
+                    <g id="end_hover"></g>
+                    <g id="start_hover"></g>
+                    <g id="focus_hover"></g>
+                    <g id="select_hover"></g>
                 </svg>
             </div>
         );

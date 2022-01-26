@@ -53,19 +53,22 @@ const OperatorEditList = (props: Props) => {
         }
     }
     
-    return (<div>
-        <div className = "fractal-sidebar-section-title_text">
+    return (<div className="fractal-sidebar-section-edit_container box-shadow">
+        <div className = "fractal-sidebar-section-title_text box-shadow">
             OPERATORS
         </div>
-        {
-            props.operators.map((operator: Operator) => 
-                <OperatorEdit key = {operator.name} 
-                    operator={operator} 
-                    updateOperator={updateOperator}
-                    removeOperator={removeOperator}/>
-            )
-        }
-        <div onClick={(event) => addOperator()}>
+        <div className="fractal-sidebar-section-list_container">
+            {
+                props.operators.map((operator: Operator) => 
+                    <OperatorEdit key = {operator.name} 
+                        operator={operator} 
+                        updateOperator={updateOperator}
+                        removeOperator={removeOperator}/>
+                )
+            }
+        </div>
+        
+        <div className="fractal-sidebar-add-new_button" onClick={(event) => addOperator()}>
             Add Operator
         </div> 
     </div>);

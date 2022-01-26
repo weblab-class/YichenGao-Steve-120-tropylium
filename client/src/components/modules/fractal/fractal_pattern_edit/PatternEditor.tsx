@@ -40,45 +40,13 @@ const PatternEditor = (props: PatternEditorProps) => {
     const [rectData, setRectData] = useState(getRectData(props.pattern));
     const [start_point, setStartPoint] = useState(props.pattern.start_position);
     const [end_point, setEndPoint] = useState(props.pattern.end_position);
-    const [is_apply_to_future_selection, setApplyToFutureSelection] = useState(true);
+    //const [is_apply_to_future_selection, setApplyToFutureSelection] = useState(true);
 
     useEffect(() => {
         setRectData(getRectData(props.pattern))
         setStartPoint(props.pattern.start_position)
         setEndPoint(props.pattern.end_position)
     }, [props.pattern]);
-
-    useEffect(() => {
-        setFocusPoint({
-            x: focus_point.x,
-            y: focus_point.y,
-            color: selected_color,
-            shape: selected_shape,
-        })
-        if(focus_point.x && focus_point.y) {
-            const newRectData = [...rectData];
-            const rect = newRectData[focus_point.x][focus_point.y];
-            rect.point.color = selected_color;
-            setRectData(newRectData);
-        }
-        
-    }, [selected_color])
-
-    useEffect(() => {
-        setFocusPoint({
-            x: focus_point.x,
-            y: focus_point.y,
-            color: selected_color,
-            shape: selected_shape,
-        })
-        if(focus_point.x && focus_point.y) {
-            const newRectData = [...rectData];
-            const rect = newRectData[focus_point.x][focus_point.y];
-            rect.point.shape = selected_shape;
-            setRectData(newRectData);
-        }
-        
-    }, [selected_shape])
 
     const [editorState, setEditorState] = useState(PatternEditorState.SELECT_REGULAR);
     const [optionStatus, setOptionStatus] = useState(
@@ -88,6 +56,14 @@ const PatternEditor = (props: PatternEditorProps) => {
             props.pattern.end_position.length > 0,
         ]
     );
+
+    useEffect(() => {
+        setOptionStatus([
+            props.pattern.points.length > 0,
+            props.pattern.start_position.length > 0,
+            props.pattern.end_position.length > 0,
+        ])
+    }, [props.pattern]);
 
     function getRectData(pattern: Pattern): RectData[][] {
         const rect_info: RectData[][] = [];
@@ -165,88 +141,6 @@ const PatternEditor = (props: PatternEditorProps) => {
         setOptionStatus(newOptionStatus);
     }
 
-    // const onRectClick = (x: number, y: number): void => {
-    //     const newRectData = [...rectData];
-    //     const newOptionStatus = [...optionStatus];
-    //     const rect = newRectData[x][y];
-    //     switch(editorState) {
-    //         case PatternEditorState.SELECT_START:
-    //             const nextStartState = !rect.is_startpoint;
-    //             if(nextStartState) {
-    //                 rect.is_selected = true;
-    //                 for(let i = 0; i < GRID_SIZE; i++) {
-    //                     for(let j = 0; j < GRID_SIZE; j++) {
-    //                         newRectData[i][j].is_startpoint = false;
-    //                     }
-    //                 }
-    //                 if(rect.is_endpoint) {
-    //                     rect.is_endpoint = false;
-    //                     newOptionStatus[PatternEditorState.SELECT_END] = false;
-    //                 }
-    //                 newOptionStatus[PatternEditorState.SELECT_REGULAR] = true
-    //             }
-    //             newOptionStatus[PatternEditorState.SELECT_START] = nextStartState;
-
-    //             rect.is_startpoint = nextStartState; 
-                
-    //             break;
-    //         case PatternEditorState.SELECT_END:
-    //             const nextEndState = !rect.is_endpoint;
-    //             if(nextEndState) {
-    //                 rect.is_selected = true;
-    //                 for(let i = 0; i < GRID_SIZE; i++) {
-    //                     for(let j = 0; j < GRID_SIZE; j++) {
-    //                         newRectData[i][j].is_endpoint = false;
-    //                     }
-    //                 }
-    //                 if(rect.is_startpoint) {
-    //                     rect.is_startpoint = false;
-    //                     newOptionStatus[PatternEditorState.SELECT_START] = false;
-    //                 }
-    //                 newOptionStatus[PatternEditorState.SELECT_REGULAR] = true
-    //             }
-    //             newOptionStatus[PatternEditorState.SELECT_END] = nextEndState;
-
-    //             rect.is_endpoint = nextEndState;
-
-    //             break;
-    //         case PatternEditorState.SELECT_REGULAR:
-    //             const nextRegularState = !rect.is_selected;
-    //             if(!nextRegularState) {
-    //                 if(rect.is_startpoint) {
-    //                     rect.is_startpoint = false;
-    //                     newOptionStatus[PatternEditorState.SELECT_START] = false;
-    //                 }
-    //                 if(rect.is_endpoint) {
-    //                     rect.is_endpoint = false;
-    //                     newOptionStatus[PatternEditorState.SELECT_END] = false;
-    //                 }
-    //                 rect.is_selected = nextRegularState;
-    //                 let any_selected = false;
-    //                 for(let i = 0; i < GRID_SIZE; i++) {
-    //                     for(let j = 0; j < GRID_SIZE; j++) {
-    //                         if(newRectData[i][j].is_selected) {
-    //                             any_selected = true;
-    //                             i = GRID_SIZE; //breaks out of outer loop
-    //                             break;
-    //                         }
-    //                     }
-    //                 }
-    //                 newOptionStatus[PatternEditorState.SELECT_REGULAR] = any_selected;
-    //             } else {
-    //                 newOptionStatus[PatternEditorState.SELECT_REGULAR] = true;
-    //             }
-    //             rect.is_selected = nextRegularState;
-
-    //             break;
-                        
-    //     }
-
-    
-    //     setRectData(newRectData);
-    //     setOptionStatus(newOptionStatus);
-    // }
-
     const updateEditorState = (newState: PatternEditorState) => {
         setEditorState(newState);
     }
@@ -271,6 +165,40 @@ const PatternEditor = (props: PatternEditorProps) => {
             newState.end_position = end_point;
             props.onPatternUpdate(newState);
         }
+
+        
+    }
+
+    function updateSelectedColor(new_color: number) {
+        setFocusPoint({
+            x: focus_point.x,
+            y: focus_point.y,
+            color: new_color,
+            shape: selected_shape,
+        })
+        if(focus_point.x && focus_point.y) {
+            const newRectData = [...rectData];
+            const rect = newRectData[focus_point.x][focus_point.y];
+            rect.point.color = new_color;
+            setRectData(newRectData);
+        }
+        setSelectedColor(new_color);
+    }
+
+    function updateSelectedShape(new_shape: string) {
+        setFocusPoint({
+            x: focus_point.x,
+            y: focus_point.y,
+            color: selected_color,
+            shape: new_shape,
+        })
+        if(focus_point.x && focus_point.y) {
+            const newRectData = [...rectData];
+            const rect = newRectData[focus_point.x][focus_point.y];
+            rect.point.shape = new_shape;
+            setRectData(newRectData);
+        }
+        setSelectedShape(new_shape);
     }
 
     return (
@@ -308,8 +236,8 @@ const PatternEditor = (props: PatternEditorProps) => {
             <PatternEditorCell
                 editorState={editorState}
                 focus_point={focus_point}
-                updateSelectedColor={setSelectedColor}
-                updateSelectedShape={setSelectedShape}
+                updateSelectedColor={updateSelectedColor}
+                updateSelectedShape={updateSelectedShape}
                 />
         </div>
     </div>);

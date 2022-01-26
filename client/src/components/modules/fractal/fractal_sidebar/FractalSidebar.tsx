@@ -6,7 +6,7 @@ import OperatorEdit from "./OperatorEdit";
 import OperatorEditList from "./OperatorEditList";
 import PatternEdit from "./PatternEdit";
 import PatternEditList from "./PatternEditList";
-import PreviewRenderer from "./PreviewRenderer";
+import PreviewRenderer from "./PatternPreviewRenderer";
 import SymbolEdit from "./SymbolEdit";
 import SymbolEditList from "./SymbolEditList";
 
