@@ -5,7 +5,7 @@
   color: white;
   font-size: 50px;
   position: fixed;
-  top: 30%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, 0);
   display: block;
@@ -21,7 +21,7 @@
   width: 50%;
   position: fixed;
   z-index: 1;
-  top: 0;
+  bottom: 0;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -29,13 +29,16 @@
 /* Control the left side */
 .left {
   left: 0;
+  background-color: var(--primary--dark);
   /* background-image: "../../images/mode_simple.png"; */
 }
 
 /* Control the right side */
 .right {
   right: 0;
+  background-color: var(--primary--dark);
   /* background-image: "../../images/mode_advanced.png"; */
+  background-image: url("../../images/fractal_example1.png");
 }
 
 /* If you want the content centered horizontally and vertically */

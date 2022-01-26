@@ -10,7 +10,6 @@ const Mode = (props: ModeProps) => {
     return (
         <div className="mode-background">
              <h3 className="mode-text">CHOOSE THE RIGHT MODE FOR YOU.</h3>
-
              <div className="split left">
                 <div className="centered">
                 <Link to="/create/simple_fractal_creator/" className="Dashboard-linkText">
@@ -26,7 +25,7 @@ const Mode = (props: ModeProps) => {
                     <Link to="/create/advanced_fractal_creator/" className="Dashboard-linkText">
                         <button className="button">ADVANCED FRACTAL CREATOR</button>
                     </Link>
-                        <h2>Build Fractals usring more adavanced features</h2>
+                        <h2>Build Fractals using more adavanced features</h2>
                         <p>Have custom shapes, colors, patterns, iteration rules, etc. 
                         Use your imagination to make intricate and beautiful fractals.
                         </p>
