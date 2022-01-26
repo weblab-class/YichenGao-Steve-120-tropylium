@@ -3,7 +3,7 @@
     background-color: var(--white);
 }
 
-.selected {
+.fractal-initial-option_container.selected {
     background-color: var(--primary--dim);
 }
 

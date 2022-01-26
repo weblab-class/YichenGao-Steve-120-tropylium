@@ -69,6 +69,9 @@ const PatternEditorRenderer = (props: Props) => {
             const step_x = event.offsetX - event.offsetX % (WIDTH/GRID_SIZE), 
             step_y= event.offsetY - event.offsetY % (HEIGHT/GRID_SIZE);
             hover_visual.attr('transform', `translate(${step_x},${step_y})`);
+            if(props.rectData[step_x][step_y]) {
+                
+            }
         }
         svg.on("mousemove", mousemove);
 

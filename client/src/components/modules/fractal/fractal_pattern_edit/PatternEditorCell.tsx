@@ -5,6 +5,7 @@ import Util from "../../../../constants/Util";
 
 import "./PatternEditorCell.css";
 import { PatternEditorState } from "./PatternEditor";
+import PatternEditorShapeSelector from "./PatternEditorShapeSelector";
 
 type Props = {
     editorState: PatternEditorState
@@ -14,20 +15,19 @@ type Props = {
 }
 
 const PatternEditorCell = (props: Props) => {
-    const container_ref = useRef(undefined);
-    const WIDTH = 50;
-    const shapes = Util.all_shapes;
+    //const container_ref = useRef(undefined);
+    //const shapes = Util.all_shapes;
 
-    useEffect(() => {
-        for(let shape of shapes) {
-            const svg = d3.select(container_ref.current).append('svg');
-            svg.style('width', `${WIDTH}px`).style('height', `${WIDTH}px`)
-            Util.drawGraphic_d3(svg, shape, WIDTH, WIDTH, 0x0);
-            svg.on("click", function(event)  {
-                props.updateSelectedShape(shape);
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     for(let shape of shapes) {
+    //         const svg = d3.select(container_ref.current).append('svg');
+    //         svg.style('width', `${WIDTH}px`).style('height', `${WIDTH}px`)
+    //         Util.drawGraphic_d3(svg, shape, WIDTH, WIDTH, 0x0);
+    //         svg.on("click", function(event)  {
+    //             props.updateSelectedShape(shape);
+    //         });
+    //     }
+    // }, []);
     
     
     return (<div className={`pattern-editor-cell_container ${props.editorState === PatternEditorState.SELECT_REGULAR ? '' : 'invisible'}`}>
@@ -35,8 +35,15 @@ const PatternEditorCell = (props: Props) => {
         <input type='color' 
             value = {Util.colorNumberToString(props.focus_point.color)} 
             onChange = {(event) => props.updateSelectedColor(Util.colorStringToNumber(event.target.value))}/>
-        <div ref={container_ref}>
-
+        <div className="select-shape_container">
+            {
+                Util.all_shapes.map((shape: string) => 
+                    <PatternEditorShapeSelector
+                        shape={shape}
+                        selected={props.focus_point.shape === shape}
+                        onClick={props.updateSelectedShape}/>
+                )
+            }
         </div>
     </div>);
 }

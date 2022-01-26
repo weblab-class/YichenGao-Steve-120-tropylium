@@ -43,12 +43,12 @@
     background-color: whitesmoke;
 }
 
-.selected {
+.operator-edit_button.selected {
     background-color: seagreen;
     color: whitesmoke;
     
 }
 
-.spacer {
+.operator-edit_button.spacer {
     flex-grow: 1;
 }
