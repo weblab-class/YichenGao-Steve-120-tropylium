@@ -19,7 +19,7 @@ const FractalNavBar = (props: Props) => {
             </div>
         </Link>
         <input className="fractal-navbar-sidebar_input" 
-                type="text" value = {props.title} placeholder="Project Title"
+                type="text" value = {props.title} placeholder="Untitled Fractal"
                 onChange={(event) => props.updateTitle(event.target.value)}/>
         <div className="fractal-navbar-tutorial_button" onClick={(event) => props.openTutorial()}>
             Tutorial

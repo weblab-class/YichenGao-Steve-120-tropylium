@@ -32,6 +32,7 @@
 }
 
 .fractal-navbar-sidebar_input::placeholder {
+    font-style: italic;
     color: rgba(256, 256, 256, 0.5);
 }
 
