@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Dtest from "./pages/Dtest";
 import FractalCreator from "./pages/FractalCreator";
 import PixiTest from "./pages/PixiTest";
+import Mode from "./pages/Mode";
 
 const App = () => {
   const [userId, setUserId] = useState<String>(undefined);
@@ -47,20 +48,6 @@ const App = () => {
     post("/api/logout");
   };
 
-  // render() {
-  //   return (
-  //     <>
-  //       <Router>
-  //         <Home
-  //           path="/"
-  //           handleLogin={this.handleLogin}
-  //           handleLogout={this.handleLogout}
-  //           loggedIn={this.state.loggedIn}
-  //           userId={this.state.userId}
-  //           loggedOut={this.state.loggedOut}
-  //           resetLogout={this.state.resetLogout}
-  //         />
-
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
 
@@ -89,13 +76,19 @@ const App = () => {
           userId={userId}
         />
 
-        <ArtCreator path="/fractal_creator/*" userId={userId} />
+        <Mode path="/create"/>
+        <ArtCreator path="/create/simple_fractal_creator/*" userId={userId} />
+        <FractalCreator path="/create/advanced_fractal_creator/" is_new_project={false} />
 
         <Dashboard path="/dashboard" userId={userId} />
 
         <Dtest default={true} />
+<<<<<<< HEAD
         <FractalCreator path="/create" is_new_project={false} />
         {/* <PixiTest path="/pixitest" /> */}
+=======
+        <PixiTest path="/pixitest" />
+>>>>>>> c39179ead40857b76b71b0d90418481ea3b071ac
       </Router>
     </div>
   );

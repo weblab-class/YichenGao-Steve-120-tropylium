@@ -98,6 +98,7 @@ const FractalSidebar = (props: Props) => {
             const new_patterns: Pattern[] = [];
             for(let old_pattern of props.patterns) {
                 new_patterns.push({
+                    id: old_pattern.id,
                     symbol_names: old_pattern.symbol_names.filter(
                         (old_symbol_name: string) => old_symbol_name !== instruction),
                     points: old_pattern.points,

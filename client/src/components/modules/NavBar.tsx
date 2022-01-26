@@ -45,9 +45,6 @@ const NavBar = (props: NavBarProps) => {
         <Link to="/dashboard" className="NavBar-linkText">
           My Artworks
         </Link>
-        <Link to="/account" className="NavBar-linkText">
-          Account
-        </Link>
       </div>
       <div className={`NavBar-login ${menuShown ? "" : "inactive"}`}>
         <div className="NavBar-linkText">
