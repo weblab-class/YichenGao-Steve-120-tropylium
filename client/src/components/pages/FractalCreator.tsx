@@ -5,6 +5,7 @@ import FractalNavBar from "../modules/fractal/FractalNavBar";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
 import PatternEditor from "../modules/fractal/fractal_pattern_edit/PatternEditor";
 import FractalSidebar from "../modules/fractal/fractal_sidebar/FractalSidebar";
+import Tutorial from "../modules/fractal/Tutorial";
 import Warning from "../modules/fractal/Warning";
 import "./FractalCreator.css";
 
@@ -75,6 +76,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
         start_position: [],
         end_position: [],
     } as Pattern);
+    const [is_tutorial_open, setTutorialOpen] = useState(false);
     const [is_warning_open, setWarningOpen] = useState(false);
 
     function saveProject(): void {
@@ -105,6 +107,14 @@ const FractalCreator = (props: FractalCreatorProps) => {
 
     function onRenderEnd(renderTimeMilli: number): void {
 
+    }
+
+    function onTutorialProceed() : void {
+        setTutorialOpen(false);
+    }
+
+    function openTutorial(): void {
+        setTutorialOpen(true);
     }
 
     const warningCallbackRef = useRef(undefined);
@@ -148,6 +158,7 @@ const FractalCreator = (props: FractalCreatorProps) => {
             onDownloadImageClick={onDownloadClick}
             title={title}
             updateTitle={setTitle}
+            openTutorial={openTutorial}
         />
         <div className="fractal-creator-editor_container">
             <FractalRenderer
@@ -187,6 +198,14 @@ const FractalCreator = (props: FractalCreatorProps) => {
             <PatternEditor 
                 pattern={editing_pattern} 
                 onPatternUpdate={updatePattern}/>
+        </div>
+        <div className = {`fractal-creator-warning_container 
+            ${is_tutorial_open
+                ? 'visible'
+                : ''
+            }`}>
+            <Tutorial
+                onProceedClick={onTutorialProceed}/>
         </div>
         <div className = {`fractal-creator-warning_container 
             ${is_warning_open

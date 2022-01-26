@@ -8,6 +8,7 @@ type Props = {
     onDownloadImageClick: () => void
     title: string
     updateTitle: (newTitle: string) => void
+    openTutorial: () => void
 }
 
 const FractalNavBar = (props: Props) => {
@@ -20,6 +21,9 @@ const FractalNavBar = (props: Props) => {
         <input className="fractal-navbar-sidebar_input" 
                 type="text" value = {props.title} placeholder="Project Title"
                 onChange={(event) => props.updateTitle(event.target.value)}/>
+        <div className="fractal-navbar-tutorial_button" onClick={(event) => props.openTutorial()}>
+            Tutorial
+        </div>
         <div className="fractal-navbar-download_button" onClick={(event) => props.onDownloadImageClick()}>
             Download Image
         </div>

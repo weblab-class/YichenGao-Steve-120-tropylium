@@ -23,7 +23,7 @@ const GeneralEdit = (props: Props) => {
         </div>
         <div className="fractal-sidebar-section-list_container">
         <div className="fractal-sidebar-edit-hint_text hint_text-extra-margin">
-            Initial Pattern:
+            Initial State:
         </div>
         <InstructionInput
             instruction={props.initial}

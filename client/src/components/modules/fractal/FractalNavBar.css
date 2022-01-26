@@ -35,15 +35,17 @@
     color: rgba(256, 256, 256, 0.5);
 }
 
-.fractal-navbar-download_button{
+.fractal-navbar-download_button, .fractal-navbar-tutorial_button{
     height: 100%;
-    padding: 0 var(--m);
+    padding: 0 var(--l);
     display: flex;
     align-items: center;
     color: white;
     line-height: 100%;
     font-weight: bold;
+    transition: 500ms;
 }
-.fractal-navbar-download_button:hover {
-    background-color: rgba(256, 256, 256, 0.3);
+
+.fractal-navbar-download_button:hover, .fractal-navbar-tutorial_button:hover {
+    background-image: linear-gradient(90deg, var(--blue) 0%, var(--purple) 100%);
 }
