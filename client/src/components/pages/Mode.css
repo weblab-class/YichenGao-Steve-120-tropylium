@@ -30,15 +30,16 @@
 .left {
   left: 0;
   background-color: var(--primary--dark);
-  /* background-image: "../../images/mode_simple.png"; */
+  background-image: url("../../images/simple_creator.png");
+  background-size: 100% 100%;
 }
 
 /* Control the right side */
 .right {
   right: 0;
   background-color: var(--primary--dark);
-  /* background-image: "../../images/mode_advanced.png"; */
-  background-image: url("../../images/fractal_example1.png");
+  background-image: url("../../images/advanced_creator.png");
+  background-size: 100% 100%;
 }
 
 /* If you want the content centered horizontally and vertically */

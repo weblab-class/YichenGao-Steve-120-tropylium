@@ -39,7 +39,7 @@ const NavBar = (props: NavBarProps) => {
         </Link>
       </div>
       <div className={`NavBar-list ${menuShown ? "" : "inactive"}`}>
-        <Link to="/fractal_creator" className="NavBar-linkText">
+        <Link to="/create" className="NavBar-linkText">
           Create
         </Link>
         <Link to="/dashboard" className="NavBar-linkText">

@@ -12,11 +12,11 @@ type Props = {
 
 const FractalNavBar = (props: Props) => {
     return (<div className="fractal-navbar_container">
-        <div className = "fractal-navbar-back_button" onClick={(event) => props.onSaveClick}>
-            <Link to="/dashboard/">
+        <Link to="/create/">
+            <div className = "fractal-navbar-back_button" onClick={(event) => props.onSaveClick}>
                 <img src={arrow_back}></img>
-            </Link>
-        </div>
+            </div>
+        </Link>
         <input className="fractal-navbar-sidebar_input" 
                 type="text" value = {props.title} placeholder="Project Title"
                 onChange={(event) => props.updateTitle(event.target.value)}/>

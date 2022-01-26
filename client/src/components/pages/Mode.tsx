@@ -13,7 +13,7 @@ const Mode = (props: ModeProps) => {
              <div className="split left">
                 <div className="centered">
                 <Link to="/create/simple_fractal_creator/" className="Dashboard-linkText">
-                    <button className="button">ADVANCED FRACTAL CREATOR</button>
+                    <button className="button">SIMPLE FRACTAL CREATOR</button>
                  </Link>
                      <h2>Follow 5 simple steps to create fractals</h2>
                      <p>Learn the process of creating fractals with a basic step-by-step tutorial.
