@@ -28,11 +28,12 @@ router.post("/initsocket", (req, res) => {
 const Artwork = require("./models/Artwork");
 import ArtworkInterface from "../shared/Artwork";
 
-router.get("/artworks", (req, res) => {
+router.get("/artworks", auth.ensureLoggedIn, (req, res) => {
   Artwork.find({}).then((artworks: ArtworkInterface[] | null | undefined) => res.send(artworks));
 });
 
-router.get("/artworks/:id", (req, res) => {
+router.get("/artworks/:id", auth.ensureLoggedIn, (req, res) => {
+  console.log(req.params.id);
   Artwork.find({ creator_id: req.params.id }).then(
     (artworks: ArtworkInterface[] | null | undefined) => res.send(artworks)
   );
