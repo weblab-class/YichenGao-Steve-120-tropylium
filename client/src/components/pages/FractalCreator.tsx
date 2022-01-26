@@ -156,9 +156,9 @@ const FractalCreator = (props: FractalCreatorProps) => {
             onPatternClick={onPatternClick}
             initial={initial}
             updateInitial={setInitial}
-            numIterations={num_iterations}
+            num_iterations={num_iterations}
             updateNumIterations={setNumIterations}
-            backgroundColor={background_color}
+            background_color={background_color}
             updateBackgroundColor={setBackgroundColor}
         />
         </div>

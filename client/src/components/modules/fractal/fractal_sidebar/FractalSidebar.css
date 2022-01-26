@@ -25,16 +25,37 @@
 
 .sidebar_input {
     width: 100%;
-    padding: var(--m);
+}
+
+.general_extra_padding {
+    padding-bottom: var(--s);
+}
+
+.fractal-sidebar-color_input {
+    width: 100%;
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+    border-width: var(--l);
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+    border-width: var(--l);
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+    border-width: var(--l);
 }
 
 .box-shadow {
-    box-shadow: 0 calc(var(--s) / 8) calc(var(--s)) 0 var(--medgrey);
+    box-shadow: 0 calc(var(--s) / 8) calc(var(--s)) 0 #ccc;
 }
 
 .fractal-sidebar-section-edit_container {
     width: calc(100% - 1 * var(--s));
-    margin: 0 0 0 var(--s);
+    margin: var(--xs) 0 0 var(--s);
     border-radius: var(--m);
     background-color: var(--white);
     display: flex;
@@ -97,6 +118,10 @@
 
 .fractal-sidebar-edit-hint_text {
     font-size: 14px;
+}
+
+.hint_text-extra-margin {
+    padding: var(--s) 0;
 }
 
 .instruction-icon {

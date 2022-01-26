@@ -2,6 +2,7 @@ import React from "react";
 import { Operator, Pattern, Symbol } from "../../../../constants/Types";
 import Util from "../../../../constants/Util";
 import "./FractalSidebar.css";
+import GeneralEdit from "./GeneralEdit";
 import OperatorEdit from "./OperatorEdit";
 import OperatorEditList from "./OperatorEditList";
 import PatternEdit from "./PatternEdit";
@@ -18,11 +19,11 @@ type Props = {
     updateOperators: (new_operators: Operator[]) => void
     symbols: Symbol[]
     updateSymbols: (new_symbols: Symbol[]) => void
-    numIterations: number
+    num_iterations: number
     updateNumIterations: (new_num_iterations: number) => void
     initial: string
     updateInitial: (new_initial: string) => void
-    backgroundColor: number
+    background_color: number
     updateBackgroundColor: (new_background_color: number) => void
     //antialias: boolean
     //updateAntialias: (new_antialias: boolean) => void
@@ -115,55 +116,16 @@ const FractalSidebar = (props: Props) => {
     
     return <div className ='sidebar_container'>
         <div className = 'sidebar-scrolling_container'>
-    
-        <div>
-            Initial Pattern
-        </div>
-        <div>
-            {`Available Operators: 
-            ${props.operators.map((operator: Operator) => operator.name).join(', ')}`
-            }
-        </div>
-        <div>
-            {`Available Symbols: 
-            ${props.symbols.map((symbol: Symbol) => symbol.name).join(', ')}`
-            }
-        </div>
-        <input className="sidebar_input" 
-            type="text" 
-            value = {props.initial} 
-            placeholder={
-                props.operators.map((operator: Operator) => operator.name).join(', ') + 
-                ', ' + 
-                props.symbols.map((symbol: Symbol) => symbol.name).join(', ')} 
-            maxLength={10}
-            onChange={(event) => onInitialUpdate(event.target.value.toUpperCase())}/> 
-        {/* <div className={`-sidebar-warning_text 
-            ${initial_input_invalid.length === 0} 
-                ? '' 
-                : 'invalid'`}>
-                {`${initial_input_invalid.join(', ')} not found among operators or symbols`}
-        </div> */}
-        <div>
-            Number of Iterations
-        </div>
-        <input className = 'sidebar_input'
-            type='number' 
-            value={props.numIterations} 
-            min={0} 
-            max={20} 
-            step={1} 
-            onChange={(event) => props.updateNumIterations(Number(event.target.value))}
-        />
-        <div>
-            Background Color
-        </div>
-        <input 
-            type='color' 
-            value={Util.colorNumberToString(props.backgroundColor)}
-            onChange={(event) => {
-                props.updateBackgroundColor(Util.colorStringToNumber(event.target.value))}}
-        />
+        <GeneralEdit
+            num_iterations={props.num_iterations}
+            updateNumIterations={props.updateNumIterations}
+            initial={props.initial}
+            updateInitial = {onInitialUpdate}
+            symbols= {props.symbols}
+            operators ={props.operators}
+            background_color = {props.background_color}
+            updateBackgroundColor = {props.updateBackgroundColor}
+            />
         <PatternEditList
             patterns={props.patterns}
             updatePatterns={onPatternsUpdate}
@@ -172,7 +134,8 @@ const FractalSidebar = (props: Props) => {
         <SymbolEditList
             symbols={props.symbols}
             updateSymbols={onSymbolsUpdate}
-            getInvalidInstructions={getInvalidInstructions}/>
+            getInvalidInstructions={getInvalidInstructions}
+            operators={props.operators}/>
         <OperatorEditList
             operators={props.operators}
             updateOperators={onOperatorsUpdate}/>

@@ -1,13 +1,16 @@
 import React, { useRef } from "react";
-import { Symbol } from "../../../../constants/Types";
+import { Operator, Symbol } from "../../../../constants/Types";
 import "./SymbolEdit.css";
 import delete_icon from "../../../../images/delete.svg"
+import InstructionInput from "./InstructionInput";
 
 type Props = {
     symbol: Symbol
     updateSymbol: (new_symbol: Symbol) => void; 
     removeSymbol: (remove_symbol: Symbol) => void;
     getInvalidInstructions: (replacement_rule: string) => string[]
+    symbols: Symbol[]
+    operators: Operator[]
 }
 
 const SymbolEdit = (props: Props) => {
@@ -42,11 +45,11 @@ const SymbolEdit = (props: Props) => {
         <div className="fractal-sidebar-edit-hint_text symbol-edit-hint_text">
             Replacement Rule:
         </div>
-                
-                
-                <input className = 'symbol-edit_input symbol-edit_input' ref = {input_ref}
-                    type='text' value={props.symbol.replacement_rule}
-                    onChange={(event) => updateReplacementRule(event.target.value.toUpperCase())}/>
+                <InstructionInput
+                    instruction={props.symbol.replacement_rule}
+                    updateInstruction={updateReplacementRule}
+                    symbols={props.symbols}
+                    operators={props.operators}/>
                 
                     <div className="fractal-sidebar_divider">
                     </div>

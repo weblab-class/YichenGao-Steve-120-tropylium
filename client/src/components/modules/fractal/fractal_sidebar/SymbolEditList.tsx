@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Symbol } from "../../../../constants/Types";
+import { Symbol, Operator } from "../../../../constants/Types";
 
 import "./FractalSidebar.css";
 import SymbolEdit from "./SymbolEdit";
@@ -8,9 +8,11 @@ type Props = {
     symbols: Symbol[]
     updateSymbols: (new_symbols: Symbol[], removed_symbol: Symbol) => void
     getInvalidInstructions: (replacement_rule: string) => string[]
+    operators: Operator[]
 }
 
 const SymbolEditList = (props: Props) => {
+    
     function updateSymbol(new_symbol: Symbol): void {
         const new_symbols = [];
         for(let old_symbol of props.symbols) {
@@ -65,7 +67,9 @@ const SymbolEditList = (props: Props) => {
                                 symbol={symbol} 
                                 updateSymbol={updateSymbol}
                                 removeSymbol={removeSymbol}
-                                getInvalidInstructions={props.getInvalidInstructions}/>
+                                getInvalidInstructions={props.getInvalidInstructions}
+                                symbols={props.symbols}
+                                operators={props.operators}/>
                         )
                     }
         </div>

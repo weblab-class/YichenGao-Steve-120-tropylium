@@ -14,7 +14,7 @@ type Props = {
 }
 
 const PatternEdit = (props: Props) => {
-    console.log(props.pattern.id);
+    
     function removeSymbol(symbol_name: string): void {
         props.updatePattern({
             id: props.pattern.id,
