@@ -1,6 +1,6 @@
 import { RouteComponentProps } from "@reach/router";
 import React, { useState, useRef } from "react";
-import { Operator, Pattern, Symbol } from "../../constants/Types";
+import { Operator, Pattern, Symbol, Point } from "../../constants/Types";
 import FractalNavBar from "../modules/fractal/FractalNavBar";
 import FractalRenderer from "../modules/fractal/FractalRenderer";
 import PatternEditor from "../modules/fractal/fractal_pattern_edit/PatternEditor";
@@ -22,9 +22,25 @@ const FractalCreator = (props: FractalCreatorProps) => {
     const [patterns, setPatterns] = useState([{
         id: 0,
         symbol_names: ["A", "B"],
-        points: [],
-        start_position: [],
-        end_position: [],
+        points: [{
+            x: 4,
+            y: 5,
+            shape: 'ecirW',
+            color: 0x0,
+        } as Point,
+        {
+            x: 5,
+            y: 5,
+            shape: 'rect',
+            color: 0x0,
+        } as Point,{
+            x: 6,
+            y: 5,
+            shape: 'ecirE',
+            color: 0x0,
+        } as Point],
+        start_position: [4,5],
+        end_position: [6,5],
     } as Pattern,    
     ]);
     const [symbols, setSymbols] = useState([
