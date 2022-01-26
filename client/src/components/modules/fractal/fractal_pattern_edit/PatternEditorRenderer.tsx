@@ -25,7 +25,7 @@ const PatternEditorRenderer = (props: Props) => {
     // const firstTime = useRef(true);
 
     const svg_container_ref = useRef(undefined);
-    const WIDTH = 800, HEIGHT = WIDTH, C_X = WIDTH/2, C_Y = HEIGHT/2;
+    let WIDTH = 800, HEIGHT = WIDTH, C_X = WIDTH/2, C_Y = HEIGHT/2;
     const GRID_SIZE = 10;
 
     useEffect(() => {
@@ -199,6 +199,7 @@ const PatternEditorRenderer = (props: Props) => {
                     .attr('height', HEIGHT/GRID_SIZE)
                     .attr('fill', '#fff')
                     .attr('stroke', '#ddd')
+                    .attr('stroke-width', 1)
             }
         }
     }, []);
@@ -249,7 +250,7 @@ const PatternEditorRenderer = (props: Props) => {
 
     return (
             <div ref={svg_container_ref} className="create-initial-svg_container">
-                <svg width={WIDTH+"px"} height={HEIGHT + "px"}>
+                <svg width="100%" height="100%" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
                     <g id="grid"></g>
                     <g id="rects"></g>
                     

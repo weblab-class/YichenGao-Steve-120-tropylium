@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { PatternEditorState} from "./PatternEditor";
-
+import check_circle from "../../../../images/check_circle.svg"
 import "./PatternEditorOptions.css";
 
 type Props = {
@@ -21,11 +21,15 @@ const PatternEditorOptions = (props: Props) => {
         className = {`fractal-initial-option_container ${
             props.is_selected ? 'selected' : (props.done ? 'done': '')}`}
         onClick = {onClickOption}>
-        <div className="fractal-initial-option-title">
+        <div className="pattern-editor-option-title_container">
+            <div className="fractal-initial-option-title">
             {props.title}
+            </div>
+            <img className={`fractal-initial-option-done_img ${props.done ? 'done-img_visible' : ''}`} src={check_circle}/>
         </div>
+        
         <div className="fractal-initial-option-hint">
-            {props.hint + (props.done ? ' DONE' : '')}
+            {props.hint}
         </div>
     </div>)
 }

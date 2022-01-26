@@ -31,10 +31,15 @@ const PatternEditorCell = (props: Props) => {
     
     
     return (<div className={`pattern-editor-cell_container ${props.editorState === PatternEditorState.SELECT_REGULAR ? '' : 'invisible'}`}>
-        
-        <input type='color' 
+        <div className="fractal-sidebar-edit-hint_text hint_text-extra-margin">
+            Selected Color
+        </div>
+        <input className="sidebar_input" type='color' 
             value = {Util.colorNumberToString(props.focus_point.color)} 
             onChange = {(event) => props.updateSelectedColor(Util.colorStringToNumber(event.target.value))}/>
+        <div className="fractal-sidebar-edit-hint_text hint_text-extra-margin">
+            Selected Shape
+        </div>
         <div className="select-shape_container">
             {
                 Util.all_shapes.map((shape: string) => 

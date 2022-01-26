@@ -1,9 +1,17 @@
 .pattern-editor-cell_container {
     display: block;
+    padding: var(--m);
+    width: 248px;
 }
 
 .invisible {
     display: none;
+}
+.select-shape_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--s);
 }
 
 .pattern-editor-cell_button {

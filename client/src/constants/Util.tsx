@@ -20,7 +20,7 @@ export default abstract class Util {
         return sum_arr;
     }
 
-    static all_shapes: string[] = ['rect', 'circ', 'diam', 'oct', 'ecirN', 'ecirE', 'ecirS', 'ecirW'];
+    static all_shapes: string[] = ['rect', 'circ', 'diam', 'oct', 'ecirN', 'ecirE', 'ecirS', 'ecirW', 'triNW', 'triNE', 'triSE', 'triSW'];
 
     // draws to 0,0; you will need to transform it yourself
     public static drawGraphic_d3(selection, shape: string, width: number, height: number, color: number) {
@@ -229,6 +229,46 @@ export default abstract class Util {
                 .attr('d', path_ecirW)
                 .attr('fill', Util.colorNumberToString(color))
                 break;
+            case 'triNW':
+                const path_triNW = d3.path();
+                path_triNW.moveTo(0,0);
+                path_triNW.lineTo(0,width);
+                path_triNW.lineTo(width, 0);
+                path_triNW.closePath();
+                selection.append('path')
+                .attr('d', path_triNW)
+                .attr('fill', Util.colorNumberToString(color))
+                break;
+            case 'triNE':
+                const path_triNE = d3.path();
+                path_triNE.moveTo(width,0);
+                path_triNE.lineTo(0,0);
+                path_triNE.lineTo(width, width);
+                path_triNE.closePath();
+                selection.append('path')
+                .attr('d', path_triNE)
+                .attr('fill', Util.colorNumberToString(color))
+                break;
+            case 'triSE':
+                const path_triSE = d3.path();
+                path_triSE.moveTo(width,width);
+                path_triSE.lineTo(0,width);
+                path_triSE.lineTo(width, 0);
+                path_triSE.closePath();
+                selection.append('path')
+                .attr('d', path_triSE)
+                .attr('fill', Util.colorNumberToString(color))
+                break;
+            case 'triSW':
+                const path_triSW = d3.path();
+                path_triSW.moveTo(0,width);
+                path_triSW.lineTo(0,0);
+                path_triSW.lineTo(width, width);
+                path_triSW.closePath();
+                selection.append('path')
+                .attr('d', path_triSW)
+                .attr('fill', Util.colorNumberToString(color))
+                break;
         }
     }
 
@@ -302,6 +342,18 @@ export default abstract class Util {
                 graphics.arc(x,y,width/2,Math.PI*(0.5+rotation/180), Math.PI*(-0.5+rotation/180));
                 graphics.lineTo(rot_3[0], rot_3[1]);
                 graphics.lineTo(rot_2[0], rot_2[1]);
+                break;
+            case 'triNW':
+                graphics.drawPolygon([...rot_4].concat(rot_1, rot_3));
+                break;
+            case 'triNE':
+                graphics.drawPolygon([...rot_3].concat(rot_4, rot_2));
+                break;
+            case 'triSE':
+                graphics.drawPolygon([...rot_2].concat(rot_3, rot_1));
+                break;
+            case 'triSW':
+                graphics.drawPolygon([...rot_1].concat(rot_2, rot_4));
                 break;
             
         }

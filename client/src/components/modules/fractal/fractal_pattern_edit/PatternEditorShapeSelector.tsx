@@ -20,7 +20,7 @@ const PatternEditorShapeSelector = (props: Props) => {
     }, []);
 
     return (
-    <div className={`pattern-editor-cell_button ${props.selected ? 'selected' : ''}`}
+    <div className={`pattern-editor-cell_button box-shadow ${props.selected ? 'selected' : ''}`}
         ref={container_ref} onClick={(event) => {props.onClick(props.shape);}}>
             <svg>
 

@@ -203,9 +203,10 @@ const PatternEditor = (props: PatternEditorProps) => {
 
     return (
     <div className = "create-initial_container">
+        <div className = "pattern-edit-content_container">
         <div className="create-initial_container2">
             <div className="create-initial-title_text">
-                Create the initial pattern
+                {`Editing Pattern ${props.pattern.id + 1}`}
             </div>
             <div className={`create-initial-save-button ${
                 (optionStatus.every((status) => status))
@@ -229,7 +230,8 @@ const PatternEditor = (props: PatternEditorProps) => {
                 onRectClick={onRectClick}
                 selected_color={selected_color}
                 selected_shape={selected_shape}/>
-            <PatternEditorSidebar
+            <div className="pattern-editor-container4">
+                <PatternEditorSidebar
                 editorState={editorState}
                 onEditorStateUpdate={updateEditorState}
                 optionStatus={optionStatus}/>
@@ -239,6 +241,9 @@ const PatternEditor = (props: PatternEditorProps) => {
                 updateSelectedColor={updateSelectedColor}
                 updateSelectedShape={updateSelectedShape}
                 />
+            </div>
+            
+        </div>
         </div>
     </div>);
 }
