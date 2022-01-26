@@ -83,7 +83,7 @@ const Dashboard = (props: DashboardProps) => {
         <Stack spacing={4} direction="row" alignItems="center">
           <div>MY PROJECTS</div>
           <ThemeProvider theme={theme}>
-            <Link to="/fractal_creator" className="Dashboard-linkText">
+            <Link to="/create" className="Dashboard-linkText">
               <Button variant="contained" size="large">
                 NEW PROJECT
               </Button>
