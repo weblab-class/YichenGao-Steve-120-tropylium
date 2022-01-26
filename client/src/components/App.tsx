@@ -12,7 +12,6 @@ import "./App.css";
 import NavBar from "./modules/NavBar";
 import ArtCreator from "./pages/ArtCreator";
 import Dashboard from "./pages/Dashboard";
-import Account from "./pages/Account";
 import Dtest from "./pages/Dtest";
 import FractalCreator from "./pages/FractalCreator";
 import PixiTest from "./pages/PixiTest";
@@ -67,36 +66,36 @@ const App = () => {
 
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
-  return (
-    <div className="App-container">
-      {/* <div className="App-navbar">
-        <NavBar
-          handleLogin={
-            handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void
-          }
-          handleLogout={handleLogout}
-          userId={userId}
-        />
-      </div> */}
-      <Router className="App-content">
-        <Home path="/" 
-          handleLogin={
-            handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void
-          }
-          handleLogout={handleLogout}
-          userId={userId} />
-      
-        <ArtCreator path="/fractal_creator" userId={userId} />
-
-        <Dashboard path="/dashboard" userId={userId} />
+  
+    return (
+      <div className="App-container">
+        {userId ? <div className="App-navbar">
+          <NavBar
+            handleLogin={
+              handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void
+            }
+            handleLogout={handleLogout}
+            userId={userId}
+          />
+        </div> : <></>}
+        <Router className="App-content">
+          <Home path="/" 
+            handleLogin={
+              handleLogin as (res: GoogleLoginResponse | GoogleLoginResponseOffline) => void
+            }
+            handleLogout={handleLogout}
+            userId={userId} />
         
-        <Account path="/account" />
-        <Dtest default={true} />
-        <FractalCreator path="/create" is_new_project={false} />
-        <PixiTest path="/pixitest" />
-      </Router>
-    </div>
-  );
+          <ArtCreator path="/fractal_creator" userId={userId} />
+
+          <Dashboard path="/dashboard" userId={userId} />
+          
+          <Dtest default={true} />
+          <FractalCreator path="/create" is_new_project={false} />
+          <PixiTest path="/pixitest" />
+        </Router>
+      </div>
+    );
 };
 
 export default App;
