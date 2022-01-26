@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Symbol } from "../../../../constants/Types";
 import "./SymbolEdit.css";
+import delete_icon from "../../../../images/delete.svg"
 
 type Props = {
     symbol: Symbol
@@ -27,18 +28,29 @@ const SymbolEdit = (props: Props) => {
     }
 
     return (<div className="symbol-edit_container">
-    <div className="symbol-edit-name_text">
-        {props.symbol.name}
-    </div>
-    <div className="spacer"/>
-    <input className = 'symbol-edit_input' ref = {input_ref}
-        type='text' value={props.symbol.replacement_rule}
-        onChange={(event) => updateReplacementRule(event.target.value.toUpperCase())}/>
-    <div className="symbol-edit-remove_button"
+        <div className="symbol-edit_container2">
+            <div className="instruction-icon symbol box-shadow">
+                        <div>
+                        {props.symbol.name}
+                        </div>
+                    </div>
+            <div className="fractal-sidebar-edit-remove_button"
             onClick={(event) => removeSymbol()}>
-            Remove
+            <img src={delete_icon}/>
+            </div>        
         </div>
-</div>);
+        <div className="fractal-sidebar-edit-hint_text symbol-edit-hint_text">
+            Replacement Rule:
+        </div>
+                
+                
+                <input className = 'symbol-edit_input symbol-edit_input' ref = {input_ref}
+                    type='text' value={props.symbol.replacement_rule}
+                    onChange={(event) => updateReplacementRule(event.target.value.toUpperCase())}/>
+                
+                    <div className="fractal-sidebar_divider">
+                    </div>
+            </div>);
 }
 
 export default SymbolEdit;

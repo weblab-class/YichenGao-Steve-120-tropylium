@@ -23,12 +23,15 @@
   --primary--dark: #010040;
   --darkgrey: #444444;
   --medgrey: #e0e0e0;
+  --lightgrey: #fafafa;
   --grey: #f7f7f7;
   --white: #fff;
   --black: #000;
   --light-blue: #92d8ff;
   --green: #9aff7b;
   --red: #ff7b7b;
+  --blue: #0f0891;
+  --purple: #6f00d6;
 
   --xs: 4px;
   --s: 8px;

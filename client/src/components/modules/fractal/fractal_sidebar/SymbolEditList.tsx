@@ -54,20 +54,23 @@ const SymbolEditList = (props: Props) => {
         }
     }
     
-    return (<div>
-        <div className = "fractal-sidebar-section-title_text">
+    return (<div className="fractal-sidebar-section-edit_container box-shadow">
+        <div className = "fractal-sidebar-section-title_text box-shadow">
             SYMBOLS
         </div>
-        {
-            props.symbols.map((symbol: Symbol) => 
-                <SymbolEdit key = {symbol.name} 
-                    symbol={symbol} 
-                    updateSymbol={updateSymbol}
-                    removeSymbol={removeSymbol}
-                    getInvalidInstructions={props.getInvalidInstructions}/>
-            )
-        }
-        <div onClick={(event) => addSymbol()}>
+        <div className="fractal-sidebar-section-list_container">
+            {
+                        props.symbols.map((symbol: Symbol) => 
+                            <SymbolEdit key = {symbol.name} 
+                                symbol={symbol} 
+                                updateSymbol={updateSymbol}
+                                removeSymbol={removeSymbol}
+                                getInvalidInstructions={props.getInvalidInstructions}/>
+                        )
+                    }
+        </div>
+        
+        <div className="fractal-sidebar-add-new_button" onClick={(event) => addSymbol()}>
             Add Symbol
         </div> 
     </div>);

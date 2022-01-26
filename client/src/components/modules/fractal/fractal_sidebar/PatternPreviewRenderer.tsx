@@ -2,15 +2,15 @@ import React, {useState, useRef, useEffect} from "react";
 import { Project, Symbol, Operator, Pattern, Point } from "../../../../constants/Types";
 import * as d3 from 'd3'
 
-import "./PreviewRenderer.css";
+import "./PatternPreviewRenderer.css";
 import Util from "../../../../constants/Util";
 
-type PreviewRendererProps = {
+type PatternPreviewRendererProps = {
     pattern: Pattern;
     onPreviewClick: (pattern: Pattern) => void 
 }
 
-const PreviewRenderer = (props: PreviewRendererProps) => {
+const PatternPreviewRenderer = (props: PatternPreviewRendererProps) => {
     const PREVIEW_WIDTH = 120, PREVIEW_HEIGHT = 120, GRID_SIZE = 10;
     const svg_container = useRef(undefined);
 
@@ -93,4 +93,4 @@ const PreviewRenderer = (props: PreviewRendererProps) => {
     </div>);
 }
 
-export default PreviewRenderer;
+export default PatternPreviewRenderer;

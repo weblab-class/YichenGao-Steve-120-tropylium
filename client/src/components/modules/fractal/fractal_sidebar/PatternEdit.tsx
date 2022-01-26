@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Pattern, Symbol } from "../../../../constants/Types";
-import PreviewRenderer from "./PreviewRenderer";
+import PatternPreviewRenderer from "./PatternPreviewRenderer";
 
 import "./FractalSidebar.css";
 
@@ -42,7 +42,7 @@ const PatternEdit = (props: Props) => {
         <div className="pattern-edit-symbol-names_container">
             {
                 props.pattern.symbol_names.map((name: string) => 
-                    <div className="pattern-edit-symbol-name_text" 
+                    <div key={name} className="pattern-edit-symbol-name_text" 
                             onClick={(event) => removeSymbol(name)}>
                         {name}
                     </div>
@@ -60,7 +60,9 @@ const PatternEdit = (props: Props) => {
                                 symbol_name === current_symbol_name
                         ) === undefined
                     ).map((other_symbol_name: string) => 
-                    <div onClick={(event) => addSymbol(other_symbol_name)}>
+                    <div 
+                    key={other_symbol_name}
+                    onClick={(event) => addSymbol(other_symbol_name)}>
                         {other_symbol_name}
                     </div>    
                     )
@@ -69,7 +71,7 @@ const PatternEdit = (props: Props) => {
             </div>
             
         </div>
-        <PreviewRenderer 
+        <PatternPreviewRenderer 
             pattern={props.pattern}
             onPreviewClick={(event) => props.onPatternClick(props.pattern)}/>
         <div onClick = {(event) => props.removePattern(props.pattern)}>

@@ -1,52 +1,48 @@
 .operator-edit_container{
     width: 100%;
     display: flex;
-    flex-direction: row;
-    padding: var(--s);
-    justify-content: space-between;
+    flex-direction: column;
+    
 }
 
-.operator-edit-name_text {
-    width: var(--l);
-    padding: var(--s);
-    font-weight: bold;
-    text-align: center;
-    font-size: var(--m);
+.operator-edit_container2, .operator-edit_container3 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--s) 0;
 }
+
 
 .operator-edit_button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     width: var(--xl);
-    padding: var(--s) 0;
+    height: var(--xl);
+    border-radius: var(--l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background-color: whitesmoke;
-    text-align: center;
-    font-size: var(--s);
+    background-color: seagreen;
+    transition: 200ms;
 }
 
 .operator-edit-remove_button {
+    width: var(--l);
+    height: var(--l);
+    border-radius: var(--m);
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    width: var(--xl);
-    padding: var(--s) 0;
-    background-color: tomato;
-    text-align: center;
-    font-size: var(--s);
-    color: whitesmoke
+    align-items: center;
+    transition: 200ms;
 }
 
 .operator-edit-remove_button:hover {
-    color: tomato;
-    background-color: whitesmoke;
+    background-color: rgba(252, 53, 3, 0.2);
 }
 
-.operator-edit_button.selected {
-    background-color: seagreen;
-    color: whitesmoke;
-    
+.operator-edit_button:hover {
+    background-color: green;
 }
 
 .operator-edit_button.spacer {

@@ -39,6 +39,7 @@ const PatternEditorCell = (props: Props) => {
             {
                 Util.all_shapes.map((shape: string) => 
                     <PatternEditorShapeSelector
+                        key={shape}
                         shape={shape}
                         selected={props.focus_point.shape === shape}
                         onClick={props.updateSelectedShape}/>

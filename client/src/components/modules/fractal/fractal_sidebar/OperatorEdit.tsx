@@ -1,6 +1,8 @@
 import React, {useState, useRef} from "react";
 import { Operator } from "../../../../constants/Types";
-
+import rotate_right from "../../../../images/rotate_right.svg"
+import rotate_left from "../../../../images/rotate_left.svg"
+import delete_icon from "../../../../images/delete.svg"
 import "./OperatorEdit.css";
 
 type OperatorEditProps = {
@@ -36,26 +38,36 @@ const OperatorEdit = (props: OperatorEditProps) => {
     }
     
     return (<div className="operator-edit_container">
-        <div className="operator-edit-name_text">
-            {props.operator.name}
+        <div className="operator-edit_container2">
+            <div className="instruction-icon operator box-shadow">
+                        <div>
+                        {props.operator.name}
+                        </div>
+                    </div>
+            <div className="fractal-sidebar-edit-remove_button"
+            onClick={(event) => removeOperator()}>
+            <img src={delete_icon}/>
+            </div>        
         </div>
-        <input className = 'operator-edit_input' ref = {input_ref}
+
+        <div className="operator-edit_container3">
+            <div className="fractal-sidebar-edit-hint_text"> Rotate (degrees): 
+                </div>
+            
+            <div className={`operator-edit_button box-shadow ${orientation ? 'selected' : ''}`} 
+            onClick={(event) => updateOrientation(!orientation)}>
+            <img src = {orientation ? rotate_right : rotate_left}/>
+            </div>
+            <input className = 'operator-edit_input' ref = {input_ref}
             type='number' value={Math.abs(props.operator.rotation)} min={0} max={180} step={15} 
             onChange={(event) => updateOperator(Number(event.target.value), orientation)}/>
-        <div className="spacer"/>
-        <div className={`operator-edit_button ${orientation ? 'selected' : ''}`} 
-            onClick={(event) => updateOrientation(true)}>
-            CW
+        
         </div>
-        <div className={`operator-edit_button ${orientation ? '' : 'selected'}`} 
-            onClick={(event) => updateOrientation(false)}>
-            CCW
+
+        <div className="fractal-sidebar_divider">
+
         </div>
-        <div className="spacer"/>
-        <div className="operator-edit-remove_button"
-            onClick={(event) => removeOperator()}>
-            Remove
-        </div>
+        
         
     </div>);
 }
