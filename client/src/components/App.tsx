@@ -76,19 +76,15 @@ const App = () => {
           userId={userId}
         />
 
-        <Mode path="/create"/>
+        <Mode path="/create" />
         <ArtCreator path="/create/simple_fractal_creator/*" userId={userId} />
         <FractalCreator path="/create/advanced_fractal_creator/" is_new_project={false} />
 
         <Dashboard path="/dashboard" userId={userId} />
 
         <Dtest default={true} />
-<<<<<<< HEAD
         <FractalCreator path="/create" is_new_project={false} />
         {/* <PixiTest path="/pixitest" /> */}
-=======
-        <PixiTest path="/pixitest" />
->>>>>>> c39179ead40857b76b71b0d90418481ea3b071ac
       </Router>
     </div>
   );
