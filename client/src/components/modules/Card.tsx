@@ -9,6 +9,7 @@ type CardProps = {
   artworkId: string;
   cellDeltas: [number, number][];
   endDelta: [number, number];
+  numIterations: number;
   position: number;
 };
 
@@ -27,7 +28,12 @@ const Card = (props: CardProps) => {
     svg.attr("width", "100%");
     svg.attr("height", "100%");
     // svg.attr("preserveAspectRatio", "xMinYMin meet").classed("Result-svgResponsive", true);
-    const artist = new D3Drawer(props.cellDeltas, props.endDelta, 5, svg);
+    const artist = new D3Drawer(
+      props.cellDeltas,
+      props.endDelta,
+      Math.min(5, props.numIterations),
+      svg
+    );
     artist.render();
   };
   const ref = useD3(doD3Stuff);

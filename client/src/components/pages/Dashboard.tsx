@@ -55,6 +55,7 @@ const Dashboard = (props: DashboardProps) => {
                 artworkId={artwork._id}
                 cellDeltas={artwork.cellDeltas}
                 endDelta={artwork.endDelta}
+                numIterations={artwork.numIterations}
                 position={idx + 1}
                 key={idx}
               />
