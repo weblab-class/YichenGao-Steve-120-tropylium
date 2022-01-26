@@ -1,10 +1,10 @@
 .Card-container {
   /* flex-basis: 21%; */
   height: 320px;
-  width: 21%;
+  width: 21vw;
   display: flex;
   flex-flow: column;
-  row-gap: var(--l);
+  row-gap: var(--m);
   padding: var(--l);
 }
 
@@ -35,4 +35,16 @@
 .Card-caption {
   flex: 1;
   text-align: center;
+  border-radius: var(--l);
+  font-size: 28px;
+}
+
+.Card-caption-editing {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-width: 0;
+  color: white;
+}
+
+.Card-caption-editing:hover {
+  background-color: rgba(0, 0, 0, 0.7);
 }

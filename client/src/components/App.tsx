@@ -95,7 +95,7 @@ const App = () => {
 
         <Dtest default={true} />
         <FractalCreator path="/create" is_new_project={false} />
-        <PixiTest path="/pixitest" />
+        {/* <PixiTest path="/pixitest" /> */}
       </Router>
     </div>
   );
