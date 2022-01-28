@@ -35,11 +35,13 @@ const app = express();
 // Middleware setup.
 
 // Redirect http to https
-app.use((req, res, next) => {
-  if (req.header("x-forwarded-proto") !== "https")
-    res.redirect(`https://${req.header("host")}${req.url}`);
-  else next();
-});
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
 
 app.use(express.json());
 app.use(morgan("dev")); // To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
