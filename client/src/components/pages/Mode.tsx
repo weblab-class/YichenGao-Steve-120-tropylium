@@ -32,7 +32,7 @@ const theme = createTheme({
 const Mode = (props: ModeProps) => {
   return (
     <div className="mode-background">
-      <h3 className="mode-text">CHOOSE THE RIGHT MODE FOR YOU.</h3>
+      <h3 className="mode-text">CHOOSE A MODE</h3>
       <div className="split left">
         <div className="centered">
           <Stack spacing={2} direction="column">
