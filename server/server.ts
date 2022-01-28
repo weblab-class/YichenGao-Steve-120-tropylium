@@ -35,6 +35,7 @@ const app = express();
 // Middleware setup.
 
 // Redirect http to https
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
     if (req.header("x-forwarded-proto") !== "https")
