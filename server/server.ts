@@ -33,6 +33,14 @@ mongoose
 const app = express();
 
 // Middleware setup.
+
+// Redirect http to https
+app.use((req, res, next) => {
+  if (req.header("x-forwarded-proto") !== "https")
+    res.redirect(`https://${req.header("host")}${req.url}`);
+  else next();
+});
+
 app.use(express.json());
 app.use(morgan("dev")); // To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
 const sessionSecret = process.env.SESSION_SECRET;
@@ -52,13 +60,6 @@ app.use("/api", api);
 // Serves the frontend code
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));
-
-// Redirect http to https
-app.use((req, res, next) => {
-  if (req.header("x-forwarded-proto") !== "https")
-    res.redirect(`https://${req.header("host")}${req.url}`);
-  else next();
-});
 
 // Fallbacks
 
