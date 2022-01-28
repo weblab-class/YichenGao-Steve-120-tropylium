@@ -29,12 +29,18 @@ img {
 }
 
 .home-text {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
   color: white;
   font-size: 20px;
-  text-shadow: 0.07em 0 var(--primary--dark), 0 0.07em var(--primary--dark),
-    -0.07em 0 var(--primary--dark), 0 -0.07em var(--primary--dark);
+  text-shadow: 0.07em 0 0.7em var(--primary--dark), 0 0.07em 0.7em var(--primary--dark),
+    -0.07em 0 0.7em var(--primary--dark), 0 -0.07em 0.7em var(--primary--dark);
 }
 
 .item {
   transition: transform 1s ease, opacity 0.5s ease-out;
+}
+
+.link-text {
+  text-decoration: none;
 }
