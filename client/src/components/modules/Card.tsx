@@ -72,7 +72,7 @@ const Card = (props: CardProps) => {
           {displayTitle(title)}
         </button>
       ) : (
-        <Link to={`/fractal_creator/${props.artworkId}`} className="Card-link">
+        <Link to={`/create/simple_fractal_creator/${props.artworkId}`} className="Card-link">
           <div className="Card-caption">{displayTitle(title)}</div>
         </Link>
       )}

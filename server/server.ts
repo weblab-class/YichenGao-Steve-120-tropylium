@@ -53,11 +53,18 @@ app.use("/api", api);
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));
 
+// Redirect http to https
+app.use((req, res, next) => {
+  if (req.header("x-forwarded-proto") !== "https")
+    res.redirect(`https://${req.header("host")}${req.url}`);
+  else next();
+});
+
 // Fallbacks
 
 // For any other route, let index.html and react router handle it.
 app.get("*", (_, res) => {
-  res.send({ msg: "hello world." });
+  res.sendFile(path.join(reactPath, "index.html"));
 });
 
 // TODO(johancc) - Add an error interface.
