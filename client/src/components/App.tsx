@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Router } from "@reach/router";
+import { Router, Redirect, globalHistory, redirectTo } from "@reach/router";
 import { get, post } from "../utilities";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
@@ -50,6 +50,33 @@ const App = () => {
 
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
+  // const [isAtHome, setIsAtHome] = useState<boolean>(true);
+
+  const useLocation = () => {
+    const initialState = {
+      location: globalHistory.location,
+      navigate: globalHistory.navigate,
+    };
+
+    const [state, setState] = useState(initialState);
+    useEffect(() => {
+      const removeListener = globalHistory.listen((params) => {
+        const { location } = params;
+        const newState = Object.assign({}, initialState, { location });
+        setState(newState);
+      });
+      return () => {
+        removeListener();
+      };
+    }, []);
+
+    return state;
+  };
+
+  const currentLocation = useLocation().location.pathname;
+  if (!userId && currentLocation !== "/") {
+    return <Redirect to="/" noThrow />;
+  }
 
   return (
     <div className="App-container">

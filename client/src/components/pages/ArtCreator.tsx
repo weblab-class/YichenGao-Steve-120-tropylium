@@ -40,9 +40,7 @@ const ArtCreator = (props: ArtCreatorProps): JSX.Element => {
       setArtworkId(props["*"]);
     }
     if (artworkId.length > 0) {
-      console.log(artworkId);
       get(`/api/artwork/${props.userId}`, { artworkId: artworkId }).then((artworks) => {
-        console.log(artworks);
         let artwork = artworks[0];
         setGrid(artwork.grid);
         setStartCoords(artwork.startCoords);
