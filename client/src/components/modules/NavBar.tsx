@@ -10,7 +10,7 @@ import "./NavBar.css";
 import logo_transparent from "../../images/white_name_logo.png";
 import menu_icon from "../../images/menu_icon.svg";
 
-const GOOGLE_CLIENT_ID = "345260256672-4hgaortvbdeb0t3mb8iuphdvehej9m14.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "347109664609-qoa25gic3eouujego8oqggrnpha9u9v2.apps.googleusercontent.com";
 
 type NavBarProps = {
   userId: String;
