@@ -13,7 +13,7 @@ dotenv.config({});
 
 // Server configuration below
 // TODO change connection URL after setting up your team database
-const mongoConnectionURL = process.env.MONGO_SRV;
+const mongoConnectionURL = "mongodb+srv://fractory:38Rkm3Jrbtjh@cluster0.coh5xkj.mongodb.net/?retryWrites=true&w=majority"; // process.env.MONGO_SRV;
 // TODO change database name to the name you chose
 const databaseName = "Fractory";
 
@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(express.json());
 app.use(morgan("dev")); // To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
-const sessionSecret = process.env.SESSION_SECRET;
+const sessionSecret = "lol"; // process.env.SESSION_SECRET;
 if (sessionSecret === undefined) {
   throw new Error("Please add a session secret as 'SESSION_SECRET'");
 }
