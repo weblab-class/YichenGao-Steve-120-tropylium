@@ -18,7 +18,7 @@ import PixiTest from "./pages/PixiTest";
 import Mode from "./pages/Mode";
 
 const App = () => {
-  const [userId, setUserId] = useState<String>(undefined);
+  const [userId, setUserId] = useState<String>("hi");
 
   useEffect(() => {
     get("/api/whoami")

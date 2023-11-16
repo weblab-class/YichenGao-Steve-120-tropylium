@@ -60,12 +60,12 @@ const populateCurrentUser = (req: Request, _res: Response, next: NextFunction) =
 };
 
 // We use any because
-const ensureLoggedIn = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.user) {
-    return res.status(401).send({ err: "Not logged in." });
-  }
-  next();
-};
+  const ensureLoggedIn = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).send({ err: "Not logged in." });
+    }
+    next();
+  };
 
 export default {
   ensureLoggedIn,
